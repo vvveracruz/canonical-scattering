@@ -127,5 +127,4 @@ class Graphics():
 
 ########### Script
 
-main = Main()
-main.run()
+Main().run()
