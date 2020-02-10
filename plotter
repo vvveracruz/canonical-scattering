@@ -1,0 +1,95 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import numpy as np
+import matplotlib.cm as cm
+import matplotlib.pyplot as plt
+import scipy.special as sp
+import os
+import time
+
+
+class Main():
+
+    def __init__(self):
+        print("Main")
+
+    def run(self):
+        print("doing stuff...")
+        graph = Graphics()
+
+        my_wave = MyWave(10,100)
+        graph.heat_map(my_wave, title='Real part')
+
+
+#####################
+class Wave():
+
+    def __init__(self, length, delta, big_phi):
+        print("new wave created")
+        self.X, self.Y = self.get_xy_series(length,delta)
+        self.Z = self.create_z_series(length, delta)
+        self.big_phi = big_phi
+
+
+    def get_xy_series(self, length, delta):
+        x = np.linspace(-length, length, delta)
+        y = x
+        return np.meshgrid(x, y)
+
+    def create_z_series(self, length, delta):
+        print("not yet implemented in super-class")
+        # put code here .... loopy stuff... infinite summmation
+        return None
+
+    def get_big_phi:
+        return self.big_phi
+
+    def get_X(self):
+        return self.X
+
+    def get_Y(self):
+        return self.Y
+
+    def get_Z(self):
+        return self.Z
+
+#####################
+class MyWave(Wave):
+
+    def __init__(self, length=10,delta=100):
+        print("my wave created")
+        super(MyWave, self).__init__(length, delta)
+        self.Z = self.create_z_series()
+
+    def create_z_series(self):
+        return (np.exp(1j*(self.get_X() + self.get_Y()))).real
+
+
+#####################
+class Graphics():
+    def __init__(self):
+        print("graphics object created")
+
+    def contour(self, wave, title="Title", xlabel='x', ylabel='y'):
+        plot = plt.contour(wave.get_Z())
+        plt.title(title)
+        plt.ylabel(xlabel)
+        plt.xlabel(ylabel)
+        plt.colorbar(plot)
+        plt.show()
+
+    def heat_map(self, wave, title="Title", xlabel='x', ylabel='y'):
+        plot = plt.imshow(wave.get_Z())
+        plt.title(title)
+        plt.ylabel(xlabel)
+        plt.xlabel(ylabel)
+        plt.colorbar(plot)
+        plt.show()
+
+
+
+########### Script
+
+main = Main()
+main.run()
