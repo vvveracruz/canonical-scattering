@@ -16,21 +16,24 @@ class Main():
     def run(self):
         print("doing stuff...")
         graph = Graphics()
+        self.create_hankel_wave(graph)
+        #graph.contour(plane_wave, title='Real part')
+        
+    def create_hankel_wave(self, graph):
         plane_wave = PlaneWave('imag')
         hankel_wave = ExampleBessel(200)
-
         graph.heat_map(hankel_wave)
-        #graph.contour(plane_wave, title='Real part')
 
 
 #####################
+#   Wave super class
+        
 class Wave():
 
     def __init__(self, length, delta):
-        print("new wave created")
         self.X, self.Y = self.get_xy_series(length,delta)
+        self.name = "Default"
         #self.Z = self.create_z_series(length, delta)
-
 
     def get_xy_series(self, length, delta):
         x = np.linspace(-length, length, delta)
@@ -38,9 +41,15 @@ class Wave():
         return np.meshgrid(x, y)
 
     def create_z_series(self, length, delta):
-        print("not yet implemented in super-class")
         # put code here .... loopy stuff... infinite summmation
         return None
+
+    def set_name(self, new_name):
+        self.name = new_name
+
+        
+    def get_name(self):
+        return self.name
 
     def get_X(self):
         return self.X
@@ -52,11 +61,13 @@ class Wave():
         return self.Z
 
 #####################
-#   For every new wave function, I´ll need to create a class that contains it
+#   Concrete Wave Instantiations
+        
+    
 class PlaneWave(Wave):
     def __init__(self, type, length=10 , delta=100):
-        print("my wave created")
         super(PlaneWave, self).__init__(length, delta)
+        
         if type == 'real':
             print('nice one')
             self.Z = self.phi_real()
@@ -64,28 +75,33 @@ class PlaneWave(Wave):
             print('bad choice')
             self.Z = self.phi_imag()
 
+        print("New %s" % self.get_name())
+
     def phi(self):
         return np.exp(1j*(self.get_X() + self.get_Y()))
 
     def phi_real(self):
-        #   how can I define the title at this point?
         return (self.phi()).real
 
     def phi_imag(self):
         return (self.phi()).imag
 
+
+
 class ExampleBessel(Wave):
     def __init__(self, length=10, delta=100):
-        print('New ExampleBessel object created')
         super(ExampleBessel, self).__init__(length, delta)
         self.Z = self.phi_real()
+        
+        self.set_name("Example Bessel")
+        print("New %s" % self.get_name())
 
     def phi(self):
         return sp.hankel1(1, self.get_X()+ self.get_Y())
 
     def phi_real(self):
-        #   how can I define the title at this point?
         return (self.phi()).real
+
 #####################
 class Graphics():
     def __init__(self):
@@ -93,7 +109,7 @@ class Graphics():
 
     def contour(self, wave, title="Title", xlabel='x', ylabel='y'):
         plot = plt.contour(wave.get_Z())
-        plt.title(title)
+        plt.title(wave.get_name())
         plt.ylabel(xlabel)
         plt.xlabel(ylabel)
         plt.colorbar(plot)
@@ -101,7 +117,7 @@ class Graphics():
 
     def heat_map(self, wave, title="Title", xlabel='x', ylabel='y'):
         plot = plt.imshow(wave.get_Z())
-        plt.title(title)
+        plt.title(wave.get_name())
         plt.ylabel(xlabel)
         plt.xlabel(ylabel)
         plt.colorbar(plot)
