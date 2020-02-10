@@ -2,9 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
-import matplotlib.cm as cm
 import matplotlib.pyplot as plt
-import scipy.special as sp
 import os
 import time
 
@@ -17,19 +15,19 @@ class Main():
     def run(self):
         print("doing stuff...")
         graph = Graphics()
+        plane_wave = PlaneWave()
 
-        my_wave = MyWave(10,100)
         graph.heat_map(my_wave, title='Real part')
+        #graph.contour(plane_wave, title='Real part')
 
 
 #####################
 class Wave():
 
-    def __init__(self, length, delta, big_phi):
+    def __init__(self, length, delta):
         print("new wave created")
         self.X, self.Y = self.get_xy_series(length,delta)
-        self.Z = self.create_z_series(length, delta)
-        self.big_phi = big_phi
+        #self.Z = self.create_z_series(length, delta)
 
 
     def get_xy_series(self, length, delta):
@@ -42,9 +40,6 @@ class Wave():
         # put code here .... loopy stuff... infinite summmation
         return None
 
-    def get_big_phi:
-        return self.big_phi
-
     def get_X(self):
         return self.X
 
@@ -55,17 +50,25 @@ class Wave():
         return self.Z
 
 #####################
-class MyWave(Wave):
-
-    def __init__(self, length=10,delta=100):
+#   For every new wave function, I´ll need to create a class that contains it
+class PlaneWave(Wave):
+    def __init__(self, length=10 , delta=100):
         print("my wave created")
-        super(MyWave, self).__init__(length, delta)
-        self.Z = self.create_z_series()
+        super(PlaneWave, self).__init__(length, delta)
+        self.Z = self.phi()
 
-    def create_z_series(self):
-        return (np.exp(1j*(self.get_X() + self.get_Y()))).real
+    def phi(self):
+        '''
+        When plotting, python defaults to the real part.
+        '''
+        return np.exp(1j*(self.get_X() + self.get_Y()))
 
+    def phi_real(self):
+        #   how can I define the title at this point?
+        return (self.phi()).real
 
+    def phi_imag(self):
+        return (self.phi()).imag
 #####################
 class Graphics():
     def __init__(self):
