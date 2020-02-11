@@ -6,32 +6,35 @@ import matplotlib.pyplot as plt
 import scipy.special as sp
 import os
 import time
-
-
+#-----------------------------------------------------------------------------
+#                           main class
+#-----------------------------------------------------------------------------
 class Main():
-
     def __init__(self):
-        print("Main")
+        print("Main") #Q4N: do we need all these print commands?
 
     def run(self):
         print("doing stuff...")
         graph = Graphics()
         self.create_hankel_wave(graph)
-        #graph.contour(plane_wave, title='Real part')
-        
+        #self.create_plane_wave(graph)
+
     def create_hankel_wave(self, graph):
-        plane_wave = PlaneWave('imag')
-        hankel_wave = ExampleBessel(200)
+        hankel_wave = ExampleBessel(5)
         graph.heat_map(hankel_wave)
 
+    def create_plane_wave(self, graph):
+        plane_wave = PlaneWave('real')
+        graph.heat_map(plane_wave)
 
-#####################
-#   Wave super class
-        
+
+#-----------------------------------------------------------------------------
+#                           wave super class
+#-----------------------------------------------------------------------------
 class Wave():
-
     def __init__(self, length, delta):
-        self.X, self.Y = self.get_xy_series(length,delta)
+        self.X, self.Y = self.get_xy_series(length, delta)
+        self.length = length
         self.name = "Default"
         #self.Z = self.create_z_series(length, delta)
 
@@ -40,6 +43,14 @@ class Wave():
         y = x
         return np.meshgrid(x, y)
 
+    def get_extent(self):
+        '''
+        Returns the axis labels in the format [xmin, xmax, ymin, ymax].
+        '''
+        l = self.get_length()
+        print(l)
+        return [-l, l, -l, l]
+
     def create_z_series(self, length, delta):
         # put code here .... loopy stuff... infinite summmation
         return None
@@ -47,7 +58,6 @@ class Wave():
     def set_name(self, new_name):
         self.name = new_name
 
-        
     def get_name(self):
         return self.name
 
@@ -60,21 +70,23 @@ class Wave():
     def get_Z(self):
         return self.Z
 
-#####################
-#   Concrete Wave Instantiations
-        
-    
+    def get_length(self):
+        return self.length
+
+#-----------------------------------------------------------------------------
+#                       concrete wave instantiations
+#-----------------------------------------------------------------------------
+#------------------------------ plane wave -----------------------------------
 class PlaneWave(Wave):
     def __init__(self, type, length=10 , delta=100):
         super(PlaneWave, self).__init__(length, delta)
-        
+
         if type == 'real':
-            print('nice one')
+            self.set_name("Plane wave real part")
             self.Z = self.phi_real()
         else:
-            print('bad choice')
+            self.set_name("Plane wave imaginary part")
             self.Z = self.phi_imag()
-
         print("New %s" % self.get_name())
 
     def phi(self):
@@ -87,36 +99,38 @@ class PlaneWave(Wave):
         return (self.phi()).imag
 
 
-
+#--------------------- example bessel function wave ---------------------------
 class ExampleBessel(Wave):
     def __init__(self, length=10, delta=100):
         super(ExampleBessel, self).__init__(length, delta)
         self.Z = self.phi_real()
-        
+
         self.set_name("Example Bessel")
         print("New %s" % self.get_name())
 
     def phi(self):
-        return sp.hankel1(1, self.get_X()+ self.get_Y())
+        return sp.hankel1(0, self.get_X()*self.get_X()+ self.get_Y()*self.get_Y())
 
     def phi_real(self):
         return (self.phi()).real
 
-#####################
+#-----------------------------------------------------------------------------
+#                               graphics class
+#-----------------------------------------------------------------------------
 class Graphics():
     def __init__(self):
         print("graphics object created")
 
     def contour(self, wave, title="Title", xlabel='x', ylabel='y'):
-        plot = plt.contour(wave.get_Z())
+        plot = plt.contour(wave.get_Z(), extent=wave.get_extent())
         plt.title(wave.get_name())
-        plt.ylabel(xlabel)
-        plt.xlabel(ylabel)
+        plt.ylabel(ylabel)
+        plt.xlabel(xlabel)
         plt.colorbar(plot)
         plt.show()
 
     def heat_map(self, wave, title="Title", xlabel='x', ylabel='y'):
-        plot = plt.imshow(wave.get_Z())
+        plot = plt.imshow(wave.get_Z(), extent=wave.get_extent())
         plt.title(wave.get_name())
         plt.ylabel(xlabel)
         plt.xlabel(ylabel)
@@ -125,6 +139,7 @@ class Graphics():
 
 
 
-########### Script
-
+#-----------------------------------------------------------------------------
+#                               SCRIPT
+#-----------------------------------------------------------------------------
 Main().run()
