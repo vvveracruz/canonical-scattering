@@ -11,7 +11,7 @@ import time
 #-----------------------------------------------------------------------------
 class Main():
     def __init__(self):
-        print("Main") #Q4N: do we need all these print commands?
+        print("Main") 
 
     def run(self):
         print("doing stuff...")
