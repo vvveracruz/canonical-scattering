@@ -8,6 +8,7 @@ import os
 import time
 
 #   NOTE: please try to keep all lines under 70 characters
+#           so that it looks nice when i typeset it in latex
 
 #--------------------------------------------------------------------
 #                           main class
