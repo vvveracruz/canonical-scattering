@@ -36,6 +36,9 @@ class Main():
         incident_field = IncidentField()
         graph.heat_map(incident_field)
 
+    def create_scattered_field(self, graph):
+        scattered_field = ScatteredField()
+        graph.heat_map(scattered_field)
 
 #--------------------------------------------------------------------
 #                         wave super class
@@ -52,7 +55,7 @@ class Wave():
         y = x
         return np.meshgrid(x, y)
 
-    def time_dependence(self, t=1, omega=1):
+    def get_time_dependence(self, t, omega):
         return np.exp(-1j*omega*t)
 
     def set_name(self, new_name):
@@ -81,15 +84,17 @@ class Wave():
         return [-self.get_length(), self.get_length(),
             -self.get_length(), self.get_length()]
 #--------------------------------------------------------------------
-#                         wave super class
+#                         domain class
 #--------------------------------------------------------------------
 class Domain():
     def __init__(self):
         print('New domain created')
 
-        #------ setting defaults --------
+        #------ setting defaults -----
         self.wavevector = (1,1)
         self.truncation = 100
+        self.time_series = [1, 2, 3]
+        self.omega = 1
 
     def set_wavevector(self, x, y):
         self.wavevector = (x, y)
@@ -98,10 +103,30 @@ class Domain():
         return self.wavevector
 
     def set_truncation(self, N):
-        set.truncation = N
+        self.truncation = N
 
     def get_truncation(self):
         return self.truncation
+
+    def set_omega(self, omega):
+        self.omega = omega
+
+    def get_omega(self):
+        return self.omega
+
+    def get_time_period(self):
+        K = self.wavevector
+        k = np.sqrt(K[0]*K[0] + K[1]*K[1])
+                    #this is the wave number
+        c = 343     #c is the speed of sound in air in ms^-1
+        return (2*np.pi)/(k*c)
+
+    def set_time_series(self, delta):
+        end = self.get_time_period()
+        self.time_series = np.linspace(0, end, delta)
+
+    def get_time_series(self):
+        return self.time_series
 #--------------------------------------------------------------------
 #                       concrete wave instantiations
 #--------------------------------------------------------------------
@@ -127,18 +152,30 @@ class PlaneWave(Wave):
     def phi_imag(self):
         return (self.phi()).imag
 #-------------------------- incident field --------------------------
-class IncidentField(Wave, Domain):
+class IncidentField(Domain, Wave):
     def __init__(self, length=5, delta=100):
-        super(IncidentField, self).__init__(length, delta)
-        print('New Incident Field')
-        self.set_wavevector(-3, 1)
-        self.Z = (self.x_dependence()).real
-        self.set_name("Incident Field")
+        print('Enter IncidentField()')
 
-    def x_dependence(self):
+        Domain.__init__(self)
+        Wave.__init__(self, length, delta)
+
+        graph = Graphics()
+
+        for t in (1, 2):
+            self.Z = self.get_field(t)
+            self.set_name("Incident Field at t="+str(t))
+
+    def get_x_dependence(self):
         k = self.get_wavevector()
         print(k)
         return np.exp(-1j*(k[0]*self.get_X() + k[1]*self.get_Y()))
+
+    def get_field(self, t=2):
+        omega = self.get_omega()
+        return (self.get_x_dependence()*
+            self.get_time_dependence(t, omega)).real
+
+
 #------------------------- scattered field --------------------------
 class ScatteredField(Wave):
     def __init__(self, length=5, delta=100):
