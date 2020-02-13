@@ -42,10 +42,10 @@ class Main():
 #--------------------------------------------------------------------
 class Wave():
     def __init__(self, length, delta):
+        print('New wave created')
         self.X, self.Y = self.get_xy_series(length, delta)
         self.length = length
         self.name = "Default"
-        self.wavevector = (1,1) #default
 
     def get_xy_series(self, length, delta):
         x = np.linspace(-length, length, delta)
@@ -70,9 +70,6 @@ class Wave():
     def get_Z(self):
         return self.Z
 
-    def get_wavevector(self):
-        return self.wavevector
-
     def get_length(self):
         return self.length
 
@@ -83,7 +80,28 @@ class Wave():
         '''
         return [-self.get_length(), self.get_length(),
             -self.get_length(), self.get_length()]
+#--------------------------------------------------------------------
+#                         wave super class
+#--------------------------------------------------------------------
+class Domain():
+    def __init__(self):
+        print('New domain created')
 
+        #------ setting defaults --------
+        self.wavevector = (1,1)
+        self.truncation = 100
+
+    def set_wavevector(self, x, y):
+        self.wavevector = (x, y)
+
+    def get_wavevector(self):
+        return self.wavevector
+
+    def set_truncation(self, N):
+        set.truncation = N
+
+    def get_truncation(self):
+        return self.truncation
 #--------------------------------------------------------------------
 #                       concrete wave instantiations
 #--------------------------------------------------------------------
@@ -109,17 +127,18 @@ class PlaneWave(Wave):
     def phi_imag(self):
         return (self.phi()).imag
 #-------------------------- incident field --------------------------
-class IncidentField(Wave):
+class IncidentField(Wave, Domain):
     def __init__(self, length=5, delta=100):
         super(IncidentField, self).__init__(length, delta)
-
+        print('New Incident Field')
+        self.set_wavevector(-3, 1)
         self.Z = (self.x_dependence()).real
         self.set_name("Incident Field")
 
     def x_dependence(self):
         k = self.get_wavevector()
         print(k)
-        return np.exp(-1j*(k[0]*self.get_X + k[1]*self.get_Y))
+        return np.exp(-1j*(k[0]*self.get_X() + k[1]*self.get_Y()))
 #------------------------- scattered field --------------------------
 class ScatteredField(Wave):
     def __init__(self, length=5, delta=100):
