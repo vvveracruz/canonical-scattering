@@ -20,12 +20,16 @@ class Main():
     def run(self):
         print("doing stuff...")
         graph = Graphics()
-        #self.create_hankel_wave(graph)
+        domain = Domain()
+        domain.set_wavevector(1,2)
+        k = domain.get_wavevector()
+        print(k)
+        self.create_hankel_wave(graph)
         #self.create_plane_wave(graph)
-        self.create_incident_field(graph)
+        #self.create_incident_field(graph)
 
     def create_hankel_wave(self, graph):
-        hankel_wave = ExampleBessel(5)
+        hankel_wave = ExampleBessel(15)
         graph.heat_map(hankel_wave)
 
     def create_plane_wave(self, graph):
@@ -44,6 +48,7 @@ class Main():
 #                         wave super class
 #--------------------------------------------------------------------
 class Wave():
+
     def __init__(self, length, delta):
         print('New wave created')
         self.X, self.Y = self.get_xy_series(length, delta)
@@ -174,8 +179,6 @@ class IncidentField(Domain, Wave):
         omega = self.get_omega()
         return (self.get_x_dependence()*
             self.get_time_dependence(t, omega)).real
-
-
 #------------------------- scattered field --------------------------
 class ScatteredField(Wave):
     def __init__(self, length=5, delta=100):
@@ -186,7 +189,6 @@ class ScatteredField(Wave):
 
     def theta_dependence():
         return None
-
 #------------------ example bessel function wave --------------------
 class ExampleBessel(Wave):
     def __init__(self, length=5, delta=100):
@@ -196,12 +198,11 @@ class ExampleBessel(Wave):
         print("New %s" % self.get_name())
 
     def phi(self):
-        return sp.hankel1(0, self.get_X()*self.get_X()
+        return sp.hankel2(3, self.get_X()*self.get_X()
             + self.get_Y()*self.get_Y())
 
     def phi_real(self):
         return (self.phi()).real
-
 #−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−-
 #                        graphics class
 #--------------------------------------------------------------------
@@ -220,13 +221,10 @@ class Graphics():
     def heat_map(self, wave, title="Title", xlabel='x', ylabel='y'):
         plot = plt.imshow(wave.get_Z(), extent=wave.get_extent())
         plt.title(wave.get_name())
-        plt.ylabel(xlabel)
-        plt.xlabel(ylabel)
+        plt.ylabel(ylabel)
+        plt.xlabel(xlabel)
         plt.colorbar(plot)
         plt.show()
-
-
-
 #--------------------------------------------------------------------
 #                               SCRIPT
 #--------------------------------------------------------------------
