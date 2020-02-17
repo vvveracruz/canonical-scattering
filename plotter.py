@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import scipy.special as sp
 import os
 import time
+from bessel import *
 
 #   NOTE: please try to keep all lines under 70 characters
 #           so that it looks nice when i typeset it in latex
@@ -29,7 +30,7 @@ class Main():
         #self.create_incident_field(graph)
 
     def create_hankel_wave(self, graph):
-        hankel_wave = ExampleBessel(15)
+        hankel_wave = ExampleBessel(10)
         graph.heat_map(hankel_wave)
 
     def create_plane_wave(self, graph):
@@ -69,6 +70,7 @@ class Wave():
     def get_name(self):
         return self.name
 
+    #----- coordinate axis ------
     def get_X(self):
         return self.X
 
@@ -77,6 +79,14 @@ class Wave():
 
     def get_Z(self):
         return self.Z
+
+    def get_theta(self):
+        return np.arctan2(self.get_X() / self.get_Y())
+
+    def get_r(self):
+        return np.sqrt( self.get_X()*self.get_X()
+            + self.get_Y()*self.get_Y() )
+    #-----------------------------
 
     def get_length(self):
         return self.length
@@ -184,11 +194,27 @@ class ScatteredField(Wave):
     def __init__(self, length=5, delta=100):
         super(ScatteredField, self).__init__(length, delta)
 
-    def radial_dependence():
-        return None
+    def get_field(N):
+        '''
+        N   |   truncation number
+        '''
 
-    def theta_dependence():
-        return None
+
+
+    def get_angular_dependence(theta, N):
+        '''
+        theta   |   angular component
+        N       |   truncation number
+        '''
+        #----- Initialisation ----
+        z = 0
+
+        for n in range(N):
+            z += np.cos(n * theta) + np.sin(n * theta)
+        return z
+
+    def get_radial_dependence():
+        return 1
 #------------------ example bessel function wave --------------------
 class ExampleBessel(Wave):
     def __init__(self, length=5, delta=100):
@@ -198,8 +224,7 @@ class ExampleBessel(Wave):
         print("New %s" % self.get_name())
 
     def phi(self):
-        return sp.hankel2(3, self.get_X()*self.get_X()
-            + self.get_Y()*self.get_Y())
+        return sp.hankel1(0, self.get_r())
 
     def phi_real(self):
         return (self.phi()).real
