@@ -4,26 +4,32 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.special as sp
-import os
-import time
 import mpmath as mm
 
 
 #   NOTE: please try to keep all lines under 70 characters
 #           so that it looks nice when i typeset it in latex
 
+
+
 #--------------------------------------------------------------------
 #                           main class
 #--------------------------------------------------------------------
+
 class Main():
     def __init__(self):
-        print("Main")
+        print("Running plotter ...")
+        self.graph = Graphics()
 
     def run(self):
+
         print("doing stuff...")
         graph = Graphics()
 
         #self.create_hankel_wave(graph)
+
+        self.create_hankel_wave(self.graph)
+
         #self.create_plane_wave(graph)
         #self.create_incident_field(graph)
         self.create_scattered_field(graph)
@@ -47,10 +53,10 @@ class Main():
 #--------------------------------------------------------------------
 #                         wave super class
 #--------------------------------------------------------------------
+
 class Wave():
 
     def __init__(self, length, delta):
-        print('New wave created')
         self.X, self.Y = self.get_xy_series(length, delta)
         self.length = length
         self.name = "Default"
@@ -60,16 +66,14 @@ class Wave():
         y = x
         return np.meshgrid(x, y)
 
-    def get_time_dependence(self, t, omega):
-        return np.exp(-1j*omega*t)
-
     def set_name(self, new_name):
         self.name = new_name
 
     def get_name(self):
         return self.name
 
-    #----- coordinate axis ------
+    #              coordinate axis
+    #---------------------------------------------
     def get_X(self):
         return self.X
 
@@ -83,9 +87,7 @@ class Wave():
         return np.arctan2(self.get_X(), self.get_Y())
 
     def get_r(self):
-        return np.sqrt( self.get_X()*self.get_X()
-            + self.get_Y()*self.get_Y() )
-    #-----------------------------
+        return np.sqrt( self.get_X()*self.get_X() + self.get_Y()*self.get_Y() )
 
     def get_length(self):
         return self.length
@@ -97,54 +99,51 @@ class Wave():
         '''
         return [-self.get_length(), self.get_length(),
             -self.get_length(), self.get_length()]
-#--------------------------------------------------------------------
-#                         domain class
-#--------------------------------------------------------------------
-class Domain():
-    def __init__(self):
-        print('New domain created')
 
-        #------ setting defaults -----
-        self.wavevector = (1,1)
-        self.truncation = 100
-        self.time_series = [1, 2, 3]
-        self.omega = 1
+    #           physical constants
+    #---------------------------------------------
+    def get_speed_of_sound(self):           # speed of sound
+        return 343
 
-    def set_wavevector(self, x, y):
+    def set_wavevector(self, x, y):         # wavevector
         self.wavevector = (x, y)
 
     def get_wavevector(self):
         return self.wavevector
 
-    def set_truncation(self, N):
+    def get_wavenumber(self):
+        return np.sqrt(self.wavevector[0]*self.wavevector[0]
+            + self.wavevector[1]*self.wavevector[1])
+
+    def set_truncation(self, N):            # truncation number
         self.truncation = N
 
     def get_truncation(self):
         return self.truncation
 
-    def set_omega(self, omega):
-        self.omega = omega
+    def get_omega(self):                    # omega
+        return self.get_speed_of_sound()*self.get_wavenumber()
 
-    def get_omega(self):
-        return self.omega
-
+    #           time dependence
+    #---------------------------------------------
     def get_time_period(self):
-        K = self.wavevector
-        k = np.sqrt(K[0]*K[0] + K[1]*K[1])
-                    #this is the wave number
-        c = 343     #c is the speed of sound in air in ms^-1
-        return (2*np.pi)/(k*c)
+        return (2*np.pi) / (self.get_wavenumber()
+            * self.get_speed_of_sound())
 
     def set_time_series(self, delta):
         end = self.get_time_period()
         self.time_series = np.linspace(0, end, delta)
 
-    def get_time_series(self):
-        return self.time_series
+    def get_time_dependence(self, t):
+        return np.exp(-1j*self.get_omega()*t)
+
+
 #--------------------------------------------------------------------
 #                       concrete wave instantiations
 #--------------------------------------------------------------------
+
 #-------------------------- plane wave ------------------------------
+
 class PlaneWave(Wave):
     def __init__(self, type, length=10 , delta=100):
         super(PlaneWave, self).__init__(length, delta)
@@ -155,7 +154,6 @@ class PlaneWave(Wave):
         else:
             self.set_name("Plane wave imaginary part")
             self.Z = self.phi_imag()
-        print("New %s" % self.get_name())
 
     def phi(self):
         return np.exp(1j*(self.get_X() + self.get_Y()))
@@ -166,14 +164,11 @@ class PlaneWave(Wave):
     def phi_imag(self):
         return (self.phi()).imag
 #-------------------------- incident field --------------------------
-class IncidentField(Domain, Wave):
+
+class IncidentField( Wave):
     def __init__(self, length=5, delta=100):
         print('Enter IncidentField()')
-
-        Domain.__init__(self)
         Wave.__init__(self, length, delta)
-
-        graph = Graphics()
 
         for t in (1, 2):
             self.Z = self.get_field(t)
@@ -189,7 +184,9 @@ class IncidentField(Domain, Wave):
         return (self.get_x_dependence()*
             self.get_time_dependence(t, omega)).real
 #------------------------- scattered field --------------------------
+
 class ScatteredField(Wave):
+
     def __init__(self, length=5, delta=100):
         super(ScatteredField, self).__init__(length, delta)
         print('Scattered Field created')
@@ -198,6 +195,7 @@ class ScatteredField(Wave):
         self.wavevector = (5,2)
         self.separation_constant = -1
 
+
         self.set_name("Scattered field for N = "
             + str(self.truncation) + " and K ="
             + str(self.wavevector))
@@ -205,8 +203,15 @@ class ScatteredField(Wave):
         self.Z = self.get_field()
 
     def get_field(self):
-        z = 0
+        return None
 
+    def get_angular_dependence(theta, N):
+        '''
+        theta   |   angular component
+        N       |   truncation number
+        '''
+        #----- Initialisation ----
+        z = 0
         for n in range(self.truncation):
             z += (self.get_angular_dependence(n)
                 *self.get_radial_dependence()).real
@@ -223,42 +228,58 @@ class ScatteredField(Wave):
         k = np.sqrt(self.wavevector[0]*self.wavevector[0]
             + self.wavevector[1]*self.wavevector[1])
         return sp.hankel1(self.separation_constant, k*self.get_r())
+
+    def get_radial_dependence():
+        return 1
+
+
 #------------------ example bessel function wave --------------------
 class ExampleBessel(Wave):
     def __init__(self, length=5, delta=100):
         super(ExampleBessel, self).__init__(length, delta)
         self.Z = self.phi_real()
         self.set_name("Example Bessel")
-        print("New %s" % self.get_name())
 
     def phi(self):
         return sp.hankel1(0, self.get_r())
 
     def phi_real(self):
         return (self.phi()).real
+
 #−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−-
 #                        graphics class
 #--------------------------------------------------------------------
 class Graphics():
     def __init__(self):
-        print("graphics object created")
+        print("graphics started")
 
-    def contour(self, wave, title="Title", xlabel='x', ylabel='y'):
-        plot = plt.contour(wave.get_Z(), extent=wave.get_extent())
+    def contour(self, wave, xlabel='x', ylabel='y'):
+        #TODO (no difference from heat map)
+        return None
+
+    def heat_map(self, wave, xlabel='x', ylabel='y'):
+        self.create_generic_plot(wave)
+        self.label_generic_plot(wave, xlabel, ylabel)
+        self.draw_plot()
+
+    def create_generic_plot(self, wave):
+        return plt.imshow(wave.get_Z(), extent=wave.get_extent())
+
+    def label_generic_plot(self, wave = "title", xlabel='x', ylabel='y'):
         plt.title(wave.get_name())
         plt.ylabel(ylabel)
         plt.xlabel(xlabel)
-        plt.colorbar(plot)
+
+    def draw_plot(self):
+        plt.colorbar()
         plt.show()
 
-    def heat_map(self, wave, title="Title", xlabel='x', ylabel='y'):
-        plot = plt.imshow(wave.get_Z(), extent=wave.get_extent())
-        plt.title(wave.get_name())
-        plt.ylabel(ylabel)
-        plt.xlabel(xlabel)
-        plt.colorbar(plot)
-        plt.show()
+
 #--------------------------------------------------------------------
 #                               SCRIPT
 #--------------------------------------------------------------------
-Main().run()
+
+# Run code if compiled as python script from command line
+# Otherwise import module.
+if __name__ == '__main__':
+    Main().run()
