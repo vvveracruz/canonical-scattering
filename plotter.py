@@ -50,6 +50,7 @@ class Wave():
         #----------- defaults ------------
         self.axis_length = 5
         self.axis_delta = 100
+        self.cylinder_radius = 1
         self.name = "Default"
 
         self.X, self.Y = self.get_xy_series()
@@ -113,7 +114,7 @@ class Wave():
     def get_wavevector(self):
         return self.wavevector
 
-    def get_wavenumber(self):
+    def get_wavenumber(self):               # wavenumber
         return np.sqrt(self.wavevector[0]*self.wavevector[0]
             + self.wavevector[1]*self.wavevector[1])
 
@@ -125,6 +126,12 @@ class Wave():
 
     def get_omega(self):                    # omega
         return self.get_speed_of_sound()*self.get_wavenumber()
+
+    def set_cylinder_radius(self, r):       # cylinder radius
+        self.cylinder_radius = r
+
+    def get_cylinder_radius(self):
+        return self.cylinder_radius
 
     #           time dependence
     #---------------------------------------------
@@ -254,17 +261,16 @@ class Graphics():
         print("graphics started")
 
     def contour(self, wave, xlabel='x', ylabel='y'):
-        return None
-
-    def heat_map(self, wave, xlabel='x', ylabel='y'):
-        self.create_generic_plot(wave)
-        self.label_generic_plot(wave, xlabel, ylabel)
+        plt.contour(wave.get_Z(), extent=wave.get_extent())
+        self.label_plot(wave, xlabel, ylabel)
         self.draw_plot()
 
-    def create_generic_plot(self, wave):
-        return plt.imshow(wave.get_Z(), extent=wave.get_extent())
+    def heat_map(self, wave, xlabel='x', ylabel='y'):
+        plt.imshow(wave.get_Z(), extent=wave.get_extent())
+        self.label_plot(wave, xlabel, ylabel)
+        self.draw_plot()
 
-    def label_generic_plot(self, wave = "title", xlabel='x', ylabel='y'):
+    def label_plot(self, wave = "title", xlabel='x', ylabel='y'):
         plt.title(wave.get_name())
         plt.ylabel(ylabel)
         plt.xlabel(xlabel)
