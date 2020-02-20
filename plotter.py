@@ -6,12 +6,6 @@ import matplotlib.pyplot as plt
 import scipy.special as sp
 import mpmath as mm
 
-
-#   NOTE: please try to keep all lines under 70 characters
-#           so that it looks nice when i typeset it in latex
-
-
-
 #--------------------------------------------------------------------
 #                           main class
 #--------------------------------------------------------------------
@@ -22,17 +16,13 @@ class Main():
         self.graph = Graphics()
 
     def run(self):
-
-        print("doing stuff...")
-        graph = Graphics()
-
         #self.create_hankel_wave(graph)
 
-        self.create_hankel_wave(self.graph)
+        #self.create_hankel_wave(self.graph)
 
         #self.create_plane_wave(graph)
         #self.create_incident_field(graph)
-        self.create_scattered_field(graph)
+        self.create_scattered_field(self.graph)
 
     def create_hankel_wave(self, graph):
         hankel_wave = ExampleBessel(10)
@@ -56,13 +46,16 @@ class Main():
 
 class Wave():
 
-    def __init__(self, length, delta):
-        self.X, self.Y = self.get_xy_series(length, delta)
-        self.length = length
+    def __init__(self):
+        #----------- defaults ------------
+        self.axis_length = 5
+        self.axis_delta = 100
         self.name = "Default"
 
-    def get_xy_series(self, length, delta):
-        x = np.linspace(-length, length, delta)
+        self.X, self.Y = self.get_xy_series()
+
+    def get_xy_series(self):
+        x = np.linspace(-self.get_axis_length(), self.get_axis_length(), self.get_axis_delta())
         y = x
         return np.meshgrid(x, y)
 
@@ -89,16 +82,25 @@ class Wave():
     def get_r(self):
         return np.sqrt( self.get_X()*self.get_X() + self.get_Y()*self.get_Y() )
 
-    def get_length(self):
-        return self.length
+    def set_axis_length(self, length):
+        self.axis_length = length
+
+    def get_axis_length(self):
+        return self.axis_length
+
+    def set_axis_delta(self, delta):
+        self.axis_delta = delta
+
+    def get_axis_delta(self):
+        return self.axis_delta
 
     def get_extent(self):
         '''
         Returns the axis labels in the format
             [xmin, xmax, ymin, ymax]
         '''
-        return [-self.get_length(), self.get_length(),
-            -self.get_length(), self.get_length()]
+        return [-self.get_axis_length(), self.get_axis_length(),
+            -self.get_axis_length(), self.get_axis_length()]
 
     #           physical constants
     #---------------------------------------------
@@ -187,8 +189,8 @@ class IncidentField( Wave):
 
 class ScatteredField(Wave):
 
-    def __init__(self, length=5, delta=100):
-        super(ScatteredField, self).__init__(length, delta)
+    def __init__(self):
+        super(ScatteredField, self).__init__()
         print('Scattered Field created')
 
         self.truncation = 50
@@ -203,7 +205,7 @@ class ScatteredField(Wave):
         self.Z = self.get_field()
 
     def get_field(self):
-        return None
+        return self.get_radial_dependence().real
 
     def get_angular_dependence(theta, N):
         '''
@@ -229,8 +231,6 @@ class ScatteredField(Wave):
             + self.wavevector[1]*self.wavevector[1])
         return sp.hankel1(self.separation_constant, k*self.get_r())
 
-    def get_radial_dependence():
-        return 1
 
 
 #------------------ example bessel function wave --------------------
@@ -254,7 +254,6 @@ class Graphics():
         print("graphics started")
 
     def contour(self, wave, xlabel='x', ylabel='y'):
-        #TODO (no difference from heat map)
         return None
 
     def heat_map(self, wave, xlabel='x', ylabel='y'):
