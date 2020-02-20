@@ -6,7 +6,8 @@ import matplotlib.pyplot as plt
 import scipy.special as sp
 import os
 import time
-from bessel import *
+import mpmath as mm
+
 
 #   NOTE: please try to keep all lines under 70 characters
 #           so that it looks nice when i typeset it in latex
@@ -21,13 +22,11 @@ class Main():
     def run(self):
         print("doing stuff...")
         graph = Graphics()
-        domain = Domain()
-        domain.set_wavevector(1,2)
-        k = domain.get_wavevector()
-        print(k)
-        self.create_hankel_wave(graph)
+
+        #self.create_hankel_wave(graph)
         #self.create_plane_wave(graph)
         #self.create_incident_field(graph)
+        self.create_scattered_field(graph)
 
     def create_hankel_wave(self, graph):
         hankel_wave = ExampleBessel(10)
@@ -81,7 +80,7 @@ class Wave():
         return self.Z
 
     def get_theta(self):
-        return np.arctan2(self.get_X() / self.get_Y())
+        return np.arctan2(self.get_X(), self.get_Y())
 
     def get_r(self):
         return np.sqrt( self.get_X()*self.get_X()
@@ -193,28 +192,37 @@ class IncidentField(Domain, Wave):
 class ScatteredField(Wave):
     def __init__(self, length=5, delta=100):
         super(ScatteredField, self).__init__(length, delta)
+        print('Scattered Field created')
 
-    def get_field(N):
-        '''
-        N   |   truncation number
-        '''
+        self.truncation = 50
+        self.wavevector = (5,2)
+        self.separation_constant = -1
 
+        self.set_name("Scattered field for N = "
+            + str(self.truncation) + " and K ="
+            + str(self.wavevector))
 
+        self.Z = self.get_field()
 
-    def get_angular_dependence(theta, N):
-        '''
-        theta   |   angular component
-        N       |   truncation number
-        '''
-        #----- Initialisation ----
+    def get_field(self):
         z = 0
 
-        for n in range(N):
-            z += np.cos(n * theta) + np.sin(n * theta)
+        for n in range(self.truncation):
+            z += (self.get_angular_dependence(n)
+                *self.get_radial_dependence()).real
+
         return z
 
-    def get_radial_dependence():
-        return 1
+    def get_angular_dependence(self, n):
+        '''
+        TODO: missing A_n and B_n coeffs
+        '''
+        return np.cos(n * self.get_theta()) + np.sin(self.get_theta())
+
+    def get_radial_dependence(self):
+        k = np.sqrt(self.wavevector[0]*self.wavevector[0]
+            + self.wavevector[1]*self.wavevector[1])
+        return sp.hankel1(self.separation_constant, k*self.get_r())
 #------------------ example bessel function wave --------------------
 class ExampleBessel(Wave):
     def __init__(self, length=5, delta=100):
