@@ -1,0 +1,41 @@
+\ProvidesPackage{sty}
+%------------------------- packages ------------------------------
+\usepackage{
+    amsmath,    amssymb,    graphicx,   hyperref,
+    multicol,   dsfont,     subfiles,   apacite,
+    tikz,       listings,   amsthm,     xcolor,
+}
+%--------------------------- hyperlinks --------------------------
+\hypersetup{
+    colorlinks,
+    linkcolor = black,
+    urlcolor  = black,
+    citecolor = black,
+    anchorcolor = black
+}
+%------------------ table of contents ---------------------------
+\setcounter{tocdepth}{1}
+
+%-------------------- environments ------------------------------
+\newtheorem{thm}{Theorem}[chapter]      %   theorem
+\newtheorem{defn}[thm]{Definition}      %   definition
+\newtheorem{propn}[thm]{Proposition}    %   proposition
+\newtheorem{hypothesis}[thm]{Hypothesis}%   hypothesis
+\newtheorem{law}[thm]{Law}              %   law
+
+%----------------------- latex commands --------------------------
+\newcommand{\ssref}[1]{$\S$\ref{#1}}    %   reference section
+\newcommand{\figref}[1]{Fig \ref{#1}}   %   reference figure
+
+%------------------ shorthand commands ---------------------------
+\newcommand{\Phisc}{\Phi_{\text{sc}}}   %   scattered field
+\newcommand{\Phiin}{\Phi_{\text{in}}}   %   incident field
+\newcommand{\Phitot}{\Phi_{\text{tot}}} %   total field 
+
+%----------------- maths notation commands -----------------------
+\renewcommand{\Re}{\text{Re}}           %   Re	
+\renewcommand{\Im}{\text{Im}}	        %   Im
+\renewcommand{\vec}[1]{\mathbf{#1}}	    %   bold vectors
+\newcommand{\bb}[1]{\mathbb{#1}}        %   R, C, Q... sets
+\newcommand{\partialfrac}[2]            %   partial derivs
+    {\frac{\partial #1}{\partial #2}}
