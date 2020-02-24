@@ -1,0 +1,120 @@
+\begin{thebibliography}{}
+
+\bibitem [\protect \citeauthoryear {%
+Korenev%
+}{%
+Korenev%
+}{%
+{\protect \APACyear {2002}}%
+}]{%
+korenev02bessel_func}
+\APACinsertmetastar {%
+korenev02bessel_func}%
+\begin{APACrefauthors}%
+Korenev, B\BPBI G.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYear{2002}.
+\newblock
+\APACrefbtitle {Bessel functions and their applications} {Bessel functions and
+  their applications}.
+\newblock
+\APACaddressPublisher{London}{Taylor \& Francis}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Martin%
+}{%
+Martin%
+}{%
+{\protect \APACyear {2006}}%
+}]{%
+martin06scattering}
+\APACinsertmetastar {%
+martin06scattering}%
+\begin{APACrefauthors}%
+Martin, P\BPBI A.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYear{2006}.
+\newblock
+\APACrefbtitle {Multiple scattering: interaction of time-harmonic waves with N
+  obstacles} {Multiple scattering: interaction of time-harmonic waves with n
+  obstacles}.
+\newblock
+\APACaddressPublisher{Cambridge}{Cambridge University Press}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Pierce%
+}{%
+Pierce%
+}{%
+{\protect \APACyear {2019}}%
+}]{%
+pierce19acoustics}
+\APACinsertmetastar {%
+pierce19acoustics}%
+\begin{APACrefauthors}%
+Pierce, A\BPBI D.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYear{2019}.
+\newblock
+\APACrefbtitle {Acoustics: an introduction to its physical principles and
+  applications} {Acoustics: an introduction to its physical principles and
+  applications}\ (\PrintOrdinal{3rd}\ \BEd).
+\newblock
+\APACaddressPublisher{Cham, Switzerland}{Springer}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Shames%
+}{%
+Shames%
+}{%
+{\protect \APACyear {2002}}%
+}]{%
+shames02mechanics}
+\APACinsertmetastar {%
+shames02mechanics}%
+\begin{APACrefauthors}%
+Shames, I\BPBI H.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYear{2002}.
+\newblock
+\APACrefbtitle {Mechanics of fluids} {Mechanics of fluids}\
+  (\PrintOrdinal{4th}\ \BEd).
+\newblock
+\APACaddressPublisher{New York}{McGraw-Hill}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Shaughnessy%
+}{%
+Shaughnessy%
+}{%
+{\protect \APACyear {2005}}%
+}]{%
+shaughnessy05fluids}
+\APACinsertmetastar {%
+shaughnessy05fluids}%
+\begin{APACrefauthors}%
+Shaughnessy, E\BPBI J\BPBI e\BPBI a.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYear{2005}.
+\newblock
+\APACrefbtitle {Introduction to fluid mechanics} {Introduction to fluid
+  mechanics}.
+\newblock
+\APACaddressPublisher{New York}{Oxford University Press}.
+\PrintBackRefs{\CurrentBib}
+
+\end{thebibliography}
