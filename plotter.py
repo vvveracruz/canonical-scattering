@@ -16,7 +16,7 @@ class Main():
         self.graph = Graphics()
 
     def run(self):
-        #self.create_hankel_wave(graph)
+        #self.create_example_bessel(self.graph)
 
         #self.create_hankel_wave(self.graph)
 
@@ -24,9 +24,9 @@ class Main():
         #self.create_incident_field(graph)
         self.create_scattered_field(self.graph)
 
-    def create_hankel_wave(self, graph):
-        hankel_wave = ExampleBessel(10)
-        graph.heat_map(hankel_wave)
+    def create_example_bessel(self, graph):
+        wave = ExampleBessel()
+        graph.heat_map(wave)
 
     def create_plane_wave(self, graph):
         plane_wave = PlaneWave('real')
@@ -195,13 +195,13 @@ class IncidentField( Wave):
 #------------------------- scattered field --------------------------
 
 class ScatteredField(Wave):
-
     def __init__(self):
         super(ScatteredField, self).__init__()
         print('Scattered Field created')
 
-        self.truncation = 50
-        self.wavevector = (5,2)
+        #------ setting physical constants ------
+        self.set_truncation(100)
+        self.set_wavevector(1,10)
         self.separation_constant = -1
 
 
@@ -234,21 +234,20 @@ class ScatteredField(Wave):
         return np.cos(n * self.get_theta()) + np.sin(self.get_theta())
 
     def get_radial_dependence(self):
-        k = np.sqrt(self.wavevector[0]*self.wavevector[0]
-            + self.wavevector[1]*self.wavevector[1])
-        return sp.hankel1(self.separation_constant, k*self.get_r())
+        return sp.hankel1(self.separation_constant, self.get_wavenumber()*self.get_r())
 
 
 
 #------------------ example bessel function wave --------------------
 class ExampleBessel(Wave):
-    def __init__(self, length=5, delta=100):
-        super(ExampleBessel, self).__init__(length, delta)
+    def __init__(self):
+        super(ExampleBessel, self).__init__()
         self.Z = self.phi_real()
         self.set_name("Example Bessel")
+        self.set_axis_length(10)
 
     def phi(self):
-        return sp.hankel1(0, self.get_r())
+        return sp.jv(0, self.get_r())
 
     def phi_real(self):
         return (self.phi()).real
