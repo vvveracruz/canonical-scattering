@@ -101,7 +101,7 @@ First let us consider $\Phiin$, the incident field. We choose Cartesian coordina
 %
     \begin{propn}\label{propn:ch2_inc_field_infty_sum}
     The incident field can be expressed as an infinite sum as follows.
-        \begin{equation*}
+        \begin{equation*}\label{eq:ch2_inc_field_infty_sum}
             \Phiin = \sum^{\infty}_{n=0} \epsilon_n i^n J_n(kr) \cos (n(\theta - \alpha))
         \end{equation*}
     \end{propn}
@@ -305,13 +305,65 @@ From now on we refer to $H^{(1)}_\nu$ as $H_\nu$ for simplicity.
 \subsection{General solution}
 We can now combine our solutions for $\Theta$ and $R$ to find an expression for $\Phisc$.
 %
-    \begin{propn} The general solution for scattered field can be expressed as follows.
-        \begin{equation*}
-            \Phisc = \sum^\infty_{n=-\infty} C_n H_n^{(1)}(kr)e^{in\theta}
-        \end{equation*}
+    \begin{propn}
+      The general solution for scattered field can be expressed as follows.
+        \begin{equation} \label{eq:ch2_gen_eq_scattered_field}
+            \Phisc = \sum^\infty_{n=-\infty} \epsilon_n i^n B_n H_n(kr) \cos(n(\theta-\alpha))
+        \end{equation}
     \end{propn}
-    \begin{proof} TBD.
+    \begin{proof} TBD. Need to show that:
+      \[
+      \Phisc = \sum^\infty_{n=-\infty} C_n H_n(kr) \cos(n(\theta-\alpha))
+      \]
+      with, $C_n = \epsilon_n i^n B_n$.
     \end{proof}
+%----------------------------------------------------------------
+%               Neumann boundary condition
+%----------------------------------------------------------------
+\subsection{Neumann boundary condition}\label{ss:ch2_neumann_bcs}
+We first cosider the boundary at the cylinder wall to satisfy a Neumann boundary condition.
+  \begin{defn}
+    \cite[$\S$1.3.2]{martin06scattering} A boundary is sound-hard if
+      \begin{align*}
+        \partialfrac{u}{r} = 0 \text{,  on } r = \sigma.
+      \end{align*}
+  \end{defn} \par
+%
+Equivalently, we can express this boundary condition in terms of $\Phi$:
+  \begin{align*}
+    \partialfrac{\Phi}{r}=0 \text{,  on } r = \sigma.
+  \end{align*} \par
+%
+We can now apply this to find an expression for the constant terms in \eqref{eq:ch2_gen_eq_scattered_field}. Differentiating this equation gives
+  \begin{equation}
+    \sum^\infty_{n=0} \epsilon_n k i^n
+    \{ J'_n(kr) + B_n H'_n(kr) \} \cos(n(\theta-\alpha)) = 0
+  \end{equation}
+Since $\cos(n(\theta - \alpha)) \neq 0 ~ \forall n, \theta$, it must be that the expression inside the braces must be zero for each $n$ at the boundary $r=\sigma$. Hence, we get an expression for $B_n$:
+  \begin{equation}
+    B_n= \frac{J'_n(k\sigma)}{H'_n(k\sigma)}.
+  \end{equation}
+%----------------------------------------------------------------
+%               Dirichlet boundary condition
+%----------------------------------------------------------------
+\subsection{Dirichlet boundary condition}\label{ss:ch2_dirichlet_bcs}
+We now consider the Dirichlet boundary condition.
+  \begin{defn}
+    \cite[$\S$1.3.2]{martin06scattering} A body is sound-soft if
+      \[
+      u = 0 \text{,  on } r = \sigma
+      \]
+  \end{defn}
+Hence, $\Phi_{sc} = - \Phi_{in}$ on $r=\sigma$,
+  \begin{align*}
+    \sum^\infty_{n=0} \epsilon_n i^n B_n H_n(kr) \cos(n((\theta-\alpha)))
+    & = - \sum^\infty_{n=0} \epsilon_n i^n J_n(kr) \cos(n((\theta-\alpha))) \\
+    \text{hence for all } n,~ B_n H_n (k\sigma) &= - J_n (k\sigma) \\
+  \end{align*}
+Hence the Dirichlet boundary condition specifies $B_n$ as follows.
+  \begin{equation}
+    B_n = \frac{- J_n(k\sigma)}{H_n(k\sigma)}
+  \end{equation}
 %----------------------------------------------------------------
 %               TOTAL FIELD
 %----------------------------------------------------------------
@@ -321,5 +373,8 @@ Throughout this chapter we have been searching for an expression for the resulta
     \begin{propn}
         \begin{equation*}
             \Phitot =
+            \sum^\infty_{n=0} \epsilon_n i^n \cos(n(\theta-\alpha))
+             \{B_n H_n(kr) + J_n(kr)\}
         \end{equation*}
+      where $B_n$ is specified by the boundary conditions outlined in \ssref{ss:ch2_dirichlet_bcs} and \ssref{ss:ch2_neumann_bcs}.
     \end{propn}
