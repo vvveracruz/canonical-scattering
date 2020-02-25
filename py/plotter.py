@@ -5,6 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy.special as sp
 import mpmath as mm
+from fields import *
 
 #--------------------------------------------------------------------
 #                           main class
@@ -16,13 +17,18 @@ class Main():
         self.graph = Graphics()
 
     def run(self):
-        #self.create_example_bessel(self.graph)
+
+        self.create_field_around_cylinder(self.graph)
 
         #self.create_hankel_wave(self.graph)
 
         #self.create_plane_wave(graph)
         #self.create_incident_field(graph)
-        self.create_scattered_field(self.graph)
+        #self.create_scattered_field(self.graph)
+
+    def create_field_around_cylinder(self, graph):
+        field = CylinderField()
+        graph.heat_map(field)
 
     def create_example_bessel(self, graph):
         wave = ExampleBessel()
@@ -43,7 +49,6 @@ class Main():
 #--------------------------------------------------------------------
 #                         wave super class
 #--------------------------------------------------------------------
-
 class Wave():
 
     def __init__(self):
@@ -56,7 +61,8 @@ class Wave():
         self.X, self.Y = self.get_xy_series()
 
     def get_xy_series(self):
-        x = np.linspace(-self.get_axis_length(), self.get_axis_length(), self.get_axis_delta())
+        x = np.linspace(-self.get_axis_length(),
+            self.get_axis_length(), self.get_axis_delta())
         y = x
         return np.meshgrid(x, y)
 
@@ -81,7 +87,8 @@ class Wave():
         return np.arctan2(self.get_X(), self.get_Y())
 
     def get_r(self):
-        return np.sqrt( self.get_X()*self.get_X() + self.get_Y()*self.get_Y() )
+        return np.sqrt( self.get_X()*self.get_X()
+            + self.get_Y()*self.get_Y() )
 
     def set_axis_length(self, length):
         self.axis_length = length
@@ -118,6 +125,9 @@ class Wave():
         return np.sqrt(self.wavevector[0]*self.wavevector[0]
             + self.wavevector[1]*self.wavevector[1])
 
+    def get_incident_angle(self):
+        return np.arctan2(self.wavevector[0], self.wavevector[1])
+
     def set_truncation(self, N):            # truncation number
         self.truncation = N
 
@@ -133,6 +143,18 @@ class Wave():
     def get_cylinder_radius(self):
         return self.cylinder_radius
 
+
+    #           math functs
+    #---------------------------------------------
+    def get_neumann_factor(self, n):
+        '''Returns the neumann factor for a given n.'''
+        if n==0:
+            return 1
+        elif n > 0:
+            return 1
+        else:
+            print('🙀 ERROR: Invalid n for Neumann factor')
+
     #           time dependence
     #---------------------------------------------
     def get_time_period(self):
@@ -147,110 +169,6 @@ class Wave():
         return np.exp(-1j*self.get_omega()*t)
 
 
-#--------------------------------------------------------------------
-#                       concrete wave instantiations
-#--------------------------------------------------------------------
-
-#-------------------------- plane wave ------------------------------
-
-class PlaneWave(Wave):
-    def __init__(self, type, length=10 , delta=100):
-        super(PlaneWave, self).__init__(length, delta)
-
-        if type == 'real':
-            self.set_name("Plane wave real part")
-            self.Z = self.phi_real()
-        else:
-            self.set_name("Plane wave imaginary part")
-            self.Z = self.phi_imag()
-
-    def phi(self):
-        return np.exp(1j*(self.get_X() + self.get_Y()))
-
-    def phi_real(self):
-        return (self.phi()).real
-
-    def phi_imag(self):
-        return (self.phi()).imag
-#-------------------------- incident field --------------------------
-
-class IncidentField( Wave):
-    def __init__(self, length=5, delta=100):
-        print('Enter IncidentField()')
-        Wave.__init__(self, length, delta)
-
-        for t in (1, 2):
-            self.Z = self.get_field(t)
-            self.set_name("Incident Field at t="+str(t))
-
-    def get_x_dependence(self):
-        k = self.get_wavevector()
-        print(k)
-        return np.exp(-1j*(k[0]*self.get_X() + k[1]*self.get_Y()))
-
-    def get_field(self, t=2):
-        omega = self.get_omega()
-        return (self.get_x_dependence()*
-            self.get_time_dependence(t, omega)).real
-#------------------------- scattered field --------------------------
-
-class ScatteredField(Wave):
-    def __init__(self):
-        super(ScatteredField, self).__init__()
-        print('Scattered Field created')
-
-        #------ setting physical constants ------
-        self.set_truncation(100)
-        self.set_wavevector(1,10)
-        self.separation_constant = -1
-
-
-        self.set_name("Scattered field for N = "
-            + str(self.truncation) + " and K ="
-            + str(self.wavevector))
-
-        self.Z = self.get_field()
-
-    def get_field(self):
-        return self.get_radial_dependence().real
-
-    def get_angular_dependence(theta, N):
-        '''
-        theta   |   angular component
-        N       |   truncation number
-        '''
-        #----- Initialisation ----
-        z = 0
-        for n in range(self.truncation):
-            z += (self.get_angular_dependence(n)
-                *self.get_radial_dependence()).real
-
-        return z
-
-    def get_angular_dependence(self, n):
-        '''
-        TODO: missing A_n and B_n coeffs
-        '''
-        return np.cos(n * self.get_theta()) + np.sin(self.get_theta())
-
-    def get_radial_dependence(self):
-        return sp.hankel1(self.separation_constant, self.get_wavenumber()*self.get_r())
-
-
-
-#------------------ example bessel function wave --------------------
-class ExampleBessel(Wave):
-    def __init__(self):
-        super(ExampleBessel, self).__init__()
-        self.Z = self.phi_real()
-        self.set_name("Example Bessel")
-        self.set_axis_length(10)
-
-    def phi(self):
-        return sp.jv(0, self.get_r())
-
-    def phi_real(self):
-        return (self.phi()).real
 
 #−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−-
 #                        graphics class
