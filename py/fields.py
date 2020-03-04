@@ -6,19 +6,25 @@ from plotter import *
 class CylinderField(Wave):
     #THIS ISNT WORKING YET
     def __init__(self):
-        super(CylinderField, self).__init__()
         print('Initialising CylinderField')
 
-        #------ setting physical constants ------
-        self.set_truncation(100)
-        self.set_wavevector(-1,-2)
-        self.set_cylinder_radius(1)
+        self.set_parameters()
 
         self.set_name("Scattered field for N = "
             + str(self.truncation) + " and K ="
             + str(self.wavevector))
 
+        super(CylinderField, self).__init__()
+            #this needs to go after set_parameters()
+
         self.Z = self.get_z_series()
+
+    def set_parameters(self):
+        self.set_truncation(4)
+        self.set_wavevector(-1,-2)
+        self.set_cylinder_radius(1)
+        self.set_axis_length(15)
+        self.set_axis_delta(70)
 
     def get_z_series(self):
         return self.get_sum(self.get_r(), self.get_theta())
@@ -35,18 +41,18 @@ class CylinderField(Wave):
         if type == 'neumann':
             return self.get_neumann_factor(n) * np.power(1j,n)
         elif type == 'dirichlet':
-            return
+            return self.get_neumann_factor(n) * np.power(1j,n) * self.get_dirichlet_bc(n)
         else:
-            print('🚩 ERROR: Invalid type in CylinderField().get_constants()')
+            print('🚩 ERROR: Invalid type in CylinderField().get_constant_term()')
 
     def get_angular_term(self, n, theta):
         return np.cos(n * (theta - self.get_incident_angle()))
 
     def get_radial_term(self, n, r):
-        return sp.hankel1(n, self.get_wavenumber() * r)
+        return self.get_neumann_bc(n) * ( sp.hankel1(n, self.get_wavenumber() * r) + sp.jv(n, self.get_wavenumber() * r))
 
     def get_neumann_bc(self, n):
-        return n
+        return sp.jvp(n, self.get_wavenumber() * self.get_cylinder_radius()) / sp.h1vp(n, self.get_wavenumber() * self.get_cylinder_radius())
 
     def get_dirichlet_bc(self, n):
         return None

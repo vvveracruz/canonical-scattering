@@ -53,18 +53,12 @@ class Wave():
 
     def __init__(self):
         #----------- defaults ------------
-        self.axis_length = 5
-        self.axis_delta = 100
-        self.cylinder_radius = 1
-        self.name = "Default"
+        #self.axis_length = 5
+        #self.axis_delta = 100
+        #self.cylinder_radius = 1
+        #self.name = "Default"
 
         self.X, self.Y = self.get_xy_series()
-
-    def get_xy_series(self):
-        x = np.linspace(-self.get_axis_length(),
-            self.get_axis_length(), self.get_axis_delta())
-        y = x
-        return np.meshgrid(x, y)
 
     def set_name(self, new_name):
         self.name = new_name
@@ -110,6 +104,12 @@ class Wave():
         return [-self.get_axis_length(), self.get_axis_length(),
             -self.get_axis_length(), self.get_axis_length()]
 
+    def get_xy_series(self):
+        x = np.linspace(-self.get_axis_length(),
+            self.get_axis_length(), self.get_axis_delta())
+        y = x
+        return np.meshgrid(x, y)
+
     #           physical constants
     #---------------------------------------------
     def get_speed_of_sound(self):           # speed of sound
@@ -151,7 +151,7 @@ class Wave():
         if n==0:
             return 1
         elif n > 0:
-            return 1
+            return 2
         else:
             print('🙀 ERROR: Invalid n for Neumann factor')
 
