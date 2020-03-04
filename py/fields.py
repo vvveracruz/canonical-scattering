@@ -4,9 +4,8 @@
 from plotter import *
 
 class CylinderField(Wave):
-    #THIS ISNT WORKING YET
     def __init__(self):
-        print('Initialising CylinderField')
+        print('CylinderField() started...')
 
         self.set_parameters()
 
@@ -22,7 +21,7 @@ class CylinderField(Wave):
     def set_parameters(self):
         self.set_truncation(4)
         self.set_wavevector(-1,-2)
-        self.set_cylinder_radius(1)
+        self.set_cylinder_radius(5)
         self.set_axis_length(15)
         self.set_axis_delta(70)
 
