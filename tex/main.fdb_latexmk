@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex main"] 1582629343 "main.aux" "main.bbl" "main" 1582629963
+["bibtex main"] 1582629343 "main.aux" "main.bbl" "main" 1584091421
   "/usr/local/texlive/2016/texmf-dist/bibtex/bst/apacite/apacite.bst" 1374530685 141073 9d7b79dbf9d91133318126032cff8c27 ""
-  "main.aux" 1582629962 8905 39cc772648a8c047bbf4f5e4dac11aff ""
+  "main.aux" 1584091154 8905 39cc772648a8c047bbf4f5e4dac11aff ""
   "main.bcf" 0 -1 0 ""
   "references.bib" 1582554654 2052 a92d04755068c74bc095fbc250c7644a ""
   (generated)
   "main.blg"
   "main.bbl"
-["pdflatex"] 1582629961 "main.tex" "main.pdf" "main" 1582629963
+["pdflatex"] 1584091152 "main.tex" "main.pdf" "main" 1584091421
   "/usr/local/texlive/2016/texmf-dist/fonts/map/fontname/texfonts.map" 1272929888 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/local/texlive/2016/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2016/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1246382020 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -171,18 +171,18 @@
   "front/abstract.tex" 1582554654 904 639f9a72de34641dbd3c181cc7970ced ""
   "front/contents.tex" 1582554654 16 f84fe46f1a4fbd3ea00e9cc12e2be653 ""
   "front/titlepage.tex" 1582554654 414 588b8374e228d71a4fd252c6d45e25ca ""
-  "main.aux" 1582629962 8905 39cc772648a8c047bbf4f5e4dac11aff ""
+  "main.aux" 1584091154 8905 39cc772648a8c047bbf4f5e4dac11aff ""
   "main.bbl" 1582629344 2558 55889dcda57f767218d0bffb2954f696 "bibtex main"
-  "main.out" 1582629962 996 7dec61f08fef782d1944fa15c6f3b38a ""
-  "main.tex" 1582555856 1086 ed852c303ff3f4901fb5c90840518237 ""
-  "main.toc" 1582629962 2138 33834a39f8cb1c4860155286c33a10b3 ""
+  "main.out" 1584091154 996 7dec61f08fef782d1944fa15c6f3b38a ""
+  "main.tex" 1583488231 1086 ed852c303ff3f4901fb5c90840518237 ""
+  "main.toc" 1584091154 2138 33834a39f8cb1c4860155286c33a10b3 ""
   "prob1/prob1_figures/sk_problem_1.png" 1582554654 51804 ce910b4509f55f584b7f303ab6ed57a2 ""
-  "prob1/prob1_main.tex" 1582629961 17255 400ad214550b1487c918332ae3de9f2a ""
-  "sty.sty" 1582554654 1675 57f9f2a45d29a4f6cdb3a1d5b6921eb8 ""
-  "tool/tool_main.tex" 1582554654 86 3bf4c617c6feb19527d1a25894c681c6 ""
+  "prob1/prob1_main.tex" 1584091421 17255 400ad214550b1487c918332ae3de9f2a ""
+  "sty.sty" 1584091128 1673 41154a1bef5c952a9572ac08476a7167 ""
+  "tool/tool_main.tex" 1584091152 95 7608e634fdaac75f41468657998c9582 ""
   (generated)
-  "main.toc"
   "main.aux"
-  "main.pdf"
-  "main.out"
   "main.log"
+  "main.toc"
+  "main.out"
+  "main.pdf"
