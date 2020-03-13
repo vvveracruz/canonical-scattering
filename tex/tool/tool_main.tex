@@ -1,1 +1,91 @@
-Access the repo on Bitbucket \href{https://bitbucket.org/veracruz/canonical_scattering}{here}.
+%================================================================
+%                           N O T E S
+%                           ---------
+%
+%                           ---------
+%-----------------------------------------------------------------
+%                       INTRODUCTION
+%-----------------------------------------------------------------
+\section{Introduction}
+%
+The goal of this tool was to plot the scattered field. I took Prof. Guettel's Introduction to Python in 2nd Year and was interested in learning more about using the language. \par
+%
+I started off with a text file on my laptop but quickly realised I would benefit from version controlling it, so I created a repository on Bitbucket. You can access it \href{https://bitbucket.org/veracruz/canonical_scattering}{here}. It also helped me version control this document, since it became quite complex quickly. \par
+%
+In Prof. Guettel's introduction to Python we exclusively used functions to build a game of Othello that ran in the command line. This is very different to what I have done here, where I would need the programme to output the file of the plotted field. Additionally, this tool became many orders of magnitude more complex because of the nature of the problem and I thought it appropriate to employ an object oriented approach.\par
+%
+TODO: I need to credit Nathan but I'm not sure how to go about it.\par
+%
+I used four different libraries for this project, namely \verb!numpy!, \verb!matplotlib.pyplot!, \verb!scipy.special! and \verb!mpmath!.
+%
+%-----------------------------------------------------------------
+%                       THE SET UP
+%-----------------------------------------------------------------
+\section{Approach}
+%
+My tool is set up in two files: \verb!plotter.py! and \verb!fields.py!. These can be found in the Bitbucket repository above. \par
+%
+The \verb!plotter.py! file holds three classes: \verb!Main()!, \verb!Wave()! and \verb!Graphics()!. The \verb!fields.py! file holds subclasses which are instantiations of the \verb!Wave()! class, the most important of which is \verb!CylinderField(Wave)!, which provides the fields calculated in Chapter 2.\par
+%
+Within the \verb!Main()! class I defined the \verb!run()! class, which runs the tool when it is compiled as a python script from the command line. I also define different functions for different fields I want to plot in this class, so that it is easy to call them. For example, for the cylinder scattering problem I call
+%
+  \begin{lstlisting}
+self.create_field_around_cylinder(self.graph) \end{lstlisting}
+%
+where I have defined
+%
+  \begin{lstlisting}
+def create_field_around_cylinder(self, graph):
+    field = CylinderField()
+    graph.heat_map(field) \end{lstlisting}
+%
+and \verb!self.graph = Graphics()! was set within the \verb!__init__! constructor method.
+%
+%-----------------------------------------------------------------
+%                      Graphics() class
+%-----------------------------------------------------------------
+\subsection{The \texttt{Graphics()} class}
+%
+The \verb!Graphics()! class is equipped with two different types of plots: \verb!heat_map()! and \verb!contour()!. Both of these are constructed in the same way:
+%
+  \begin{lstlisting}
+def contour(self, wave, xlabel='x', ylabel='y'):
+    plt.contour(wave.get_Z(), extent=wave.get_extent())
+    self.label_plot(wave, xlabel, ylabel)
+    self.draw_plot() \end{lstlisting}
+%
+where \verb!contour! is replaced by \verb!imshow! for the heat map. \par
+%
+Here the specific wave instantiation, \verb!wave!, is fed through to the \verb!contour()! function in \verb!matplotlib.pyplot! which returns the set of contour lines for the heights given by \verb!wave.get_Z()!. I then add labels to my plot, and the \verb!draw_plot()! function draws it. \par
+%
+The \verb!label_plot()! function looks for the title I have set for my wave instantiation using the \verb!wave().get_name()! function, along with labels for the axes. \par
+%
+The plotting function brings it all together
+%
+  \begin{lstlisting}
+def draw_plot(self, wave):
+    self.draw_disk_overlay(wave)
+    plt.colorbar()
+    plt.show()\end{lstlisting}
+%
+where the \verb!draw_disk_overlay()! function creates a solid disk in the plot to block out the area where the field should not be calculated inside the cylinder. The size of this disk is pulled from the specific wave instantiation using \verb!get_cylinder_radius()! and plotted with \verb!pyplot!.
+%
+\begin{lstlisting}
+def draw_disk_overlay(self, wave):
+    r = wave.get_cylinder_radius()
+    plt.gca().add_patch(plt.Circle((0,0),r, fc='#36859F'))
+\end{lstlisting}
+
+
+
+%-----------------------------------------------------------------
+%                      Wave() class
+%-----------------------------------------------------------------
+\subsection{The \texttt{Wave()} class}
+\subsection{Particular \texttt{Wave()} instantiations}
+
+
+%-----------------------------------------------------------------
+%                       Code
+%-----------------------------------------------------------------
+%\input{tool/in_plotter}
