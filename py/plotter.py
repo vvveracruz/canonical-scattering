@@ -61,14 +61,15 @@ class Wave():
 
         self.X, self.Y = self.get_xy_series()
 
+    #              plot information
+    #---------------------------------------------
+
     def set_name(self, new_name):
         self.name = new_name
 
     def get_name(self):
         return self.name
 
-    #              coordinate axis
-    #---------------------------------------------
     def get_X(self):
         return self.X
 
