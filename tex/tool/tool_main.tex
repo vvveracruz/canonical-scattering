@@ -25,9 +25,9 @@ I used four different libraries for this project, namely \verb!numpy!, \verb!mat
 %
 My tool is set up in two files: \verb!plotter.py! and \verb!fields.py!. These can be found in the Bitbucket repository above. \par
 %
-The \verb!plotter.py! file holds three classes: \verb!Main()!, \verb!Wave()! and \verb!Graphics()!. The \verb!fields.py! file holds subclasses which are instantiations of the \verb!Wave()! class, the most important of which is \verb!CylinderField(Wave)!, which provides the fields calculated in Chapter 2.\par
+The \verb!plotter.py! file holds three classes: \verb!Main!, \verb!Wave! and \verb!Graphics!. The \verb!fields.py! file holds subclasses which are instantiations of the \verb!Wave! class, the most important of which is \verb!CylinderField(Wave)!, which provides the fields calculated in Chapter 2.\par
 %
-Within the \verb!Main()! class I defined the \verb!run()! class, which runs the tool when it is compiled as a python script from the command line. I also define different functions for different fields I want to plot in this class, so that it is easy to call them. For example, for the cylinder scattering problem I call
+Within the \verb!Main! class I defined the \verb!run! class, which runs the tool when it is compiled as a python script from the command line. I also define different functions for different fields I want to plot in this class, so that it is easy to call them. For example, for the cylinder scattering problem I call
 %
   \begin{lstlisting}
 self.create_field_around_cylinder(self.graph) \end{lstlisting}
@@ -39,16 +39,16 @@ def create_field_around_cylinder(self, graph):
     field = CylinderField()
     graph.heat_map(field) \end{lstlisting}
 %
-and \verb!self.graph = Graphics()! was set within the \verb!__init__! constructor method.
+and \verb!self.graph = Graphics! was set within the \verb!__init__! constructor method.
 %
 %-----------------------------------------------------------------
-%                      Graphics() class
+%                      Graphics class
 %-----------------------------------------------------------------
-\subsection{The \texttt{Graphics()} class}
+\subsection{The \texttt{Graphics} class}
 %
-The \verb!Graphics()! class is equipped with two different types of plots: \verb!heat_map()! and \verb!contour()!. Both of these are constructed in the same way:
+The \verb!Graphics! class is equipped with two different types of plots: \verb!heat_map! and \verb!contour!. Both of these are constructed in the same way:
 %
-  \begin{lstlisting}
+  \begin{lstlisting}[caption={},label={lst:contour}]
 def contour(self, wave, xlabel='x', ylabel='y'):
     plt.contour(wave.get_Z(), extent=wave.get_extent())
     self.label_plot(wave, xlabel, ylabel)
@@ -56,9 +56,9 @@ def contour(self, wave, xlabel='x', ylabel='y'):
 %
 where \verb!contour! is replaced by \verb!imshow! for the heat map. \par
 %
-Here the specific wave instantiation, \verb!wave!, is fed through to the \verb!contour()! function in \verb!matplotlib.pyplot! which returns the set of contour lines for the heights given by \verb!wave.get_Z()!. I then add labels to my plot, and the \verb!draw_plot()! function draws it. \par
+Here the specific wave instantiation, \verb!wave!, is fed through to the \verb!contour! function in \verb!matplotlib.pyplot! which returns the set of contour lines for the heights given by \verb!wave.get_Z!. I then add labels to my plot, and the \verb!draw_plot! function draws it. \par
 %
-The \verb!label_plot()! function looks for the title I have set for my wave instantiation using the \verb!wave().get_name()! function, along with labels for the axes. \par
+The \verb!label_plot! function looks for the title I have set for my wave instantiation using the \verb!wave.get_name! function, along with labels for the axes. \par
 %
 The plotting function brings it all together
 %
@@ -68,24 +68,153 @@ def draw_plot(self, wave):
     plt.colorbar()
     plt.show()\end{lstlisting}
 %
-where the \verb!draw_disk_overlay()! function creates a solid disk in the plot to block out the area where the field should not be calculated inside the cylinder. The size of this disk is pulled from the specific wave instantiation using \verb!get_cylinder_radius()! and plotted with \verb!pyplot!.
+where the \verb!draw_disk_overlay! function creates a solid disk in the plot to block out the area where the field should not be calculated inside the cylinder. The size of this disk is pulled from the specific wave instantiation using \verb!get_cylinder_radius! and plotted with \verb!pyplot!.
 %
 \begin{lstlisting}
 def draw_disk_overlay(self, wave):
     r = wave.get_cylinder_radius()
     plt.gca().add_patch(plt.Circle((0,0),r, fc='#36859F'))
 \end{lstlisting}
-
-
-
+%
 %-----------------------------------------------------------------
 %                      Wave() class
 %-----------------------------------------------------------------
-\subsection{The \texttt{Wave()} class}
-\subsection{Particular \texttt{Wave()} instantiations}
+\subsection{The \texttt{Wave} class}
+%
+This is fairly big class but its functions can be divided up into three main categories: plot information, constants, and mathematical functions. It makes sense to keep them all within one class because all the specific wave instantiations will make use of these functions. \par
+%
+%------------------ plot information --------------------------------
+\subsubsection{Plot information}
+Throughout this project I have attempted to name my functions to best represent the action they perform. For instance \verb!get_wavevector! returns the wavevector, \verb!self.wavevector!, whereas \verb!set_wavevector(k)! sets \verb!k! \verb!=! \verb!self.! \verb!wavevector!. This is especially useful when setting and retrieving these constants within the specific wave instantiations. \par
+%
+Following this convention I have a series of functions that set or retrieve information about the specific plot. \par
+%
+The functions \verb!set/get_name,! set and retrieve the name of the plot; \verb!get_X,! \verb!get_Y! and \verb!get_Z! retrieve the three coordinate arrays; \verb!set/get_! \verb!axis_! \verb!length! and set and retrieve the range of \verb!x! and \verb!y!; \verb!set/get_! \verb!axis! \verb!_delta! set and retrieve the granularity of the plot. \par
+%
+The axis length functions are additionally also used to specify an `extent' function, \verb!get_extent!, which is used in the \verb!Graphics! class to make sure the axis labels in the plot are over the correct range (see \ref{lst:contour}). \par
+%
+  \begin{lstlisting}
+def get_extent(self):
+    return [-self.get_axis_length(), self.get_axis_length(),
+        -self.get_axis_length(), self.get_axis_length()] \end{lstlisting}
+%
+Finally, the \verb!Wave! class is initalised by setting the arrays that will constitute our domain: \verb!self.X, self.Y = self.get_xy_series()!, where this function is defined as follows.
+%
+  \begin{lstlisting}
+def get_xy_series(self):
+    x = np.linspace(-self.get_axis_length(),
+        self.get_axis_length(), self.get_axis_delta())
+    y = x
+    return np.meshgrid(x, y)\end{lstlisting}
+%
+TODO: need to fix how x and y are defined.\par
+%
+Now that we have defined the cartesian coordinates $x$ and $y$, we can use them to define $r$ and $\theta$. We define $r$ as follows, using the \verb!numpy! library:
+%
+  \begin{lstlisting}
+def get_r(self):
+    return np.sqrt( self.get_X()*self.get_X()
+        + self.get_Y()*self.get_Y() )\end{lstlisting}
+%
+TODO: explain why $x*x$ instead of $x^2$.\par
+%
+The angular coordinate is particularly interesting because it needs work in all four quadrants of our plotted field. \verb!Numpy! offers two versions of the $\arctan(\theta)$ function, \verb!numpy.arctan! and \verb!numpy.! \verb!arctan2!. The first returns the angle $\theta \in [\frac{\pi}{2},\frac{\pi}{2}]$, that is, $(x, y)$ in the rightmost quadrants. We don't expect our field to be symmetric around $x=0$, so we need to use the latter function, which returns $\theta \in [\pi, -\pi]$.
+%
+  \begin{lstlisting}
+def get_theta(self):
+    return np.arctan2(self.get_X(), self.get_Y())\end{lstlisting}\par
+%
+%--------------------- wave constants -----------------------------
+\subsubsection{Wave constants}
+%
+The second set of functions defined within the \verb!Wave! class consist of the physical constants of the problem. These are determined by the wavenumber, which is set and retrieved using \verb!get/set_wavevector! for each wave instantiation. The wavevector is an array length two, such that $\vec{k} = (a,b) = (kcos\alpha, ksin\alpha)$.\par
+%
+From this wave vector we can calculate the wavenumber, $k$,
+%
+  \begin{lstlisting}
+def get_wavenumber(self):
+    return np.sqrt(self.wavevector[0]*self.wavevector[0]
+        + self.wavevector[1]*self.wavevector[1])\end{lstlisting}
+%
+the incident angle, $\alpha$, again using \verb!arctan2!:
+%
+  \begin{lstlisting}
+def get_incident_angle(self):
+    return np.arctan2(self.wavevector[0], self.wavevector[1])\end{lstlisting}\par
+%
+For the purposes of this project, I set the speed of sound to 343 $ms^{-1}$. Now we can calculate $\omega = k c$, the frequency of the wave (see Definition \ref{defn:frequency}).
+%
+  \begin{lstlisting}
+def get_omega(self):
+    return self.get_speed_of_sound()*self.get_wavenumber()\end{lstlisting} \par
+%
+Our solution deals with sums to infinity, so we must set a truncation numer. This is done with \verb!get/set_truncation!. Similarly, we need to specify the radius of the circle we are concerned with. This is set and retrieved using \verb!get/set_cylinder_radius!.
+%
+%--------------------- math functions -----------------------------
+\subsubsection{Mathematical functions}
+%
+Finally, we describe the Neumann factor, as defined in \ref{propn:jacobi_expansion}. I added an error message to make sure the function behaves as expected.
+  \begin{lstlisting}
+def get_neumann_factor(self, n):
+      if n==0:
+          return 1
+      elif n > 0:
+          return 2
+      else:
+          print('ERROR: Invalid n for Neumann factor')\end{lstlisting}
+%
+\subsection{Particular \texttt{Wave} instantiations}
+%
+All the classes in this file are subclasses of \verb!Wave!. They are initialised with the superconstructor referring back to the parent class so that they all inherit the functions and variables of \verb!Wave()!.
+%
+  \begin{lstlisting}
+def __init__(self):
+    print('[Field_name] started...')
+
+    self.set_parameters()
+    self.set_name("Example name")
+
+    super(Field_name, self).__init__()
+
+    self.Z = self.get_z_series()\end{lstlisting}\par
+%
+Note that the superconstructor needs to go stricly \textit{after} the parameters are set. This is to override any defaults I have set in \verb!Wave!. The \verb!set_paramaters! function sets the specific values for the wavevector, truncation number, radius, and the range and granularity of the grid. \par
+%
+The array \verb!self.Z! is what \verb!Graphics! will plot. Each value in this array will be calculated by a (truncated) infinite sum depending on the coordinates $r$ and $\theta$.
+%
+  \begin{lstlisting}
+def get_z_series(self):
+    return self.get_sum(self.get_r(), self.get_theta()) \end{lstlisting}
+%
+We can now exploit the fact that our solutions for this field are separable to write
+  \begin{equation}
+    \text{total field} = \text{constant terms} \cdot \text{angular terms} \cdot \text{radial terms}.
+  \end{equation}\par
+%
+  \begin{lstlisting}
+def get_sum(self, r, theta):
+    z = 0       #Initialising
+    for n in range(self.truncation):
+        z += self.get_constant_term(n) * self.get_angular_term(n, theta) * self.get_radial_term(n, r)
+    return z.real   \end{lstlisting}\par
+%
+We can now define what these constant, angular and radial terms are for each specific field.
+%
+%--------------------------- cylinder -------------------------------
+\subsubsection{The scattered field around a cylinder}
+%
+In this case, we have two types of constant terms: Neumann or Dirichlet. One could choose to define two separate functions \verb!get_dirichlet_constants! and \verb!get_neumann_constants!, but I've simply defined my function to take a \verb!type! argument which is set to Neumann by default. I added an error message to make sure the function behaves as expected.
+%
+\begin{lstlisting}
+def get_constant_term(self, n, type='neumann'):
+    if type == 'neumann':
+        return self.get_neumann_factor(n) * np.power(1j,n)
+    elif type == 'dirichlet':
+        return NONE TBD
+    else:
+        print('ERROR: Invalid type in CylinderField.get_constant_term')
+
+\end{lstlisting}
 
 
-%-----------------------------------------------------------------
-%                       Code
-%-----------------------------------------------------------------
-%\input{tool/in_plotter}
+\section{Example plots}
