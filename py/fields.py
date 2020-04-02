@@ -5,7 +5,7 @@ from plotter import *
 
 class CylinderField(Wave):
     def __init__(self):
-        print('CylinderField started...')
+        print('🦄 CylinderField started...')
 
         self.set_parameters()
 
