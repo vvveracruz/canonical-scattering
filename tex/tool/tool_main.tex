@@ -44,7 +44,7 @@ and \verb!self.graph = Graphics! was set within the \verb!__init__! constructor 
 %-----------------------------------------------------------------
 %                      Graphics class
 %-----------------------------------------------------------------
-\subsection{The \texttt{Graphics} class}
+\section{The \texttt{Graphics} class}
 %
 The \verb!Graphics! class is equipped with two different types of plots: \verb!heat_map! and \verb!contour!. Both of these are constructed in the same way:
 %
@@ -79,12 +79,12 @@ def draw_disk_overlay(self, wave):
 %-----------------------------------------------------------------
 %                      Wave() class
 %-----------------------------------------------------------------
-\subsection{The \texttt{Wave} class}
+\section{The \texttt{Wave} class}
 %
 This is fairly big class but its functions can be divided up into three main categories: plot information, constants, and mathematical functions. It makes sense to keep them all within one class because all the specific wave instantiations will make use of these functions. \par
 %
 %------------------ plot information --------------------------------
-\subsubsection{Plot information}
+\subsection{Plot information}
 Throughout this project I have attempted to name my functions to best represent the action they perform. For instance \verb!get_wavevector! returns the wavevector, \verb!self.wavevector!, whereas \verb!set_wavevector(k)! sets \verb!k! \verb!=! \verb!self.! \verb!wavevector!. This is especially useful when setting and retrieving these constants within the specific wave instantiations. \par
 %
 Following this convention I have a series of functions that set or retrieve information about the specific plot. \par
@@ -125,7 +125,7 @@ def get_theta(self):
     return np.arctan2(self.get_X(), self.get_Y())\end{lstlisting}\par
 %
 %--------------------- wave constants -----------------------------
-\subsubsection{Wave constants}
+\subsection{Wave constants}
 %
 The second set of functions defined within the \verb!Wave! class consist of the physical constants of the problem. These are determined by the wavenumber, which is set and retrieved using \verb!get/set_wavevector! for each wave instantiation. The wavevector is an array length two, such that $\vec{k} = (a,b) = (kcos\alpha, ksin\alpha)$.\par
 %
@@ -151,7 +151,7 @@ def get_omega(self):
 Our solution deals with sums to infinity, so we must set a truncation numer. This is done with \verb!get/set_truncation!. Similarly, we need to specify the radius of the circle we are concerned with. This is set and retrieved using \verb!get/set_cylinder_radius!.
 %
 %--------------------- math functions -----------------------------
-\subsubsection{Mathematical functions}
+\subsection{Mathematical functions}
 %
 Finally, we describe the Neumann factor, as defined in \ref{propn:jacobi_expansion}. I added an error message to make sure the function behaves as expected.
   \begin{lstlisting}
@@ -163,7 +163,7 @@ def get_neumann_factor(self, n):
       else:
           print('ERROR: Invalid n for Neumann factor')\end{lstlisting}
 %
-\subsection{Particular \texttt{Wave} instantiations}
+\section{Particular \texttt{Wave} instantiations}
 %
 All the classes in this file are subclasses of \verb!Wave!. They are initialised with the superconstructor referring back to the parent class so that they all inherit the functions and variables of \verb!Wave()!.
 %
@@ -201,20 +201,42 @@ def get_sum(self, r, theta):
 We can now define what these constant, angular and radial terms are for each specific field.
 %
 %--------------------------- cylinder -------------------------------
-\subsubsection{The scattered field around a cylinder}
+\subsection{The scattered field around a cylinder}
 %
+\subsubsection{Constant term}
 In this case, we have two types of constant terms: Neumann or Dirichlet. One could choose to define two separate functions \verb!get_dirichlet_constants! and \verb!get_neumann_constants!, but I've simply defined my function to take a \verb!type! argument which is set to Neumann by default. I added an error message to make sure the function behaves as expected.
 %
-\begin{lstlisting}
+  \begin{lstlisting}
 def get_constant_term(self, n, type='neumann'):
     if type == 'neumann':
-        return self.get_neumann_factor(n) * np.power(1j,n)
+        return self.get_neumann_factor(n) * np.power(1j,n) * self.get_neumann_bc(n)
     elif type == 'dirichlet':
-        return NONE TBD
+        return self.get_neumann_factor(n) * np.power(1j,n) * self.get_dirichlet_bc(n)
     else:
-        print('ERROR: Invalid type in CylinderField.get_constant_term')
+        print('ERROR: Invalid type in CylinderField.get_constant_term') \end{lstlisting} \par
+%
+Where \verb!get_neumann_bc! and \verb!get_dirichlet_bc! are defined as follows.
+%
+  \begin{lstlisting}
+def get_neumann_bc(self, n):
+    return sp.jvp(n, self.get_wavenumber() * self.get_cylinder_radius()) / sp.h1vp(n, self.get_wavenumber() * self.get_cylinder_radius()) \end{lstlisting} \par
+%
+  \begin{lstlisting}
+def get_dirichlet_bc(self, n):
+    return None #TBD \end{lstlisting}\par
+%
+The function \verb!sp.jvp(v, z, m=1)! computes the $m^{th}$ derivative of the Bessel function of the first kind of order $v$ and argument $z$. It is provided by the \verb!scipy.special! library, imported as \verb!sp! here. Similarly \verb!sp.h1vp(v, z, m=1)! computes the $m^{th}$ derivative of the Hankel function of the first kind of order $v$ and argument $z$.
 
-\end{lstlisting}
-
-
+\subsubsection{Radial dependence}
+%
+  \begin{lstlisting}
+def get_radial_term(self, n, r):
+    return ( sp.hankel1(n, self.get_wavenumber() * r) + sp.jv(n, self.get_wavenumber() * r))\end{lstlisting}
+%
+\subsubsection{Angular dependence}
+%
+  \begin{lstlisting}
+def get_angular_term(self, n, theta):
+    return np.cos(n * (theta - self.get_incident_angle()))\end{lstlisting}
+%
 \section{Example plots}

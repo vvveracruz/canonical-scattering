@@ -38,7 +38,7 @@ class CylinderField(Wave):
 
     def get_constant_term(self, n, type='neumann'):
         if type == 'neumann':
-            return self.get_neumann_factor(n) * np.power(1j,n)
+            return self.get_neumann_factor(n) * np.power(1j,n) * self.get_neumann_bc(n)
         elif type == 'dirichlet':
             return self.get_neumann_factor(n) * np.power(1j,n) * self.get_dirichlet_bc(n)
         else:
@@ -48,7 +48,7 @@ class CylinderField(Wave):
         return np.cos(n * (theta - self.get_incident_angle()))
 
     def get_radial_term(self, n, r):
-        return self.get_neumann_bc(n) * ( sp.hankel1(n, self.get_wavenumber() * r) + sp.jv(n, self.get_wavenumber() * r))
+        return ( sp.hankel1(n, self.get_wavenumber() * r) + sp.jv(n, self.get_wavenumber() * r))
 
     def get_neumann_bc(self, n):
         return sp.jvp(n, self.get_wavenumber() * self.get_cylinder_radius()) / sp.h1vp(n, self.get_wavenumber() * self.get_cylinder_radius())

@@ -19,10 +19,7 @@ class Main():
     def run(self):
 
         self.create_field_around_cylinder(self.graph)
-
-
         #self.create_hankel_wave(self.graph)
-
         #self.create_plane_wave(graph)
         #self.create_incident_field(graph)
         #self.create_scattered_field(self.graph)
