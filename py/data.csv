@@ -1,5 +1,7 @@
+name of plot, Default name
 axis length, 10
 axis delta,  10
 truncation, 4
 wavevector, -1, -2
 cylinder radius, 5
+speed of sound, 343

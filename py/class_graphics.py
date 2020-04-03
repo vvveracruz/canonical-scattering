@@ -1,14 +1,24 @@
 class Graphics():
     def __init__(self):
         print("graphics started...")
+        self.input = Input()
+
+    def get_extent():
+        '''
+        Returns the axis labels in the format
+            [xmin, xmax, ymin, ymax]
+        '''
+        label = self.input.get_axis_length()
+        return [-label, label,
+            -label, label]
 
     def contour(self, wave, xlabel='x', ylabel='y'):
-        plt.contour(wave.get_Z(), extent=wave.get_extent())
+        plt.contour(wave.get_Z(), extent=self.get_extent())
         self.label_plot(wave, xlabel, ylabel)
         self.draw_plot()
 
     def heat_map(self, wave, xlabel='x', ylabel='y'):
-        plt.imshow(wave.get_Z(), extent=wave.get_extent())
+        plt.imshow(wave.get_Z(), extent=self.get_extent())
         self.label_plot(wave, xlabel, ylabel)
         self.draw_plot(wave)
 
