@@ -2,13 +2,12 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
-import matplotlib.pyplot as plt
 import scipy.special as sp
 import mpmath as mm
 
 from fields import *
-from class_inputs import *
-from class_graphics import *
+from inputs import *
+from graphics import *
 
 #--------------------------------------------------------------------
 #                           main class
@@ -16,28 +15,64 @@ from class_graphics import *
 
 class Main():
     def __init__(self):
-        print("⏳ running plotter ...")
+        print("running plotter ...")
         self.graph = Graphics()
-        self.input = Inputs()
 
     def run(self):
-        #print(self.input.get_Y())
+        self.cylinder_field(self.graph)
         return None
 
-    def create_field_around_cylinder(self, graph):
+    def cylinder_field(self, graph):
         field = CylinderField()
-        print(field.get_Z())
         graph.heat_map(field)
 
 #--------------------------------------------------------------------
 #                         wave super class
 #--------------------------------------------------------------------
-class Wave():
+class Wave(Inputs):
     def __init__(self):
-        print('wave started...')
+        print('>> wave started...')
+        Inputs.__init__(self)
 
-    #           math functs
-    #---------------------------------------------
+    def get_theta(self, x, y):
+        return np.arctan2(x, y)
+
+    def get_r(self, x, y):
+        return np.sqrt( x*x
+            + y*y )
+
+    def get_array_Z(self):
+        '''
+        This will return the array to be plotted.
+        '''
+        array = []
+        for x in self.get_X():
+            lst = []
+            for y in self.get_Y():
+                lst.append(self.get_value_z(x, y))
+            array.append(lst)
+        return array
+
+    def get_value_z(self, x, y):
+        '''
+        Returns the value of Z at a given (x, y).
+        '''
+        r = self.get_r(x, y)
+        theta = self.get_theta(x, y)
+
+        if r >= self.get_cylinder_radius():
+            return self.get_sum(r, theta)
+        else:
+            return 0
+
+    def get_sum(self, r, theta):
+        '''Actions the summation up to the truncation number and
+        returns the approximate value for z for a given point.'''
+        z = 0   #Initialising
+        for n in range(self.truncation):
+            z += self.get_constant_term(n) * self.get_angular_term(n, theta) * self.get_radial_term(n, r)
+        return z.real
+
     def get_neumann_factor(self, n):
         '''Returns the neumann factor for a given n.'''
         if n==0:
@@ -46,20 +81,6 @@ class Wave():
             return 2
         else:
             print('ERROR: Invalid n for Neumann factor')
-
-    #           time dependence
-    #---------------------------------------------
-    def get_time_period(self):
-        return (2*np.pi) / (self.get_wavenumber()
-            * self.get_speed_of_sound())
-
-    def set_time_series(self, delta):
-        end = self.get_time_period()
-        self.time_series = np.linspace(0, end, delta)
-
-    def get_time_dependence(self, t):
-        return np.exp(-1j*self.get_omega()*t)
-
 
 #--------------------------------------------------------------------
 #                               SCRIPT

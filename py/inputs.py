@@ -1,32 +1,21 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import csv
 import json
 import numpy as np
 
 class Inputs():
     '''
     This class is used to retrieve the parameters for the problem from
-    the `data.csv` file.
-
-    Structure of the file
-    ---------------------
-    0   name of plot        str
-    1   axis length         float
-    2   axis delta          int
-    3   truncation          int
-    4   wavevector          float   float
-    5   cylinder radius     float
-    6   speed of sound      float
+    the `data.txt` file.
     '''
 
     def __init__(self):
-        print("inputs started...")
+        print(">> inputs started...")
         self.set_params()
-        print(self.wavevector)
 
-    def read_json(self):
+
+    def read_file(self):
         '''
         Returns a dictionary containing the data in data.txt.
         '''
@@ -38,10 +27,13 @@ class Inputs():
         '''
         TODO: docstring
         '''
-        dict = self.read_json()
+        dict = self.read_file()
 
         ## NAME OF PLOT
         self.plot_name = dict['plot_name']
+
+        ## TYPE OF BCS
+        self.boundary_type = dict['boundary_type']
 
         ##  AXIS LENGTH
         try:
@@ -80,7 +72,7 @@ class Inputs():
 
         ##  SPEED OF SOUND
         try:
-            self.speed_of_sound = float('speed_of_sound')
+            self.speed_of_sound = float(dict['speed_of_sound'])
         except ValueError:
             self.speed_of_sound = 343
             print('ERROR: input for speed of sound must be a float. Has been set to default.')
@@ -106,13 +98,6 @@ class Inputs():
 
     def get_Y(self):
         return self.get_coord_series()
-
-    def get_theta(self):
-        return np.arctan2(self.get_X(), self.get_Y())
-
-    def get_r(self):
-        return np.sqrt( self.get_X()*self.get_X()
-            + self.get_Y()*self.get_Y() )
 
     ##  PLOT NAME
     def get_plot_name(self):

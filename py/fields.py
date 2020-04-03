@@ -3,46 +3,19 @@
 
 from plotter import *
 
-class CylinderField(Wave):
+class CylinderField(Wave, Inputs):
     def __init__(self):
-        print('🦄 CylinderField started...')
-
-        self.set_parameters()
-
-        self.set_name("Scattered field for N = "
-            + str(self.truncation) + " and K ="
-            + str(self.wavevector))
-
-        super(CylinderField, self).__init__()
-            #this needs to go after set_parameters()
-
-        self.Z = self.get_z_series()
-
-    def set_parameters(self):
-        self.set_truncation(4)
-        self.set_wavevector(-1,-2)
-        self.set_cylinder_radius(5)
-        self.set_axis_length(15)
-        self.set_axis_delta(70)
-
-    def get_z_series(self):
-        return self.get_sum(self.get_r(), self.get_theta())
-
-    def get_sum(self, r, theta):
-        '''Actions the summation up to the truncation number and
-        returns the approximate value for z for a given point.'''
-        z = 0   #Initialising
-        for n in range(self.truncation):
-            z += self.get_constant_term(n) * self.get_angular_term(n, theta) * self.get_radial_term(n, r)
-        return z.real
+        print('>>> cylinderField started...')
+        Wave.__init__(self)
+        Inputs.__init__(self)
 
     def get_constant_term(self, n, type='neumann'):
-        if type == 'neumann':
+        if self.boundary_type in ['neumann', 'Neumann']:
             return self.get_neumann_factor(n) * np.power(1j,n) * self.get_neumann_bc(n)
-        elif type == 'dirichlet':
+        elif self.boundary_type in ['dirichlet', 'Dirichlet']:
             return self.get_neumann_factor(n) * np.power(1j,n) * self.get_dirichlet_bc(n)
         else:
-            print('🚩 ERROR: Invalid type in CylinderField().get_constant_term()')
+            raise TypeError('Invalid boundary type.')
 
     def get_angular_term(self, n, theta):
         return np.cos(n * (theta - self.get_incident_angle()))

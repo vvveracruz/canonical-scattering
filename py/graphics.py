@@ -1,11 +1,12 @@
-from class_inputs import *
+import matplotlib.pyplot as plt
+from inputs import *
 
 class Graphics():
     def __init__(self):
-        print("graphics started...")
+        print(">> graphics started...")
         self.input = Inputs()
 
-    def get_extent():
+    def get_extent(self):
         '''
         Returns the axis labels in the format
             [xmin, xmax, ymin, ymax]
@@ -15,17 +16,17 @@ class Graphics():
             -label, label]
 
     def contour(self, wave, xlabel='x', ylabel='y'):
-        plt.contour(wave.get_Z(), extent=self.get_extent())
+        plt.contour(wave.get_array_Z(), extent=self.get_extent())
         self.label_plot(wave, xlabel, ylabel)
         self.draw_plot()
 
     def heat_map(self, wave, xlabel='x', ylabel='y'):
-        plt.imshow(wave.get_Z(), extent=self.get_extent())
+        plt.imshow(wave.get_array_Z(), extent=self.get_extent())
         self.label_plot(wave, xlabel, ylabel)
         self.draw_plot(wave)
 
     def label_plot(self, wave = "title", xlabel='x', ylabel='y'):
-        plt.title(wave.get_name())
+        plt.title(wave.get_plot_name())
         plt.ylabel(ylabel)
         plt.xlabel(xlabel)
 
@@ -38,7 +39,7 @@ class Graphics():
 
     def draw_disk_overlay(self, wave):
         r = wave.get_cylinder_radius()
-        plt.gca().add_patch(plt.Circle((0,0),r, fc='#36859F'))
+        #plt.gca().add_patch(plt.Circle((0,0),r, fc='#36859F'))
 
     '''def create_legend(self, wave):
         plt.legend('test')
