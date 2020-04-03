@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import scipy.special as sp
 import mpmath as mm
 from fields import *
+from class_inputs import *
 
 #--------------------------------------------------------------------
 #                           main class
@@ -15,52 +16,25 @@ class Main():
     def __init__(self):
         print("⏳ running plotter ...")
         self.graph = Graphics()
+        self.input = Inputs()
 
     def run(self):
-
-        #print(Wave().X)
-
-        self.create_field_around_cylinder(self.graph)
-        #self.create_hankel_wave(self.graph)
-        #self.create_plane_wave(graph)
-        #self.create_incident_field(graph)
-        #self.create_scattered_field(self.graph)
+        print(Wave().get_theta())
 
     def create_field_around_cylinder(self, graph):
         field = CylinderField()
         print(field.get_Z())
         graph.heat_map(field)
 
-    def create_example_bessel(self, graph):
-        wave = ExampleBessel()
-        graph.heat_map(wave)
-
-    def create_plane_wave(self, graph):
-        plane_wave = PlaneWave('real')
-        graph.heat_map(plane_wave)
-
-    def create_incident_field(self, graph):
-        incident_field = IncidentField()
-        graph.heat_map(incident_field)
-
-    def create_scattered_field(self, graph):
-        scattered_field = ScatteredField()
-        graph.heat_map(scattered_field)
-
 #--------------------------------------------------------------------
 #                         wave super class
 #--------------------------------------------------------------------
 class Wave():
-
     def __init__(self):
-        #----------- defaults ------------
-        #self.axis_length = 5
-        #self.axis_delta = 5
-        #self.cylinder_radius = 1
-        #self.name = "Default"
+        self.input = Inputs()
 
-        self.X = self.get_xy_series()
-        self.Y = self.get_xy_series()
+        self.X = self.input.get_coord_series()
+        self.Y = self.input.get_coord_series()
 
     #              plot information
     #---------------------------------------------
@@ -174,55 +148,6 @@ class Wave():
 
     def get_time_dependence(self, t):
         return np.exp(-1j*self.get_omega()*t)
-
-
-
-#−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−-
-#                        graphics class
-#--------------------------------------------------------------------
-class Graphics():
-    def __init__(self):
-        print("📈 graphics started...")
-
-    def contour(self, wave, xlabel='x', ylabel='y'):
-        plt.contour(wave.get_Z(), extent=wave.get_extent())
-        self.label_plot(wave, xlabel, ylabel)
-        self.draw_plot()
-
-    def heat_map(self, wave, xlabel='x', ylabel='y'):
-        plt.imshow(wave.get_Z(), extent=wave.get_extent())
-        self.label_plot(wave, xlabel, ylabel)
-        self.draw_plot(wave)
-
-    def label_plot(self, wave = "title", xlabel='x', ylabel='y'):
-        plt.title(wave.get_name())
-        plt.ylabel(ylabel)
-        plt.xlabel(xlabel)
-
-    def draw_plot(self, wave):
-        self.draw_disk_overlay(wave)
-        #self.draw_plane_wave_overlay(wave)
-        #self.create_legend(wave)
-        plt.colorbar()
-        plt.show()
-
-    def draw_disk_overlay(self, wave):
-        r = wave.get_cylinder_radius()
-        plt.gca().add_patch(plt.Circle((0,0),r, fc='#36859F'))
-
-    '''def create_legend(self, wave):
-        plt.legend('test')
-        text =  'PARAMETERS \n\n' +\
-                'K = ' + str(wave.get_wavevector()) +\
-                'N = ' + str(wave.get_truncation())
-        plt.gcf().text(0.87, 0.75, text, fontsize=10)'''
-
-
-    '''def draw_plane_wave_overlay(self, wave):
-        K = wave.get_wavevector()
-        x = wave.get_axis_length()
-        d = -5
-        plt.gca().add_patch(plt.Arrow(x, x, d, d, fc='white'))'''
 
 
 #--------------------------------------------------------------------
