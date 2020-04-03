@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import csv
+import json
 import numpy as np
 
 class Inputs():
@@ -23,79 +24,66 @@ class Inputs():
     def __init__(self):
         print("inputs started...")
         self.set_params()
+        print(self.wavevector)
 
-    def get_data(self):
+    def read_json(self):
         '''
-        Returns an array containing every row of the file as a list.
+        Returns a dictionary containing the data in data.txt.
         '''
-        data = []
-        with open("data.csv", 'rt') as file:
-            reader = csv.reader(file)
-            for row in reader: # each row is a list
-                data.append(row)
-        return data
+        file = open(r"data.txt", "r")
+        return json.load(file)
+        file.close()
 
     def set_params(self):
         '''
-        This function retrieves the parameters for the problem for the
-        csv filed opened in get_data. It sets the params to default when
-        the type entered is not correct.
-
-        Defaults
-        --------
-        name of plot        No default, it is a string
-        axis length         5           float
-        axis delta          100         int
-        truncation          50          int
-        wavevector          (-1,-1)     floats
-        cylinder radius     1           int
-        speed of sound      343         float
+        TODO: docstring
         '''
+        dict = self.read_json()
+
         ## NAME OF PLOT
-        self.plot_name = self.get_data()[0][1]
+        self.plot_name = dict['plot_name']
 
         ##  AXIS LENGTH
         try:
-            self.axis_length = float(self.get_data()[1][1])
+            self.axis_length = float(dict['axis_length'])
         except ValueError:
             self.axis_length = 5
-            print('⚠️ Error: input for axis length must be a float. Has been set to default.')
+            print('ERROR: input for axis length must be a float. Has been set to default.')
 
         ##  AXIS DELTA
         try:
-            self.axis_delta = int(self.get_data()[2][1])
+            self.axis_delta = int(dict['axis_delta'])
         except ValueError:
             self.axis_delta = 100
-            print('⚠️ Error: input for axis delta must be a int. Has been set to default.')
+            print('ERROR: input for axis delta must be a int. Has been set to default.')
 
         ##  TRUNCATION
         try:
-            self.truncation = int(self.get_data()[3][1])
+            self.truncation = int(dict['truncation'])
         except ValueError:
             self.truncation = 50
-            print('⚠️ Error: input for truncation must be an integer. Has been set to default.')
+            print('ERROR: input for truncation must be an integer. Has been set to default.')
 
         ##  WAVEVECTOR
         try:
-            self.wavevector = (float(self.get_data()[4][1]),
-                    float(self.get_data()[4][2]))
+            self.wavevector = [float(x) for x in dict['wavevector']]
         except ValueError:
-            self.wavevector = (-1, -1)
-            print('⚠️ Error: inputs for wavevector must be two floats. Has been set to default.')
+            self.wavevector = [-1, -1]
+            print('ERROR: inputs for wavevector must be two floats. Has been set to default.')
 
         ##  CYLINDER RADIUS
         try:
-            self.cylinder_radius = float(self.get_data()[5][1])
+            self.cylinder_radius = float(dict['cylinder_radius'])
         except ValueError:
             self.cylinder_radius = 1
-            print('⚠️ Error: input for cylinder radius must be a float. Has been set to default.')
+            print('ERROR: input for cylinder radius must be a float. Has been set to default.')
 
         ##  SPEED OF SOUND
         try:
-            self.speed_of_sound = float(self.get_data()[6][1])
+            self.speed_of_sound = float('speed_of_sound')
         except ValueError:
             self.speed_of_sound = 343
-            print('⚠️ Error: input for speed of sound must be a float. Has been set to default.')
+            print('ERROR: input for speed of sound must be a float. Has been set to default.')
 
     ##  PARAMS FOR THE COORDINATES
     def get_axis_length(self):

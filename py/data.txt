@@ -1,0 +1,9 @@
+{
+  "plot_name" : "Default name",
+  "axis_length" : 10,
+  "axis_delta" : 10,
+  "truncation" : 4,
+  "wavevector" : [-1, -2],
+  "cylinder_radius" : 5,
+  "speed_of_sound" : 343
+}

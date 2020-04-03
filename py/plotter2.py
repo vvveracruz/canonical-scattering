@@ -21,7 +21,8 @@ class Main():
         self.input = Inputs()
 
     def run(self):
-        print(self.input.get_Y())
+        #print(self.input.get_Y())
+        return None
 
     def create_field_around_cylinder(self, graph):
         field = CylinderField()

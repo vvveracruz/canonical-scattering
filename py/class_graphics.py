@@ -1,7 +1,9 @@
+from class_inputs import *
+
 class Graphics():
     def __init__(self):
         print("graphics started...")
-        self.input = Input()
+        self.input = Inputs()
 
     def get_extent():
         '''
