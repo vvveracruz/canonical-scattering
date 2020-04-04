@@ -29,11 +29,11 @@ class Inputs():
         '''
         dict = self.read_file()
 
-        ## NAME OF PLOT
-        self.plot_name = dict['plot_name']
-
         ## TYPE OF BCS
         self.boundary_type = dict['boundary_type']
+
+        ## FIELD TYPE
+        self.field_type = dict['field_type']
 
         ##  AXIS LENGTH
         try:
@@ -101,7 +101,10 @@ class Inputs():
 
     ##  PLOT NAME
     def get_plot_name(self):
-        return self.plot_name
+        return self.field_type + ' ' + self.boundary_type
+
+    def get_field_type(self):
+        return self.field_type
 
     ##  TRUNCATION
     def get_truncation(self):

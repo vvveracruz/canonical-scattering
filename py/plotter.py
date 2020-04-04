@@ -13,17 +13,37 @@ from graphics import *
 #                           main class
 #--------------------------------------------------------------------
 
-class Main():
+class Main(Inputs):
     def __init__(self):
-        print("running plotter ...")
+        print("> running plotter ...")
+
+        Inputs.__init__(self)
         self.graph = Graphics()
 
     def run(self):
-        self.cylinder_field(self.graph)
-        return None
+        '''TODO: docstring'''
+        if self.field_type in ['incident', 'Incident', 'IncidentField']:
+            self.incident_plot(self.graph)
+        elif self.field_type in ['scattered', 'Scattered', 'ScatteredField']:
+            self.scattered_plot(self.graph)
+        elif self.field_type in ['total', 'Total', 'TotalField']:
+            self.total_plot(self.graph)
+        else:
+            raise TypeError('Invalid field type.')
 
-    def cylinder_field(self, graph):
-        field = CylinderField()
+    def incident_plot(self, graph):
+        '''TODO: docstring'''
+        field = IncidentField()
+        graph.heat_map(field)
+
+    def scattered_plot(self, graph):
+        '''TODO: docstring'''
+        field = ScatteredField()
+        graph.heat_map(field)
+
+    def total_plot(self,graph):
+        '''TODO: docstring'''
+        field = TotalField()
         graph.heat_map(field)
 
 #--------------------------------------------------------------------
@@ -38,8 +58,7 @@ class Wave(Inputs):
         return np.arctan2(x, y)
 
     def get_r(self, x, y):
-        return np.sqrt( x*x
-            + y*y )
+        return np.sqrt( x*x + y*y )
 
     def get_array_Z(self):
         '''
@@ -53,26 +72,6 @@ class Wave(Inputs):
             array.append(lst)
         return array
 
-    def get_value_z(self, x, y):
-        '''
-        Returns the value of Z at a given (x, y).
-        '''
-        r = self.get_r(x, y)
-        theta = self.get_theta(x, y)
-
-        if r >= self.get_cylinder_radius():
-            return self.get_sum(r, theta)
-        else:
-            return 0
-
-    def get_sum(self, r, theta):
-        '''Actions the summation up to the truncation number and
-        returns the approximate value for z for a given point.'''
-        z = 0   #Initialising
-        for n in range(self.truncation):
-            z += self.get_constant_term(n) * self.get_angular_term(n, theta) * self.get_radial_term(n, r)
-        return z.real
-
     def get_neumann_factor(self, n):
         '''Returns the neumann factor for a given n.'''
         if n==0:
@@ -81,6 +80,24 @@ class Wave(Inputs):
             return 2
         else:
             print('ERROR: Invalid n for Neumann factor')
+
+    def get_modified_neumann_factor(self, n):
+        '''Returns the neumann factor multiplied by i^n for a given n.'''
+        if n==0:
+            return 1
+        elif n > 0:
+            return 2 * np.power(1j, n)
+        else:
+            print('ERROR: Invalid n for Neumann factor')
+
+    def get_neumann_bc(self, n):
+        '''TODO: docstring'''
+        return sp.jvp(n, self.get_wavenumber() * self.get_cylinder_radius()) / sp.h1vp(n, self.get_wavenumber() * self.get_cylinder_radius())
+
+    def get_dirichlet_bc(self, n):
+        '''TODO: docstring'''
+        return -sp.jv(n, self.get_wavenumber() * self.get_cylinder_radius()) / sp.hankel1(n, self.get_wavenumber() * self.get_cylinder_radius())
+
 
 #--------------------------------------------------------------------
 #                               SCRIPT
