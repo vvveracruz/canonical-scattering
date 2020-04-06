@@ -2,9 +2,16 @@
 %------------------------- packages ------------------------------
 \usepackage{
     amsmath,    amssymb,    graphicx,   hyperref,
-    multicol,   dsfont,     subfiles,   apacite,
+    multicol,   dsfont,     subfiles,
     tikz,       listings,   amsthm,     xcolor,
+    bigints,
 }
+\usepackage[utf8]{inputenc}
+%----------------------- bibliography settings --------------------
+\usepackage[
+  style=authoryear-ibid
+]{biblatex}
+\addbibresource{references.bib}
 %--------------------------- hyperlinks --------------------------
 \hypersetup{
     colorlinks,

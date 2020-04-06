@@ -14,8 +14,7 @@
     \input{front/contents.tex}
 
 %-------------------------- ABSTRACT ------------------------------
-\addcontentsline{toc}{chapter}{Abstract}
-\chapter*{Abstract}
+\chapter*{Abstract} \addcontentsline{toc}{chapter}{Abstract}
     \input{front/abstract.tex}
 
 
@@ -24,16 +23,20 @@
     \input{derivation/deriv_main.tex}
 
 
-%--------------------------- PROBLEM  1 ---------------------------
-\chapter{Problem 1: scattering around a circular cylinder}
+%--------------------------- OUTSIDE ---------------------------
+\chapter{Scattering around a circular cylinder}\label{chp:outside}
     \input{prob1/prob1_main.tex}
+
+%--------------------------- INSIDE ---------------------------
+\chapter{Scattering inside a circular cylinder}\label{chp:inside}
+  \input{prob2/prob2_main.tex}
 
 %------------------------ PLOTTER TOOL ----------------------------
 \chapter{Plotter tool}
     \input{tool/tool_main.tex}
 
 %--------------------------- END MATTER ----------------------------
-\bibliographystyle{apacite}
-\bibliography{references.bib}
+\printbibliography
+\addcontentsline{toc}{chapter}{Bibliography}
 
 \end{document}
