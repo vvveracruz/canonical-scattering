@@ -1,10 +1,10 @@
 {
-  "axis_length" : 4,
+  "axis_length" : 5,
   "axis_delta" : 100,
-  "truncation" : 1,
-  "wavevector" : [-1, -2],
+  "truncation" : 20,
+  "wavevector" : [5, -2],
   "cylinder_radius" : 1,
   "speed_of_sound" : 343,
-  "boundary_type" : "Neumann",
-  "field_type" : "TotalField"
+  "boundary_type" : "neumann",
+  "field_type" : "none"
 }

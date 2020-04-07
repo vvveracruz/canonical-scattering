@@ -24,7 +24,7 @@ class TotalField(Wave, Inputs):
         '''
         r = self.get_r(x, y)
         theta = self.get_theta(x, y)
-        return self.incident.get_sum(r, theta) + self.scattered.get_sum(x, y)
+        return self.incident.get_value_z(x, y) + self.scattered.get_value_z(x,y)
 
 #--------------------------------------------------------------------
 #           INCIDENT FIELD
@@ -42,27 +42,13 @@ class IncidentField(Wave, Inputs):
         '''
         Returns the value of Z at a given (x, y).
         '''
-        r = self.get_r(x, y)
-        theta = self.get_theta(x, y)
 
-        if r >= self.get_cylinder_radius():
-            return self.get_sum(x, y)
+        if self.get_r(x, y) >= self.get_cylinder_radius():
+            return (np.exp(1j*(self.get_wavevector()[0]*x + self.get_wavevector()[1]*y))).real
         else:
             return 0
 
-    def get_sum(self, x, y):
-        '''
-        TODO: docstring
-        '''
-        return (self.get_constant_term() * self.get_function(x,y)).real
 
-    def get_constant_term(self):
-        return 1
-
-    def get_function(self, x, y):
-        return np.exp(1j*(self.get_wavevector()[0]*x + self.get_wavevector()[1]*y))
-
-        
 #--------------------------------------------------------------------
 #           SCATTERED FIELD
 #--------------------------------------------------------------------
@@ -83,7 +69,7 @@ class ScatteredField(Wave, Inputs):
         theta = self.get_theta(x, y)
 
         if r >= self.get_cylinder_radius():
-            return self.get_sum(r, theta)
+            return self.get_sum(r, theta).real
         else:
             return 0
 
@@ -93,7 +79,7 @@ class ScatteredField(Wave, Inputs):
         z = 0   #Initialising
         for n in range(self.truncation):
             z += self.get_constant_term(n) * self.get_angular_term(n, theta) * self.get_radial_term(n, r)
-        return z.real
+        return z
 
     def get_constant_term(self, n):
         '''TODO: docstring'''
@@ -102,6 +88,7 @@ class ScatteredField(Wave, Inputs):
 
         elif self.boundary_type in ['dirichlet', 'Dirichlet']:
             return self.get_modified_neumann_factor(n) * self.get_dirichlet_bc(n)
+
 
         else:
             raise TypeError('Invalid boundary type.')

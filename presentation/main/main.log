@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.5.29)  6 APR 2020 11:33
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.5.29)  6 APR 2020 17:25
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -757,7 +757,46 @@ Package: booktabs 2016/04/27 v1.618033 publication quality tables
 \@lastruleclass=\count156
 \@thisrulewidth=\dimen256
 )
-(./main.aux)
+(/usr/local/texlive/2016/texmf-dist/tex/latex/psnfss/mathptm.sty
+Package: mathptm 2005/04/12 PSNFSS-v9.2a Times w/ Math (SPQR, WaS) 
+
+
+Package mathptm Warning: This package is to be regarded as obsolete.
+(mathptm)                See the PSNFSS documentation.
+
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 31.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> OT1/ptmcm/m/n on input line 31.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ptmcm/m/n on input line 31.
+LaTeX Font Info:    Redeclaring symbol font `letters' on input line 32.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
+(Font)                  OML/cmm/m/it --> OML/ptmcm/m/it on input line 32.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/cmm/b/it --> OML/ptmcm/m/it on input line 32.
+LaTeX Font Info:    Redeclaring symbol font `symbols' on input line 33.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/cmsy/m/n --> OMS/pzccm/m/n on input line 33.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/cmsy/b/n --> OMS/pzccm/m/n on input line 33.
+LaTeX Font Info:    Redeclaring symbol font `largesymbols' on input line 34.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> OMX/psycm/m/n on input line 34.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> OMX/psycm/m/n on input line 34.
+\symbold=\mathgroup6
+\symitalic=\mathgroup7
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 37.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 37.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 37.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 38.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> OT1/ptm/m/it on input line 38.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> OT1/ptm/m/it on input line 38.
+) (./main.aux)
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 5.
@@ -858,18 +897,18 @@ LaTeX Info: Redefining \nameref on input line 5.
 \openout5 = `main.out'.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 5.
+(Font)                  OT1/ptmcm/m/n --> OT1/cmss/m/n on input line 5.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 5.
-\symnumbers=\mathgroup6
-\sympureletters=\mathgroup7
+(Font)                  OT1/ptmcm/m/n --> OT1/cmss/bx/n on input line 5.
+\symnumbers=\mathgroup8
+\sympureletters=\mathgroup9
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/cmr/m/n on input line 5.
+(Font)                  OT1/cmss/m/n --> OT1/ptm/m/n on input line 5.
 LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 5.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 5.
+(Font)                  OT1/ptm/bx/n --> OT1/cmss/bx/n on input line 5.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 5.
+(Font)                  OT1/ptm/bx/n --> OT1/cmss/bx/n on input line 5.
 LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 5.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
 (Font)                  OT1/cmss/m/n --> OT1/cmss/m/n on input line 5.
@@ -877,9 +916,9 @@ LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
 (Font)                  OT1/cmss/bx/n --> OT1/cmss/m/n on input line 5.
 LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 5.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> OT1/cmss/m/it on input line 5.
+(Font)                  OT1/ptm/m/it --> OT1/cmss/m/it on input line 5.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> OT1/cmss/m/it on input line 5.
+(Font)                  OT1/ptm/m/it --> OT1/cmss/m/it on input line 5.
 LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 5.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
 (Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 5.
@@ -890,7 +929,7 @@ LaTeX Font Info:    Overwriting symbol font `numbers' in version `bold'
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
 (Font)                  OT1/cmss/m/it --> OT1/cmss/bx/it on input line 5.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
-(Font)                  OT1/cmss/bx/n --> OT1/cmr/bx/n on input line 5.
+(Font)                  OT1/cmss/bx/n --> OT1/ptm/bx/n on input line 5.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
 (Font)                  OT1/cmss/bx/n --> OT1/cmss/bx/n on input line 5.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
@@ -943,55 +982,24 @@ Package hyperref Warning: Option `pdfauthor' has already been used,
 
 
 LaTeX Font Warning: Font shape `OT1/cmss/m/n' in size <4> not available
-(Font)              size <5> substituted on input line 14.
+(Font)              size <5> substituted on input line 15.
 
 [1
 
 {/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}])
-[2
+(./main.toc) [2
 
-] [3
+] (../slides.tex
+<../../tex/prob1/prob1_figures/sk_problem_1.png, id=87, 612.2875pt x 464.73625p
+t>
+File: ../../tex/prob1/prob1_figures/sk_problem_1.png Graphic file (type png)
+ <use ../../tex/prob1/prob1_figures/sk_problem_1.png>
+Package pdftex.def Info: ../../tex/prob1/prob1_figures/sk_problem_1.png used on
+ input line 10.
+(pdftex.def)             Requested size: 171.14764pt x 129.89833pt.
+ [3
 
-] [4
-
-]
-LaTeX Font Info:    Try loading font information for U+msa on input line 70.
- (/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Try loading font information for U+msb on input line 70.
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-LaTeX Font Info:    Try loading font information for OT1+mathkerncmss on input 
-line 70.
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/sansmathaccent/ot1mathkerncmss.fd
-File: ot1mathkerncmss.fd 2013/03/27 Fontinst v1.933 font definitions for OT1/ma
-thkerncmss.
-) [5
-
-] [6
-
-] [7
-
-]
-\openout4 = `main.vrb'.
-
- (./main.vrb) [8
-
-] [9
-
-]
-\openout4 = `main.vrb'.
-
- (./main.vrb) [10
-
-] [11
-
- </usr/local/texlive/2016/texmf-dist/tex/latex/beamer/art/beamericonarticle.pdf
->] [12
+ <../../tex/prob1/prob1_figures/sk_problem_1.png>]) [4
 
 ]
 \tf@nav=\write6
@@ -1003,42 +1011,37 @@ thkerncmss.
 \tf@snm=\write8
 \openout8 = `main.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 156.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 156.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 20.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 20.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 156.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 156.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 20.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 20.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 085726B7EC624A3C1719A4A3B4831465;164.
+(rerunfilecheck)             Checksum: 8379FF26DAD40E0F698EBB7FC4C514CB;102.
 
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 156.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 20.
  ) 
 Here is how much of TeX's memory you used:
- 16979 strings out of 493014
- 329488 string characters out of 6133351
- 397352 words of memory out of 5000000
- 20072 multiletter control sequences out of 15000+600000
- 13140 words of font info for 47 fonts, out of 8000000 for 9000
+ 16728 strings out of 493014
+ 323213 string characters out of 6133351
+ 391742 words of memory out of 5000000
+ 19858 multiletter control sequences out of 15000+600000
+ 6109 words of font info for 22 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 56i,16n,60p,409b,786s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 56i,16n,60p,384b,555s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb
 ></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb>
 </usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmss17.pfb><
 /usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></u
-sr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr
-/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></us
-r/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></us
-r/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi8.pfb></usr
-/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi9.pfb></usr/
-local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on main.pdf (12 pages, 130248 bytes).
+sr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi8.pfb>
+Output written on main.pdf (4 pages, 78948 bytes).
 PDF statistics:
- 413 PDF objects out of 1000 (max. 8388607)
- 370 compressed objects within 4 object streams
- 29 named destinations out of 1000 (max. 500000)
- 97 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 164 PDF objects out of 1000 (max. 8388607)
+ 139 compressed objects within 2 object streams
+ 11 named destinations out of 1000 (max. 500000)
+ 82 words of extra memory for PDF output out of 10000 (max. 10000000)
 

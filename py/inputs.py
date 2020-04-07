@@ -101,8 +101,8 @@ class Inputs():
 
     ##  PLOT NAME
     def get_plot_name(self):
-        return self.field_type + ' ' + self.boundary_type
-
+        return self.field_type + ' ' + self.boundary_type + ', N = ' + str(self.truncation) + ', K = ' + str(self.wavevector)
+        
     def get_field_type(self):
         return self.field_type
 

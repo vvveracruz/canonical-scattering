@@ -4,6 +4,7 @@
 import numpy as np
 import scipy.special as sp
 import mpmath as mm
+import time
 
 from fields import *
 from inputs import *
@@ -24,12 +25,22 @@ class Main(Inputs):
         '''TODO: docstring'''
         if self.field_type in ['incident', 'Incident', 'IncidentField']:
             self.incident_plot(self.graph)
+
         elif self.field_type in ['scattered', 'Scattered', 'ScatteredField']:
             self.scattered_plot(self.graph)
+
         elif self.field_type in ['total', 'Total', 'TotalField']:
             self.total_plot(self.graph)
+
+        elif self.field_type in ['none', 'None']:
+            self.testing()
+
         else:
             raise TypeError('Invalid field type.')
+
+    def testing(self):
+        '''Function used to test code.'''
+        return None
 
     def incident_plot(self, graph):
         '''TODO: docstring'''
@@ -96,7 +107,7 @@ class Wave(Inputs):
 
     def get_dirichlet_bc(self, n):
         '''TODO: docstring'''
-        return -sp.jv(n, self.get_wavenumber() * self.get_cylinder_radius()) / sp.hankel1(n, self.get_wavenumber() * self.get_cylinder_radius())
+        return -(sp.jv(n, self.get_wavenumber() * self.get_cylinder_radius()) / sp.hankel1(n, self.get_wavenumber() * self.get_cylinder_radius()))
 
 
 #--------------------------------------------------------------------
