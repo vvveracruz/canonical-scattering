@@ -9,6 +9,18 @@
 \section{Introduction}
 We now have an expression for the total field around the cyliner, the logical next step is to ask ourselves what happens \emph{inside} the cylinder. For this, we will assume that the boundary for the cylinder is permeable. Our goal in this section is to find an expression for the velocity field inside the cylinder, combine this with our result in Chapter \ref{chp:inside} to plot the complete field over the entire domain. \par
 %
+This is referred to as a \emph{transmission problem} in the literature, see for example \cite[$\S$1.3.3]{martin06scattering} since the wave is not bounded at the cylinder walls but transmitted through. We will consider a situation where the densities outside and inside the cylinder are different, see \figref{fig:problem_2}. \par
+%
+The statement of the problem is as follows. We are given an incident field, $\Phiin$ for which we need to find the field at the cylinder wall, $\Phi_{r=\sigma}$ and the field inside the cylinder wall $\Phi_{r<\sigma}$.
+%
+  \begin{figure} \centering
+    %
+    \includegraphics[width=6cm]{prob2/prob2_figures/prob2_sketch.png}
+    %
+    \caption{The transmission problem}\label{fig:problem_2}
+    %
+  \end{figure}
+%
 \section{The velocity field}
 %
 The velocity field inside the cylinder will be subject to the same physics as the one outside the cylinder. We can therefore find the scattered field inside the cylinder in the same way we found the scattered field outside the cylinder in section \ref{ss:scattered_field}. \par

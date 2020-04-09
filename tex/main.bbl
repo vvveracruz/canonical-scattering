@@ -72,8 +72,9 @@
       \field{labeltitlesource}{title}
       \field{booktitle}{Multiple scattering: interaction of time-harmonic waves with N obstacles}
       \field{isbn}{9780521865548}
-      \field{series}{Encyclopedia of mathematics and its applications; vol. 107}
+      \field{series}{Encyclopedia of mathematics and its applications}
       \field{title}{Multiple scattering: interaction of time-harmonic waves with N obstacles}
+      \field{volume}{107}
       \field{year}{2006}
     \endentry
     \entry{pierce19acoustics}{book}{}

@@ -30,7 +30,7 @@ Throughout this chapter we will use Bessel functions. These functions are soluti
     \end{equation}
 called the Bessel equation of order $n$, where $n \in \bb{C}$.
     \begin{defn}\label{defn:bessel_func}
-    \cite{korenev02bessel_func} Bessel functions, or cylindrical functions of the first kind, are solutions to the Bessel differential equation, \eqref{eq:bessel_differential}.
+    \parencite{korenev02bessel_func} Bessel functions, or cylindrical functions of the first kind, are solutions to the Bessel differential equation, \eqref{eq:bessel_differential}.
         \begin{align*}
             J_n(z) = \sum^\infty_{m=0} \frac{
             (-1)^m z^{2m+n} }{
@@ -38,13 +38,13 @@ called the Bessel equation of order $n$, where $n \in \bb{C}$.
         \end{align*}
     \end{defn}
     \begin{defn}\label{defn:neumann_func}
-    \cite{korenev02bessel_func} Cylindrical functions of the second kind, also called Neumann functions, are linear combinations of Bessel functions of the first kind.
+    \parencite{korenev02bessel_func} Cylindrical functions of the second kind, also called Neumann functions, are linear combinations of Bessel functions of the first kind.
         \begin{align*}
             Y_n (z) = \frac{J_n(z) \cos (n \pi) - J_{-n}(z)}{\sin (n \pi)}
         \end{align*}
     \end{defn}
     \begin{defn}\label{defn:hankel_func}
-    \cite{korenev02bessel_func} Cylindrical functions of the third kind or Hankel functions, are linear combinations of Bessel functions of the first and second kind.
+    \parencite{korenev02bessel_func} Cylindrical functions of the third kind or Hankel functions, are linear combinations of Bessel functions of the first and second kind.
         \begin{align*}
             H^{(1)}_n(z) = J_n(z) + i Y_n(z)\\
             H^{(2)}_n(z) = J_n(z) - i Y_n(z)
@@ -96,7 +96,7 @@ First let us consider $\Phiin$, the incident field. We choose Cartesian coordina
                 \end{array}\right.
         \end{align*}
     \end{propn}
-    \begin{proof} TBD \cite[$\S$2.5]{martin06scattering}
+    \begin{proof} TBD \parencite[$\S$2.5]{martin06scattering}
     \end{proof}
 %
     \begin{propn}\label{propn:ch2_inc_field_infty_sum}
@@ -263,7 +263,7 @@ Since $R(kr)$ satisfies a Bessel differential equation, the Bessel functions are
       Hankel functions of the first kind satisfy the Sommerfeld radiation condition.
   \end{propn}
   \begin{proof}
-      TBD, see \cite[$\S$4.2]{martin06scattering}
+      TBD, see \parencite[$\S$4.2]{martin06scattering}
   \end{proof}\par
 %
 From now on we refer to $H^{(1)}_\nu$ as $H_\nu$ for simplicity.
@@ -323,7 +323,7 @@ We can now combine our solutions for $\Theta$ and $R$ to find an expression for 
 \subsection{Neumann boundary condition}\label{ss:ch2_neumann_bcs}
 We first cosider the boundary at the cylinder wall to satisfy a Neumann boundary condition.
   \begin{defn}
-    \cite[$\S$1.3.2]{martin06scattering} A boundary is sound-hard if
+    \parencite[$\S$1.3.2]{martin06scattering} A boundary is sound-hard if
       \begin{align*}
         \partialfrac{u}{r} = 0 \text{,  on } r = \sigma.
       \end{align*}
@@ -349,7 +349,7 @@ Since $\cos(n(\theta - \alpha)) \neq 0 ~ \forall n, \theta$, it must be that the
 \subsection{Dirichlet boundary condition}\label{ss:ch2_dirichlet_bcs}
 We now consider the Dirichlet boundary condition.
   \begin{defn}
-    \cite[$\S$1.3.2]{martin06scattering} A body is sound-soft if
+    \parencite[$\S$1.3.2]{martin06scattering} A body is sound-soft if
       \[
       u = 0 \text{,  on } r = \sigma
       \]

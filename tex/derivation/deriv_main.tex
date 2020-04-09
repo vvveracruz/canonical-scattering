@@ -17,7 +17,7 @@ We can use the Navier-Stokes equations to model the velocity field $\vec{u}$ of 
     \end{equation}
 Where $\nabla p$ is the pressure gradient within the fluid, $\vec{F}$ is the external force applied onto the fluid and $D/Dt$ is the material derivative.
 %
-For our problems, we will be interested in the velocity field of air, where the viscosity is negligible. Setting $\mu = 0$ gives the Euler momentum equation \cite{shaughnessy05fluids}
+For our problems, we will be interested in the velocity field of air, where the viscosity is negligible. Setting $\mu = 0$ gives the Euler momentum equation \parencite{shaughnessy05fluids}
     \begin{equation}
         \rho \frac{D \vec{u}}{D t} = \rho \vec{F} - \nabla p.
     \end{equation}
@@ -94,7 +94,7 @@ To continue we need to make a physical assumption about the pressure field.
 A fluid can either be barotropic or baroclinic.
 %
 Naively, baroclinic fluids are those where there is high variability. For example, where there are different air masses, cold and warm fronts or weather. In the problems we are going to consider this will not be the case - our fluid will be barotropic.
-    \begin{defn} \cite{shames02mechanics} A barotropic fluid is one where $\rho$ is expressible as a function of p only.
+    \begin{defn} \parencite{shames02mechanics} A barotropic fluid is one where $\rho$ is expressible as a function of p only.
         \[ \rho = \rho(p)
         \]
     \end{defn}
@@ -200,7 +200,7 @@ For an adiabatic process and a gas at constant pressure and volume, with constan
     \begin{equation}\label{eq:adiabatic_condition}
         p = K \rho ^ \gamma
     \end{equation}
-where $\gamma = c_p/c_v$ the specific heat ratio, and $K$ constant in time \cite[$\S$1.4.1]{pierce19acoustics}.
+where $\gamma = c_p/c_v$ the specific heat ratio, and $K$ constant in time \parencite[$\S$1.4.1]{pierce19acoustics}.
 %
 %----------------------------------------------------------------
 %                  speed of sound
