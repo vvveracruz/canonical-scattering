@@ -10,6 +10,8 @@ from fields import *
 from inputs import *
 from graphics import *
 
+def real(Z):
+    return [[n.real for n in z] for z in Z]
 #--------------------------------------------------------------------
 #                           main class
 #--------------------------------------------------------------------

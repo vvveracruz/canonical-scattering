@@ -44,7 +44,7 @@ class IncidentField(Wave, Inputs):
         '''
 
         if self.get_r(x, y) >= self.get_cylinder_radius():
-            return (np.exp(1j*(self.get_wavevector()[0]*x + self.get_wavevector()[1]*y))).real
+            return (np.exp(1j*(self.get_wavevector()[0]*x + self.get_wavevector()[1]*y)))
         else:
             return 0
 
@@ -69,7 +69,7 @@ class ScatteredField(Wave, Inputs):
         theta = self.get_theta(x, y)
 
         if r >= self.get_cylinder_radius():
-            return self.get_sum(r, theta).real
+            return self.get_sum(r, theta)
         else:
             return 0
 
