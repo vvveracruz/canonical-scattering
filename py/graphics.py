@@ -74,38 +74,6 @@ class Graphics(Inputs):
 
         plt.show()
 
-    """def time_slider(self, wave):
-        '''TODO: docstring'''
-
-        def time_dependence(t):
-            return np.exp(-1j*self.get_omega()*t)
-
-        def field(t):
-            return [[n * time_dependence(t) for n in z] for z in wave.get_array_Z()]
-
-        #specifying the plot
-        fig = plt.figure()
-        ax = fig.add_subplot(111)
-        fig.subplots_adjust(bottom=0.25)
-
-        plot = self.heat_map(wave)
-
-        time_slider_ax = fig.add_axes([0.25, 0.1, 0.65, 0.03])
-        time_slider = Slider(   time_slider_ax,
-                                'Time',
-                                self.time_period[0],
-                                self.time_period[1],
-                                0.5* (self.time_period[0] + self.time_period[1]),
-                                valstep = self.time_step,
-                                    )
-
-        def val_update(val):
-            plot.set_ydata(signal(time_slider.val))
-            fig.canvas.draw_idle()
-        time_slider.on_changed(val_update)
-
-        plt.show()"""
-
     def contour(self, wave):
         Z = [[n.real for n in z] for z in wave.get_array_Z()]
         plt.contour(Z, extent=self.get_extent())
