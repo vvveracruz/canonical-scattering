@@ -1,11 +1,10 @@
 # Fdb version 3
-["biber main"] 1586860708 "main.bcf" "main.bbl" "main" 1586860715
-  "main.bcf" 1586860714 94228 edff001aad0ba9474d20392a54314f8d ""
+["biber main"] 1586861338 "main.bcf" "main.bbl" "main" 1586861348
+  "main.bcf" 1586861347 94228 edff001aad0ba9474d20392a54314f8d ""
   "references.bib" 1586860705 2073 2ce611824384dedde0172559b3761c85 ""
   (generated)
-  "main.blg"
   "main.bbl"
-["pdflatex"] 1586860712 "main.tex" "main.pdf" "main" 1586860715
+["pdflatex"] 1586861345 "main.tex" "main.pdf" "main" 1586861348
   "/usr/local/texlive/2016/texmf-dist/fonts/map/fontname/texfonts.map" 1272929888 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/local/texlive/2016/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2016/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1246382020 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -198,12 +197,12 @@
   "front/abstract.tex" 1582554654 904 639f9a72de34641dbd3c181cc7970ced ""
   "front/contents.tex" 1582554654 16 f84fe46f1a4fbd3ea00e9cc12e2be653 ""
   "front/titlepage.tex" 1586166422 402 2a01378f5d2e4285eac04f942edc8eb7 ""
-  "main.aux" 1586860714 15506 31a3a7cd65a7cd39b6aeae59ee036647 ""
-  "main.bbl" 1586860709 6190 bc07fa6934e3ad3ec35c0001e0848c98 "biber main"
-  "main.out" 1586860714 1758 6c9deaa81eb26fcdd5fdc033b972f05a ""
-  "main.run.xml" 1586860714 2355 8480d22a360e2ec2c810188abca33e9e ""
+  "main.aux" 1586861347 15506 31a3a7cd65a7cd39b6aeae59ee036647 ""
+  "main.bbl" 1586861339 6190 bc07fa6934e3ad3ec35c0001e0848c98 "biber main"
+  "main.out" 1586861347 1758 6c9deaa81eb26fcdd5fdc033b972f05a ""
+  "main.run.xml" 1586861347 2355 8480d22a360e2ec2c810188abca33e9e ""
   "main.tex" 1586343245 1005 8c79e4fd9323413233773605421ba694 ""
-  "main.toc" 1586860714 5207 d74186a548c9ecc9f229e49e2ba0b71f ""
+  "main.toc" 1586861347 5207 d74186a548c9ecc9f229e49e2ba0b71f ""
   "prob1/prob1_figures/sk_problem_1.png" 1582554654 51804 ce910b4509f55f584b7f303ab6ed57a2 ""
   "prob1/prob1_main.tex" 1586785061 15568 eb38ba8c2c0db319ee6f9127051ffb13 ""
   "prob2/prob2_figures/prob2_sketch.png" 1586254071 22479 c4e169974c601e9263d15e18704b6ec8 ""
@@ -213,10 +212,10 @@
   "sty.sty" 1586785442 2712 7c7ad1ef7740479aa6074c4357283a66 ""
   "tool/tool_main.tex" 1584191555 13574 27d9ad641720e78a2667eb72ba96697f ""
   (generated)
-  "main.bcf"
-  "main.aux"
-  "main.toc"
   "main.pdf"
-  "main.run.xml"
   "main.log"
+  "main.toc"
+  "main.aux"
+  "main.bcf"
+  "main.run.xml"
   "main.out"
