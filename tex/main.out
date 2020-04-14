@@ -7,23 +7,22 @@
 \BOOKMARK [1][-]{section.1.5}{Speed of sound}{chapter.1}% 7
 \BOOKMARK [1][-]{section.1.6}{The Helmholtz equation}{chapter.1}% 8
 \BOOKMARK [1][-]{section.1.7}{Physical interpretation}{chapter.1}% 9
-\BOOKMARK [0][-]{chapter.2}{Scattering around a circular cylinder}{}% 10
-\BOOKMARK [1][-]{section.2.1}{Introduction to the problem}{chapter.2}% 11
-\BOOKMARK [1][-]{section.2.2}{The incident field}{chapter.2}% 12
-\BOOKMARK [1][-]{section.2.3}{The scattered field}{chapter.2}% 13
-\BOOKMARK [1][-]{section.2.4}{Total field}{chapter.2}% 14
-\BOOKMARK [0][-]{chapter.3}{Scattering inside the circular cylinder}{}% 15
-\BOOKMARK [1][-]{section.3.1}{Introduction}{chapter.3}% 16
-\BOOKMARK [1][-]{section.3.2}{The velocity field}{chapter.3}% 17
-\BOOKMARK [1][-]{section.3.3}{Problems at the origin}{chapter.3}% 18
-\BOOKMARK [1][-]{section.3.4}{The permeable boundary}{chapter.3}% 19
-\BOOKMARK [0][-]{chapter.4}{Scattering around multiple cylinders}{}% 20
-\BOOKMARK [1][-]{section.4.1}{Introduction}{chapter.4}% 21
-\BOOKMARK [0][-]{chapter.5}{Plotter tool}{}% 22
-\BOOKMARK [1][-]{section.5.1}{Introduction}{chapter.5}% 23
-\BOOKMARK [1][-]{section.5.2}{Approach}{chapter.5}% 24
-\BOOKMARK [1][-]{section.5.3}{The Graphics class}{chapter.5}% 25
-\BOOKMARK [1][-]{section.5.4}{The Wave class}{chapter.5}% 26
-\BOOKMARK [1][-]{section.5.5}{Particular Wave instantiations}{chapter.5}% 27
-\BOOKMARK [1][-]{section.5.6}{Example plots}{chapter.5}% 28
-\BOOKMARK [0][-]{chapter*.6}{Bibliography}{}% 29
+\BOOKMARK [1][-]{section.1.8}{Bessel functions}{chapter.1}% 10
+\BOOKMARK [0][-]{chapter.2}{Scattering around a circular cylinder}{}% 11
+\BOOKMARK [1][-]{section.2.1}{Introduction to the problem}{chapter.2}% 12
+\BOOKMARK [1][-]{section.2.2}{The incident field}{chapter.2}% 13
+\BOOKMARK [1][-]{section.2.3}{The scattered field}{chapter.2}% 14
+\BOOKMARK [1][-]{section.2.4}{Total field}{chapter.2}% 15
+\BOOKMARK [0][-]{chapter.3}{Scattering inside the circular cylinder}{}% 16
+\BOOKMARK [1][-]{section.3.1}{Introduction}{chapter.3}% 17
+\BOOKMARK [1][-]{section.3.2}{Boundary conditions}{chapter.3}% 18
+\BOOKMARK [0][-]{chapter.4}{Scattering around multiple cylinders}{}% 19
+\BOOKMARK [1][-]{section.4.1}{Introduction}{chapter.4}% 20
+\BOOKMARK [0][-]{chapter.5}{Plotter tool}{}% 21
+\BOOKMARK [1][-]{section.5.1}{Introduction}{chapter.5}% 22
+\BOOKMARK [1][-]{section.5.2}{Approach}{chapter.5}% 23
+\BOOKMARK [1][-]{section.5.3}{The Graphics class}{chapter.5}% 24
+\BOOKMARK [1][-]{section.5.4}{The Wave class}{chapter.5}% 25
+\BOOKMARK [1][-]{section.5.5}{Particular Wave instantiations}{chapter.5}% 26
+\BOOKMARK [1][-]{section.5.6}{Example plots}{chapter.5}% 27
+\BOOKMARK [0][-]{chapter*.6}{Bibliography}{}% 28

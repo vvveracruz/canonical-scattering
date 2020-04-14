@@ -9,6 +9,7 @@
 \usepackage[utf8]{inputenc}
 %----------------------- bibliography settings --------------------
 \usepackage[
+  backend = biber,
   style=authoryear-ibid
 ]{biblatex}
 \addbibresource{references.bib}
@@ -38,6 +39,8 @@
 \newcommand{\Phisc}{\Phi_{\text{sc}}}   %   scattered field
 \newcommand{\Phiin}{\Phi_{\text{in}}}   %   incident field
 \newcommand{\Phitot}{\Phi_{\text{tot}}} %   total field
+\newcommand{\Phiout}{\Phi_{\text{out}}} %   total field
+\newcommand{\PPhi}[1]{\Phi_{\text{#1}}}
 
 %----------------- maths notation commands -----------------------
 \renewcommand{\Re}{\text{Re}}           %   Re

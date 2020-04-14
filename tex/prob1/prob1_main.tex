@@ -19,39 +19,6 @@ For this problem we consider a plane wave propagates from infinity onto a cylind
 Throughout this problem we will be concerned with finding an expression for the total velocity field around the cylinder, $\vec{u}$. As we showed in \ssref{ss:physical_interpretation}, it will be sufficient for us to seek $\Phi(x, y)$, since this is a 2D problem. \par
 %
 Let $\Phitot = \Phiin + \Phisc$, where $\Phiin$ is the incident field, and $\Phisc$ is the scattered field. All three of these must satisfy the Helmholtz equation.
-%
-%-----------------------------------------------------------------
-%               introducing bessel funcs
-%-----------------------------------------------------------------
-\subsection{Introducing Bessel functions}
-Throughout this chapter we will use Bessel functions. These functions are solutions to the differential equation
-    \begin{equation}\label{eq:bessel_differential}
-        z^2 \frac{d^2 u}{dz^2} + z\frac{du}{dz} + (z^2 - n^2)u = 0
-    \end{equation}
-called the Bessel equation of order $n$, where $n \in \bb{C}$.
-    \begin{defn}\label{defn:bessel_func}
-    \parencite{korenev02bessel_func} Bessel functions, or cylindrical functions of the first kind, are solutions to the Bessel differential equation, \eqref{eq:bessel_differential}.
-        \begin{align*}
-            J_n(z) = \sum^\infty_{m=0} \frac{
-            (-1)^m z^{2m+n} }{
-            2^{2m+n} m! (n+m)! }
-        \end{align*}
-    \end{defn}
-    \begin{defn}\label{defn:neumann_func}
-    \parencite{korenev02bessel_func} Cylindrical functions of the second kind, also called Neumann functions, are linear combinations of Bessel functions of the first kind.
-        \begin{align*}
-            Y_n (z) = \frac{J_n(z) \cos (n \pi) - J_{-n}(z)}{\sin (n \pi)}
-        \end{align*}
-    \end{defn}
-    \begin{defn}\label{defn:hankel_func}
-    \parencite{korenev02bessel_func} Cylindrical functions of the third kind or Hankel functions, are linear combinations of Bessel functions of the first and second kind.
-        \begin{align*}
-            H^{(1)}_n(z) = J_n(z) + i Y_n(z)\\
-            H^{(2)}_n(z) = J_n(z) - i Y_n(z)
-        \end{align*}
-    \end{defn}
-By the principle of superpostion both Neumann and Hankel functions are solutions to the Bessel differential equation.
-%
 %-----------------------------------------------------------------
 %                   INCIDENT FIELD
 %-----------------------------------------------------------------

@@ -7,9 +7,9 @@
 %                       INTRODUCTION
 %-----------------------------------------------------------------
 \section{Introduction}
-We now have an expression for the total field around the cyliner, the logical next step is to ask ourselves what happens \emph{inside} the cylinder. For this, we will assume that the boundary for the cylinder is permeable. Our goal in this section is to find an expression for the velocity field inside the cylinder, combine this with our result in Chapter \ref{chp:inside} to plot the complete field over the entire domain. \par
+We now want to consider what happens inside a cylinder of different density to the outside medium. We consider our same plane wave inciding on this cylinder see \figref{fig:problem_2}. The goal in this section is to find an expression for the velocity field inside the cylinder, combine this with our result in Chapter \ref{chp:outside} to plot the complete field over the entire domain. \par
 %
-This is referred to as a \emph{transmission problem} in the literature, see for example \cite[$\S$1.3.3]{martin06scattering} since the wave is not bounded at the cylinder walls but transmitted through. We will consider a situation where the densities outside and inside the cylinder are different, see \figref{fig:problem_2}. \par
+This is referred to as a \emph{transmission problem} in the literature, see for example \cite[$\S$1.3.3]{martin06scattering} since the wave is not bounded at the cylinder walls but transmitted through. \par
 %
 The statement of the problem is as follows. We are given an incident field, $\Phiin$ for which we need to find the field at the cylinder wall, $\Phi_{r=\sigma}$ and the field inside the cylinder wall $\Phi_{r<\sigma}$.
 %
@@ -21,87 +21,78 @@ The statement of the problem is as follows. We are given an incident field, $\Ph
     %
   \end{figure}
 %
-\section{The velocity field}
-%
 The velocity field inside the cylinder will be subject to the same physics as the one outside the cylinder. We can therefore find the scattered field inside the cylinder in the same way we found the scattered field outside the cylinder in section \ref{ss:scattered_field}. \par
 %
-In \ref{ss:scattered_field} we made our choice of cylindrical function to be used by describing the far field, and realising it must satisfy the Sommerfeld Radiation Condition (definition \ref{defn:sommerfeld_radiation_condition}). In the same way here we consider the field as we approach the origin.
+  \begin{equation}
+    \Phi_{\text{inside}} = \sum^\infty_{n=0} \epsilon_n i^n \hat{A} \text{ Bessel}(kr) \cos(n(\theta-\alpha))
+  \end{equation}
+  \begin{equation}
+    \Phi_{\text{outside}} = \sum^\infty_{n=0} \epsilon_n i^n \hat{B} H(kr) \cos(n(\theta-\alpha))
+  \end{equation}
 %
-\section{Problems at the origin}
+In \ref{ss:scattered_field} we made our choice of cylindrical function to be used by describing the far field, and realising it must satisfy the Sommerfeld Radiation Condition (definition \ref{defn:sommerfeld_radiation_condition}). In the same way here we consider the field as we approach the origin. Outside the cylinder the Bessel function must still be of the third kind since it must still satisfy the Sommerfeld Radiation Condition.
 %
-  \begin{propn}
-    Hankel functions are singular at zero.
-  \end{propn}
-  %
-  \begin{proof}
-
-  \end{proof}
+\section{Boundary conditions}
+The complete velocity field must be
+  \begin{enumerate}
+    \item continuous at the boundary,
+    \item well defined as $r \rightarrow \infty$,
+    \item and well defined as $r \rightarrow 0$.
+  \end{enumerate}\par
 %
-  \begin{propn}
-    Neumann functions are singular at zero.
-  \end{propn}
-  %
-  \begin{proof}
-
-  \end{proof}
-%
-  \begin{propn}
-    Bessel functions are well defined at zero.
-  \end{propn}
-  %
-  \begin{proof}
-
-  \end{proof}
-%
-\section{The permeable boundary}
-The first thing we notice when looking at this problem is the boundary condition: the wave must cross the permeable membrane of the cylinder to enter it, and this transition between the outside and inside must be continuous. We have:
-%
-  \begin{equation}\label{eq:in_boundary_conditon}
-    \rho_1 \partialfrac{\Phi^{out}}{r}\bigg\vert_{r=\sigma} = \rho_2 \partialfrac{\Phi^{in}}{r}\bigg\vert_{r=\sigma}.
+These conditions will be sufficient to find an expression for the total field, which as before will be defined as
+  \begin{equation}
+    \PPhi{tot} = \PPhi{in} + \PPhi{out}.
   \end{equation}\par
 %
-  \begin{propn}\label{propn:in_boundary_condition_integral}
-    The boundary condition at $r=\sigma$ the velocity potential inside the cylinder is the following
-    %
-      \begin{align*}
-        \Phi^{in}(r, \theta) = \sum^\infty_{n=0} \left( \xi_n r cos(n(\theta-\alpha)) + \vartheta_n(\theta) \right)& \\
-        \text{ with } &\xi_n = \frac{\rho_1}{\rho_2}\epsilon_n i^n\{ B_n H_n'(k\sigma) + J_n'(k\sigma) \}
-      \end{align*}
-    %
-    for $\vartheta_n$ any function of $\theta$.
+Condition 2 is immediatelly satisfied by our solution to the first problem, since that solution was chosen to satisfy the Sommerfeld Radiation Condition. \par
+%
+We can restate Condition 3 as follows.
+  \begin{equation}\label{eq:in_boundary_conditon}
+    \partialfrac{\PPhi{out}}{r}\bigg\vert_{r=\sigma} =  \partialfrac{\PPhi{in}}{r}\bigg\vert_{r=\sigma}.
+  \end{equation}\par
+%
+Condition 1 will be satisfied by our choice of Bessel function.
+%             PROPOSITION
+  \begin{propn}
+    Neumann functions are singular at the origin.
   \end{propn}
-%
+  %
   \begin{proof}
-    This follows from \eqref{eq:in_boundary_conditon}. \par
-    %
-    We know that $\Phi^{out}$ is an infinite sum such that
-    %
-      \begin{gather*}
-        \Phi^{out} = \sum^{\infty}_{n=0} \Phi^{out}_n, \text{ for } \\
-        \Phi^{out}_n = \epsilon_n i^n cos(n(\theta-\alpha)) \{ B_n H_n(kr) + J_n(kr) \}.
-      \end{gather*}
-    %
-    Then,
-    %
-      \begin{equation}
-        \partialfrac{\Phi^{out}_n}{r}\bigg\vert_{r=\sigma} = \epsilon_n i^n cos(n(\theta-\alpha)) \{ B_n H_n'(k\sigma) + J_n'(k\sigma) \}.
-      \end{equation}\par
-    %
-    Hence from \eqref{eq:in_boundary_conditon},
-    %
-      \begin{equation}
-        \partialfrac{\Phi^{in}_n}{r} = \frac{\rho_1}{\rho_2}\epsilon_n i^n cos(n(\theta-\alpha)) \{ B_n H_n'(k\sigma) + J_n'(k\sigma) \},
-      \end{equation}
-    %
-    or equivalently,
-    %
-      \begin{align}
-        \partialfrac{\Phi^{in}}{r} &= \sum^\infty_{n=0} \xi_n cos(n(\theta-\alpha)). \\
-        \therefore \Phi^{in} &= \bigintsss \sum^\infty_{n=0} \xi_n cos(n(\theta-\alpha)) \mathrm{d}r \\
-          &= \sum^\infty_{n=0} \int\xi_n cos(n(\theta-\alpha)) \mathrm{d}r \\
-          &= \sum^\infty_{n=0} \left( \xi_n r cos(n(\theta-\alpha)) + \vartheta_n(\theta) \right)
-      \end{align}
-    %
-    as required.
+
   \end{proof}
-%
+%               PROPOSITION
+  \begin{propn}
+    Bessel functions of the first kind of integer order are well defined at the origin. In particular,
+    \begin{align}\label{propn:bessel_arg_zero}
+        J_n(x) =\left\{
+          \begin{array}{c l}
+               1 & n = 0 \\
+               0 & n \neq 0
+          \end{array}\right.
+        \text{for } x \rightarrow 0.
+    \end{align}
+  \end{propn}
+  %              PROOF
+  \begin{proof}
+    This is immediate from the definiton of Bessel functions (definition \ref{defn:bessel_func}).
+      \begin{align*}
+        J_n(x)
+          &= \sum^\infty_{m=0} \frac{(-1)^m(x/2)^{n+2m}}{m! (n+m)!}\\
+          &= \frac{(-1)^0(x/2)^{n}}{0!n!}         %m=0
+            + \frac{(-1)^1(x/2)^{n+2}}{1!(n+1)!}  %m=1
+            + \frac{(-1)^2(x/2)^{n+4}}{2!(n+2)!}  %m=2
+            + \dotsb \\
+          &= \left(\frac{x}{2}\right)^n
+            \left[\frac{1}{n!}           %m=0
+            - \frac{(x/2)^{2}}{(n+1)!}   %m=1
+            + \frac{(x/2)^{4}}{2(n+2)!}  %m=2
+            + \dotsb \right]\\
+        \therefore
+        J_0(x)
+          &= 1
+            - \frac{(x/2)^{2}}{2}
+            + \frac{(x/2)^{4}}{12} + \dotsb
+      \end{align*}
+    Hence the function is well defined at $x=0$, and \ref{propn:bessel_arg_zero} holds for all $n \in \bb{Z}$.
+  \end{proof}

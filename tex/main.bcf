@@ -2103,14 +2103,15 @@
     <bcf:citekey order="3">pierce19acoustics</bcf:citekey>
     <bcf:citekey order="4">korenev02bessel_func</bcf:citekey>
     <bcf:citekey order="5">korenev02bessel_func</bcf:citekey>
-    <bcf:citekey order="6">korenev02bessel_func</bcf:citekey>
-    <bcf:citekey order="7">martin06scattering</bcf:citekey>
+    <bcf:citekey order="6">cohen02numth</bcf:citekey>
+    <bcf:citekey order="7">korenev02bessel_func</bcf:citekey>
     <bcf:citekey order="8">martin06scattering</bcf:citekey>
     <bcf:citekey order="9">martin06scattering</bcf:citekey>
     <bcf:citekey order="10">martin06scattering</bcf:citekey>
     <bcf:citekey order="11">martin06scattering</bcf:citekey>
     <bcf:citekey order="12">martin06scattering</bcf:citekey>
     <bcf:citekey order="13">martin06scattering</bcf:citekey>
+    <bcf:citekey order="14">martin06scattering</bcf:citekey>
   </bcf:section>
   <bcf:sortlist section="0" name="nyt/global/" type="entry" sortscheme="nyt" sortnamekeyscheme="global" labelprefix="">
   <bcf:sorting>

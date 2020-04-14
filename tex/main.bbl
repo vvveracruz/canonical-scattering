@@ -19,6 +19,33 @@
 
 \refsection{0}
   \sortlist[entry]{nyt/global/}
+    \entry{cohen02numth}{book}{}
+      \name{author}{1}{}{%
+        {{uniquename=0,hash=1b9eaa2dcc035d832e4e006c440bd99d}{%
+           family={Cohen},
+           family_i={C\bibinitperiod},
+           given={H.},
+           given_i={H\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {New York}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{1b9eaa2dcc035d832e4e006c440bd99d}
+      \strng{fullhash}{1b9eaa2dcc035d832e4e006c440bd99d}
+      \field{sortinit}{C}
+      \field{sortinithash}{59f25d509f3381b07695554a9f35ecb2}
+      \field{labelyear}{2007}
+      \field{datelabelsource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{series}{Graduate texts in Mathematics}
+      \field{title}{Number Theory Volume II: Analytic and Modern Tools}
+      \field{volume}{240}
+      \field{year}{2007}
+    \endentry
     \entry{korenev02bessel_func}{book}{}
       \name{author}{1}{}{%
         {{uniquename=0,hash=4e7721a051a126a7df9e4a57405bf967}{%
@@ -41,12 +68,10 @@
       \field{datelabelsource}{}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{booktitle}{Bessel functions and their applications}
-      \field{isbn}{041528130X}
-      \field{series}{Analytical methods and special functions; vol.8}
+      \field{series}{Analytical methods and special functions}
       \field{title}{Bessel functions and their applications}
+      \field{volume}{8}
       \field{year}{2002}
-      \keyw{Bessel functions}
     \endentry
     \entry{martin06scattering}{book}{}
       \name{author}{1}{}{%
@@ -70,8 +95,6 @@
       \field{datelabelsource}{}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{booktitle}{Multiple scattering: interaction of time-harmonic waves with N obstacles}
-      \field{isbn}{9780521865548}
       \field{series}{Encyclopedia of mathematics and its applications}
       \field{title}{Multiple scattering: interaction of time-harmonic waves with N obstacles}
       \field{volume}{107}
@@ -79,10 +102,10 @@
     \endentry
     \entry{pierce19acoustics}{book}{}
       \name{author}{1}{}{%
-        {{uniquename=0,hash=182efbbddc503448c703834250b01e9c}{%
+        {{uniquename=0,hash=ff90202d8cda451dffe25b4aeda0e46d}{%
            family={Pierce},
            family_i={P\bibinitperiod},
-           given={Allan\bibnamedelima D.},
+           given={A.\bibnamedelimi D.},
            given_i={A\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
       }
       \list{location}{1}{%
@@ -91,26 +114,24 @@
       \list{publisher}{1}{%
         {Springer}%
       }
-      \strng{namehash}{182efbbddc503448c703834250b01e9c}
-      \strng{fullhash}{182efbbddc503448c703834250b01e9c}
+      \strng{namehash}{ff90202d8cda451dffe25b4aeda0e46d}
+      \strng{fullhash}{ff90202d8cda451dffe25b4aeda0e46d}
       \field{sortinit}{P}
       \field{sortinithash}{c0a4896d0e424f9ca4d7f14f2b3428e7}
       \field{labelyear}{2019}
       \field{datelabelsource}{}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{booktitle}{Acoustics: an introduction to its physical principles and applications}
       \field{edition}{3rd}
-      \field{isbn}{9783030112141}
       \field{title}{Acoustics: an introduction to its physical principles and applications}
       \field{year}{2019}
     \endentry
     \entry{shames02mechanics}{book}{}
       \name{author}{1}{}{%
-        {{uniquename=0,hash=c3cf2eae82a9125b34779e3f773b3a3c}{%
+        {{uniquename=0,hash=960a56b2e01efe367fa8b1f70ee0aa34}{%
            family={Shames},
            family_i={S\bibinitperiod},
-           given={Irving\bibnamedelima H.},
+           given={I.\bibnamedelimi H.},
            given_i={I\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
       }
       \list{location}{1}{%
@@ -119,27 +140,24 @@
       \list{publisher}{1}{%
         {McGraw-Hill}%
       }
-      \strng{namehash}{c3cf2eae82a9125b34779e3f773b3a3c}
-      \strng{fullhash}{c3cf2eae82a9125b34779e3f773b3a3c}
+      \strng{namehash}{960a56b2e01efe367fa8b1f70ee0aa34}
+      \strng{fullhash}{960a56b2e01efe367fa8b1f70ee0aa34}
       \field{sortinit}{S}
       \field{sortinithash}{fd1e7c5ab79596b13dbbb67f8d70fb5a}
       \field{labelyear}{2002}
       \field{datelabelsource}{}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{booktitle}{Mechanics of fluids}
       \field{edition}{4th}
-      \field{isbn}{007119889X}
       \field{title}{Mechanics of fluids}
       \field{year}{2002}
-      \keyw{Fluid mechanics}
     \endentry
     \entry{shaughnessy05fluids}{book}{}
       \name{author}{1}{}{%
-        {{uniquename=0,hash=4ec994ddf7b0a0374136faf889e806d7}{%
+        {{uniquename=0,hash=07cc55e7aee352db216844c6fcefb80e}{%
            family={Shaughnessy},
            family_i={S\bibinitperiod},
-           given={Edward\bibnamedelimb J.\bibnamedelimi et\bibnamedelima al},
+           given={E.\bibnamedelimi J.\bibnamedelimi et\bibnamedelima al},
            given_i={E\bibinitperiod\bibinitdelim J\bibinitperiod\bibinitdelim e\bibinitperiod\bibinitdelim a\bibinitperiod}}}%
       }
       \list{location}{1}{%
@@ -148,16 +166,14 @@
       \list{publisher}{1}{%
         {Oxford University Press}%
       }
-      \strng{namehash}{4ec994ddf7b0a0374136faf889e806d7}
-      \strng{fullhash}{4ec994ddf7b0a0374136faf889e806d7}
+      \strng{namehash}{07cc55e7aee352db216844c6fcefb80e}
+      \strng{fullhash}{07cc55e7aee352db216844c6fcefb80e}
       \field{sortinit}{S}
       \field{sortinithash}{fd1e7c5ab79596b13dbbb67f8d70fb5a}
       \field{labelyear}{2005}
       \field{datelabelsource}{}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{booktitle}{Introduction to fluid mechanics}
-      \field{isbn}{9781680152838}
       \field{title}{Introduction to fluid mechanics}
       \field{year}{2005}
     \endentry
