@@ -6,7 +6,5 @@
   "cylinder_radius" : 1,
   "speed_of_sound" : 343,
   "boundary_type" : "neumann",
-  "field_type" : "IncidentField",
-  "time_period" : [0, 5],
-  "time_step"   : 1
+  "field_type" : "none"
 }

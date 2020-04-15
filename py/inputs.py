@@ -77,18 +77,6 @@ class Inputs():
             self.speed_of_sound = 343
             print('ERROR: input for speed of sound must be a float. Has been set to default.')
 
-        ## TIME PERIOD
-        try:
-            self.time_period = [float(x) for x in dict['time_period']]
-        except ValueError:
-            self.time_period = [0, 1, 10]
-            print('ERROR: inputs for time_period must be floats. Has been set to default.')
-
-        try:
-            self.time_step = float(dict['time_step'])
-        except ValueError:
-            self.time_step = 0.1
-            print('ERROR: input for time_step must be a float. Has been set to default.')
 
     ##  PARAMS FOR THE COORDINATES
     def get_axis_length(self):
@@ -147,6 +135,3 @@ class Inputs():
     ##  PHYSICAL CONSTANTS
     def get_speed_of_sound(self):
         return self.speed_of_sound
-
-    def get_time_period(self):
-        return self.time_period

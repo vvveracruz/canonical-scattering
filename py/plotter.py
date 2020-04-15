@@ -11,6 +11,10 @@ from inputs import *
 from graphics import *
 
 def real(Z):
+    '''
+    Transforms an array with imaginary float elements into an
+    array with real float elements.
+    '''
     return [[n.real for n in z] for z in Z]
 #--------------------------------------------------------------------
 #                           main class
@@ -19,7 +23,6 @@ def real(Z):
 class Main(Inputs):
     def __init__(self):
         print("> running plotter ...")
-
         Inputs.__init__(self)
         self.graph = Graphics()
 
@@ -42,7 +45,7 @@ class Main(Inputs):
 
     def testing(self):
         '''Function used to test code.'''
-        return None
+        self.integer_order_hankel1(self.graph)
 
     def incident_plot(self, graph):
         '''TODO: docstring'''
@@ -58,6 +61,67 @@ class Main(Inputs):
         '''TODO: docstring'''
         field = TotalField()
         graph.heat_map(field)
+
+    def integer_order_bessel(self, graph):
+        '''TODO'''
+        x=np.linspace(0,5,100)
+
+        fig=plt.figure()
+        ax=fig.add_subplot(111)
+
+        for n in range(6):
+            ax.plot(x,sp.jv(n, x), label=str(n))
+
+        plt.axhline(color='black',
+                    linewidth = 0.5)
+
+        plt.legend(loc=1)
+        plt.title('Bessel function of order n.')
+        plt.ylabel('$J_{n}(r)$')
+        plt.xlabel('$r$')
+        plt.show()
+
+    def integer_order_hankel1(self, graph):
+        '''TODO'''
+        x=np.linspace(0,7,100)
+
+        fig=plt.figure()
+        ax=fig.add_subplot(111)
+
+        axes = plt.gca()
+        axes.set_ylim([0,4])
+
+        for n in range(6):
+            ax.plot(x,abs(sp.hankel1(n, x)), label=str(n))
+
+        plt.legend(loc=1)
+        plt.title('Absolute value of the Hankel function of the first type of order n.')
+        plt.ylabel('$H_{n}^{(1)}(r)$')
+        plt.xlabel('$r$')
+        plt.show()
+
+    def integer_order_neumann(self, graph):
+        '''TODO'''
+        x=np.linspace(0,10,100)
+
+        fig=plt.figure()
+        ax=fig.add_subplot(111)
+
+        axes = plt.gca()
+        axes.set_ylim([-2,1])
+
+        for n in range(6):
+            ax.plot(x,sp.yn(n, x), label=str(n))
+
+        plt.axhline(color='black',
+                    linewidth = 0.5)
+
+        plt.legend(loc=4)
+        plt.title('Neumann function of order n.')
+        plt.ylabel('$Y_{n}(r)$')
+        plt.xlabel('$r$')
+        plt.show()
+
 
 #--------------------------------------------------------------------
 #                         wave super class
