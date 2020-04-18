@@ -325,7 +325,7 @@ This is the Helmholtz equation, or Helmholtz eigenvalue problem.
 \section{Physical interpretation}\label{ss:physical_interpretation}
 \begin{figure}
         \centering
-        \includegraphics[width=6cm]{derivation/deriv_figures/sk_incident_wave_2.png}
+        \includegraphics[width=6cm]{../figures/sk_incident_wave_2.png}
         \caption{Incident wave with wave vector $\vec{k}$}
         \label{fig:incident_wave}
     \end{figure}
@@ -396,64 +396,3 @@ In \ssref{ss:lin_wave_eq} we showed that $\vec{u}=\nabla\phi$, and that this fun
         \end{equation*}
     as required.
     \end{proof}
-
-%-----------------------------------------------------------------
-%               BESSEL FUNCTIONS
-%-----------------------------------------------------------------
-\section{Bessel functions}
-We will use Bessel functions throughout. These functions are solutions to the differential equation.
-  \begin{equation}\label{eq:bessel_differential}
-      z^2 \frac{d^2 u}{dz^2} + z\frac{du}{dz} + (z^2 - n^2)u = 0
-  \end{equation}
-called the Bessel equation of order $n$.\par
-%                                         DEFN: BESSEL
-  \begin{defn}\label{defn:bessel_func}
-  \parencite{korenev02bessel_func} Bessel functions, or cylindrical functions of the first kind, are solutions to the Bessel differential equation, \eqref{eq:bessel_differential}.
-  %
-    \begin{align*}
-        J_n(z) = \sum^\infty_{m=0} \frac{
-        (-1)^m (z/2)^{2m+n} }{
-        m! (n+m)! }
-    \end{align*}
-  %
-  \end{defn}
-%                                         DEFN: NEUMANN
-  \begin{defn}\label{defn:neumann_func}
-  \parencite{korenev02bessel_func} Cylindrical functions of the second kind, also called Neumann functions, are linear combinations of Bessel functions of the first kind.
-  %
-    \begin{align*}
-        Y_n (z) = \frac{J_n(z) \cos (n \pi) - J_{-n}(z)}{\sin (n \pi)}
-    \end{align*} \par
-  %
-  where we take the limit $ n\rightarrow n'$ for integer values of $n$ \parencite{cohen02numth}.
-  \end{defn}\par
-%
-We run into problems when we consider Neumann functions of integer argument. Since this will be our main application it is worth discussing.
-%               PROPOSITION
-  \begin{propn}
-    Neumann functions are not well defined for $n \in \bb{Z}$.
-  \end{propn}
-%               PROOF
-  \begin{proof}
-    It is sufficient to note the following limits:
-      \begin{align*}
-        \lim_{n\rightarrow \text{ even int}^{+}} \frac{1}{\sin(n\pi)} = + \infty,~
-        \lim_{n\rightarrow \text{ even int}^{-}} \frac{1}{\sin(n\pi)} = - \infty \\
-        \lim_{n\rightarrow \text{ odd int}^{+}} \frac{1}{\sin(n\pi)} = - \infty,~
-        \lim_{n\rightarrow \text{ odd int}^{-}} \frac{1}{\sin(n\pi)} = + \infty \\.
-      \end{align*}\par
-    %
-    Hence, the limit of $1/\sin(n\pi)$ as $n\rightarrow$ integer does not exist, and therefore the Neumann functions are not well defined for $n \in \bb{Z}$.
-  \end{proof}\par
-%
-However Neumann functions are still useful in this context because they form part of the definition of Hankel functions. \par
-%                                         DEFN: HANKEL
-  \begin{defn}\label{defn:hankel_func}
-  \parencite{korenev02bessel_func} Cylindrical functions of the third kind or Hankel functions, are linear combinations of Bessel functions of the first and second kind.
-      \begin{align*}
-          H^{(1)}_n(z) = J_n(z) + i Y_n(z)\\
-          H^{(2)}_n(z) = J_n(z) - i Y_n(z)
-      \end{align*}
-  \end{defn}
-By the principle of superpostion both Neumann and Hankel functions are solutions to the Bessel differential equation.
-%

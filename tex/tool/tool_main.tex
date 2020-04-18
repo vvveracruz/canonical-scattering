@@ -239,4 +239,70 @@ def get_radial_term(self, n, r):
 def get_angular_term(self, n, theta):
     return np.cos(n * (theta - self.get_incident_angle()))\end{lstlisting}
 %
-\section{Example plots}
+\section{Secondary plots}\label{ss:secondary_plots}
+I used python to create most of the figures in this document.
+%
+  \begin{lstlisting}[caption={Plot of bessel functions of integer order},label={lst:bessel_int_no}]
+x=np.linspace(0,5,100)
+
+fig=plt.figure()
+ax=fig.add_subplot(111)
+
+for n in range(6):
+    ax.plot(x,sp.jv(n, x), label=str(n))
+
+plt.axhline(color='black',
+            linewidth = 0.5)
+
+plt.legend(loc=1)
+plt.title('Bessel function of order n.')
+plt.show()\end{lstlisting}\par
+%
+The code for the Neumann functions plot was similar, replacing \verb!sp.jv(n,x)! on line 7 by \verb!sp.yn(n,x)!. I also had to adjust the axis to make sure we got a meaningful plot, see \figref{fig:neumann_bounding_axis}.\par
+%
+\begin{figure} \centering
+  %
+  \includegraphics[width=6cm]{../figures/plot_neumann_unbounded_y}
+  \includegraphics[width=6cm]{../figures/plot_neumann_int_order}
+  \caption{Neumann functions with and without bounded axis}\label{fig:neumann_bounding_axis}
+  %
+\end{figure}
+%
+\begin{lstlisting}[caption={Plot of neumann functions of integer order},label={lst:neumann_int_no}]
+x=np.linspace(0,10,100)
+
+fig=plt.figure()
+ax=fig.add_subplot(111)
+
+axes = plt.gca()
+axes.set_ylim([-2,1])
+
+for n in range(6):
+    ax.plot(x,sp.yn(n, x), label=str(n))
+
+plt.axhline(color='black',
+            linewidth = 0.5)
+
+plt.legend(loc=4)
+plt.title('Neumann function of order n.')
+plt.show()\end{lstlisting}\par
+%
+For Hankel functions I decided to plot the absolute value. If we do not specify when plotting, \verb!matplotlib! takes the real part of a complex number, so withou the \verb!abs! command this was just plotting a Bessel function.
+%
+\begin{lstlisting}[caption={Plot of hankel functions of integer order},label={lst:hankel_int_no}]
+x=np.linspace(0,7,100)
+
+fig=plt.figure()
+ax=fig.add_subplot(111)
+
+axes = plt.gca()
+axes.set_ylim([0,4])
+
+for n in range(6):
+    ax.plot(x,abs(sp.hankel1(n, x)), label=str(n))
+
+plt.legend(loc=1)
+plt.title('Absolute value of the Hankel function of the first type of order n.')
+plt.ylabel('$H_{n}^{(1)}(r)$')
+plt.xlabel('$r$')
+plt.show()\end{lstlisting}\par

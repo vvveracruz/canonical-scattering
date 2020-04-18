@@ -1,0 +1,71 @@
+%================================================================
+%                 B E S S E L  F U N C T I O N S
+%================================================================
+%                             NOTES
+%                           ---------
+%
+%                           ---------
+%================================================================
+\section{Bessel functions}
+%
+Bessel functions are solutions to the Bessel differential equation.
+%
+  \begin{defn}The Bessel differential equation of order $\nu$ and argument $z$
+  %
+    \begin{equation}\label{eq:bessel_differential}
+        z^2 \frac{d^2 u}{dz^2} + z\frac{du}{dz} + (z^2 - \nu^2)u = 0
+    \end{equation}
+  %
+  for $\nu, z \in \bb{C}$.
+  %
+  \end{defn}\par
+%
+  \begin{defn}\label{defn:bessel_func}
+  Bessel functions, or cylindrical functions of the first kind, are solutions to the Bessel differential equation, \eqref{eq:bessel_differential}.
+  %
+    \begin{align*}
+        J_\nu(z) = \sum^\infty_{m=0} \frac{
+        (-1)^m (z/2)^{2m+\nu} }{
+        m! (\nu+m)! }
+    \end{align*}
+  %
+  \end{defn}
+%
+For $\nu$ not an integer, the collection of Bessel functions of different $\nu$ is linearly independent and is the general soltion to \ref{eq:bessel_differential}. However if $\nu = n \in \bb{Z}$ Bessel functions are linearly dependent. In particular, the following identity holds.
+%
+  \begin{propn} \label{propn:bessel_int_order_identity} For $n \in \bb{Z}$,
+    \begin{equation}
+      J_n(z) = (-1)^n J_{-n}(z).
+    \end{equation}
+
+  \end{propn}\par
+%
+This property is stated in all sources regarding Cylindrical functions, for example see \cite{culham04bessel, karmazina19cylinderfunc, korenev02bessel_func}.\par
+%
+Hence for $n$ an integer the Bessel functions no longer form the solution to the Bessel differential equation, so we introduce cylindrical functions of the second kind: Neumann functions.
+%
+  \begin{defn}\label{defn:neumann_func}
+    Neumann functions, are linear combinations of Bessel functions of the first kind.
+    %
+      \begin{gather*}
+          Y_\nu (z) = \frac{J_\nu(z) \cos (\nu \pi) - J_{-\nu}(z)}{\sin (\nu \pi)} \text{ for } \nu \notin \bb{Z}\\
+          Y_n = \lim_{\nu \rightarrow n} Y_\nu (z) \text{ for } n \in \bb{Z}
+      \end{gather*}
+    %
+  \end{defn}\par
+%                                         DEFN: HANKEL
+  \begin{defn}\label{defn:hankel_func}
+    Cylindrical functions of the third kind or Hankel functions, are linear combinations of Bessel functions of the first and second kind.
+      \begin{align*}
+          H^{(1)}_\nu(z) = J_\nu(z) + i Y_\nu(z)\\
+          H^{(2)}_\nu(z) = J_\nu(z) - i Y_\nu(z)
+      \end{align*}
+    In particular, for $\nu = n \in \bb{Z}$,
+      \begin{align*}
+        H^{(1)}_\nu(z)
+          &= \lim_{\nu \rightarrow n} \frac{J_{\nu}(z) - e^{-\nu\pi i} J_\nu(z)}{i \sin(\nu \pi)} \\
+        H^{(2)}_\nu(z)
+          &= \lim_{\nu \rightarrow n} \frac{J_{\nu}(z) - e^{\nu\pi i} J_\nu(z)}{- i \sin(\nu \pi)}
+      \end{align*}
+    from \cite{karmazina19cylinderfunc}.
+  \end{defn}
