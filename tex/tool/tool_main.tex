@@ -14,19 +14,31 @@ I started off with a text file on my laptop but quickly realised I would benefit
 %
 In Prof. Guettel's introduction to Python we exclusively used functions to build a game of Othello that ran in the command line. This is very different to what I have done here, where I would need the programme to output the file of the plotted field. Additionally, this tool became many orders of magnitude more complex because of the nature of the problem and I thought it appropriate to employ an object oriented approach.\par
 %
-TODO: I need to credit Nathan but I'm not sure how to go about it.\par
-%
 I used four different libraries for this project, namely \verb!numpy!, \verb!matplotlib.pyplot!, \verb!scipy.special! and \verb!mpmath!.
 %
 %-----------------------------------------------------------------
 %                       THE SET UP
 %-----------------------------------------------------------------
 \section{Approach}
-%
-My tool is set up in two files: \verb!plotter.py! and \verb!fields.py!. These can be found in the Bitbucket repository above. \par
-%
-The \verb!plotter.py! file holds three classes: \verb!Main!, \verb!Wave! and \verb!Graphics!. The \verb!fields.py! file holds subclasses which are instantiations of the \verb!Wave! class, the most important of which is \verb!CylinderField(Wave)!, which provides the fields calculated in Chapter 2.\par
-%
+
+My tool went through a lot of different verisons but in it's final state it is comprised of four python files and one json file. The json file was a late addition which made it very easy to set and carry over values for variables, which originally had to be set for every particular wave instantiation.\par
+
+The json file is called \verb!data.txt! and is not very complex:
+\begin{lstlisting}
+{
+  "axis_length" : [int],
+  "axis_delta" : [int],
+  "truncation" : [int],
+  "wavevector" : [[float], [float]],
+  "cylinder_radius" : [float],
+  "speed_of_sound" : 343,
+  "boundary_type" : [str],
+  "field_type" : [str]
+} \end{lstlisting}
+however this data needs to be brought into the tool. For this I created the \verb!inputs.py! file, which holds the \verb!Inputs! class. This class is then fed through to all other classes so all the variables throughout the tool are set by the \verb!data.txt! file. This was a big change from having the variables be determined independently at different points in the plotting process, but I think it makes much more sense now, and it is easier to expand upon.
+
+The \verb!plotter.py! file holds two classes: \verb!Main! and \verb!Wave!. The \verb!Main! class is used ot run the programme itself, and the \verb!Wave! class holds all the functions that are common to all wave instantiations. The \verb!fields.py! file holds subclasses which are instantiations of the \verb!Wave! class. Finally we have the \verb!grpahics.py! file which holds the \verb!Graphics! class where the plots are created.
+
 Within the \verb!Main! class I defined the \verb!run! class, which runs the tool when it is compiled as a python script from the command line. I also define different functions for different fields I want to plot in this class, so that it is easy to call them. For example, for the cylinder scattering problem I call
 %
   \begin{lstlisting}
@@ -40,9 +52,110 @@ def create_field_around_cylinder(self, graph):
     graph.heat_map(field) \end{lstlisting}
 %
 and \verb!self.graph = Graphics! was set within the \verb!__init__! constructor method.
-%
+
+
 %-----------------------------------------------------------------
-%                      Graphics class
+%                        INPUTS CLASS
+%-----------------------------------------------------------------
+
+\section{The \texttt{Inputs} class}
+
+The \verb!Inputs! class has two main objectives, first to read the \verb!data.txt! file, and to create local variables that can be passed through to the other classes. To do this we first import the \verb!json! library, and then define a function to read the file.
+
+\begin{lstlisting}
+def read_file(self):
+    file = open(r"data.txt", "r")
+    return json.load(file)\end{lstlisting}
+
+This function returns a dictionary containing all the data in the json file. I found it was better to create a dictionary this way rather than in one of the python files since it reduces the chances of me accidentally deleting or editing code. This is then used in the \verb!set_params! function to set the variables themselves.
+
+The \verb!data.txt! file was originally read as a \verb!csv! file instead of \verb!json!. This became cumbersome very quickly though, since \verb!csv! are read line by line. The only way to tell the reader which bit of information to pass through is to point at a line and position which is prone to human error. In contrast, with \verb!json! you give all the variables a name, and point to the information you want using that name which is much more human friendly. The syntax is also pretty simple so it did not require too much extra research from my part.
+
+Since all the information in \verb!data.txt! is inputted manually I decided to make sure to do some error handling at this stage, so that if I have inputted the wrong variable type it will be caught immediately and won't cause bugs that would be hard to pinpoint later on.
+
+\begin{lstlisting}
+def set_params(self):
+    dict = self.read_file()
+
+    ## TYPE OF BCS
+    self.boundary_type = dict['boundary_type']
+
+    ## FIELD TYPE
+    self.field_type = dict['field_type']
+
+    ##  AXIS LENGTH
+    try:
+        self.axis_length = float(dict['axis_length'])
+    except ValueError:
+        self.axis_length = 5
+        print('ERROR: input for axis length must be a float. Has been set to default.')
+
+    ##  AXIS DELTA
+    try:
+        self.axis_delta = int(dict['axis_delta'])
+    except ValueError:
+        self.axis_delta = 100
+        print('ERROR: input for axis delta must be a int. Has been set to default.')
+
+    ##  TRUNCATION
+    try:
+        self.truncation = int(dict['truncation'])
+    except ValueError:
+        self.truncation = 50
+        print('ERROR: input for truncation must be an integer. Has been set to default.')
+
+    ##  WAVEVECTOR
+    try:
+        self.wavevector = [float(x) for x in dict['wavevector']]
+    except ValueError:
+        self.wavevector = [-1, -1]
+        print('ERROR: inputs for wavevector must be two floats. Has been set to default.')
+
+    ##  CYLINDER RADIUS
+    try:
+        self.cylinder_radius = float(dict['cylinder_radius'])
+    except ValueError:
+        self.cylinder_radius = 1
+        print('ERROR: input for cylinder radius must be a float. Has been set to default.')
+
+    ##  SPEED OF SOUND
+    try:
+        self.speed_of_sound = float(dict['speed_of_sound'])
+    except ValueError:
+        self.speed_of_sound = 343
+        print('ERROR: input for speed of sound must be a float. Has been set to default.')
+\end{lstlisting}
+
+My error handling including setting the variable to some default value. This is because the plotting tool ended up being fairly slow on my laptop so I didn't want to be in the position where I'd waited for a few minutes only to get an error if I was trying to test some other aspect of my code. I'd still be alerted to the error in the console, so I'd know what variable was not actually what I expected it to be, but for the most part the code would run.
+
+These two are the main functions for the class, but I also defined functions to easily retrieve variables, whether \verb!Inputs! has been passed through as a parent class or not. For this we have functions such as
+\begin{lstlisting}
+def get_axis_length(self):
+    return self.axis_length\end{lstlisting}
+and other similar ones for all the variables. Some variables I use need to be computed, and it makes sense to do it at this stage. So we have
+\begin{lstlisting}
+def get_coord_series(self):
+    return np.linspace(-self.get_axis_length(),
+        self.get_axis_length(), self.get_axis_delta())
+\end{lstlisting}
+which defines the \verb!X! and \verb!Y! coordinate series. And some others like
+\begin{lstlisting}
+def get_plot_name(self):
+    return self.field_type + ' ' + self.boundary_type + ', N = ' + str(self.truncation) + ', k = ' + str(self.get_wavenumber())+ ', inc angle = ' + str(self.get_incident_angle())
+
+def get_wavenumber(self):
+    return np.sqrt(self.wavevector[0]*self.wavevector[0]
+        + self.wavevector[1]*self.wavevector[1])
+
+def get_incident_angle(self):
+    return np.arctan2(self.wavevector[0], self.wavevector[1])
+
+def get_omega(self):
+    return self.get_speed_of_sound()*self.get_wavenumber()
+\end{lstlisting}
+
+%-----------------------------------------------------------------
+%                    GRAPHICS
 %-----------------------------------------------------------------
 \section{The \texttt{Graphics} class}
 %

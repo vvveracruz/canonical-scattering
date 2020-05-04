@@ -7,184 +7,133 @@
 %                       INTRODUCTION
 %-----------------------------------------------------------------
 \section{Introduction}
-We now want to consider what happens inside a cylinder of different density to the outside medium. We consider our same plane wave inciding on this cylinder see \figref{fig:problem_2}. The goal in this section is to find an expression for the velocity field inside the cylinder, combine this with our result in Chapter \ref{chp:outside} to plot the complete field over the entire domain. \par
-%
-This is referred to as a \emph{transmission problem} in the literature, see for example \cite[$\S$1.3.3]{martin06scattering} since the wave is not bounded at the cylinder walls but transmitted through. \par
-%
-The statement of the problem is as follows. We are given an incident field, $\Phiin$ for which we need to find the field at the cylinder wall, $\Phi_{r=\sigma}$ and the field inside the cylinder wall $\Phi_{r<\sigma}$.
-%
-  \begin{figure} \centering
-    %
-    \includegraphics[width=6cm]{../figures/prob2_sketch.png}
-    %
-    \caption{The transmission problem}\label{fig:problem_2}
-    %
-  \end{figure}
-%
-The velocity field inside the cylinder will be subject to the same physics as the one outside the cylinder. We can therefore find the scattered field inside the cylinder in the same way we found the scattered field outside the cylinder in section \ref{ss:scattered_field}. \par
-%
-  \begin{equation}
-    \Phi_{\text{inside}} = \sum^\infty_{n=0} \epsilon_n i^n \hat{A} \text{ Bessel}(kr) \cos(n(\theta-\alpha))
-  \end{equation}
-  \begin{equation}
-    \Phi_{\text{outside}} = \sum^\infty_{n=0} \epsilon_n i^n \hat{B} H(kr) \cos(n(\theta-\alpha))
-  \end{equation}
-%
-In \ref{ss:scattered_field} we made our choice of cylindrical function to be used by describing the far field, and realising it must satisfy the Sommerfeld Radiation Condition (definition \ref{defn:sommerfeld_radiation_condition}). In the same way here we consider the field as we approach the origin. Outside the cylinder the Bessel function must still be of the third kind since it must still satisfy the Sommerfeld Radiation Condition.
-%
+We now want to consider what happens inside a cylinder of different density to the outside medium. We consider our same plane wave inciding on this cylinder, see \figref{fig:problem_2}. The goal in this section is to find an expression for the velocity field over the entire domain. \par
+
+We can divide this problem into two domains: the wave field inside the cylinder and outside the cylinder. Similar the previous problem we have
+\begin{equation}
+  \Phi_{tot} = \Phi_{1} + \Phi_{2} + \Phi_{in}
+\end{equation}
+where $\Phi_{1}$ and $\Phi_{2}$ are the potential fields for the outside and inside velocity fields respectively.
+
+We already have an expression for the incident field from the previous chapter:
+\begin{gather}
+  \Phi_{in} = e^{- i(\vec{k} \cdot \vec{x})}.
+\end{gather}
+
+Physically, we still expect the wave outside the cylinder to dissipate and satisfy the Sommerfeld Radiation Condition. Hence, the solution from the previous chapter still applies, except the constant $B_n$ will be determined by the boundary condition specific for this problem. This is discussed later on in this chapter. So we have
+\begin{equation}
+  \Phi_1 = \sum^\infty_{n=0} \epsilon_n i^n B_2 H_n(kr) \cos(n(\theta-\alpha)).
+\end{equation}
+
+All that is left now is to find $\Phi_2$.
+
+\begin{figure} \centering
+  \includegraphics[width=6cm]{../figures/prob2_sketch.png}
+  \caption{The transmission problem}\label{fig:problem_2}
+\end{figure}
+
 %---------------------------------------------------------------------
 %
-%               BESSEL FUNCTIONS APPLIED TO THIS PROBLEM
+%             Potential field inside the cylinder
 %
 %---------------------------------------------------------------------
-\section{Bessel functions applied to this problem}
-These propositions will become useful later in the chapter.
-%
-  \begin{propn}\label{propn:bessel_at_origin}
-    Bessel functions of the first kind of integer order are well defined at the origin. In particular,
-    \begin{align}\label{propn:bessel_arg_zero}
-        J_n(0) =\left\{
-          \begin{array}{c l}
-               1 & n = 0 \\
-               0 & n \neq 0
-          \end{array}\right.
-    \end{align}
-  \end{propn}
-  %              PROOF
-  \begin{proof}
-    This is immediate from the definiton of Bessel functions (definition \ref{defn:bessel_func}).
-      \begin{align*}
-        J_n(x)
-          &= \sum^\infty_{m=0} \frac{(-1)^m(x/2)^{n+2m}}{m! (n+m)!}\\
-          &= \frac{(-1)^0(x/2)^{n}}{0!n!}         %m=0
-            + \frac{(-1)^1(x/2)^{n+2}}{1!(n+1)!}  %m=1
-            + \frac{(-1)^2(x/2)^{n+4}}{2!(n+2)!}  %m=2
-            + \dotsb \\
-          &= \left(\frac{x}{2}\right)^n
-            \left[\frac{1}{n!}           %m=0
-            - \frac{(x/2)^{2}}{(n+1)!}   %m=1
-            + \frac{(x/2)^{4}}{2(n+2)!}  %m=2
-            + \dotsb \right]\\
-        \therefore
-        J_0(x)
-          &= 1
-            - \frac{(x/2)^{2}}{2}
-            + \frac{(x/2)^{4}}{12} + \dotsb
-      \end{align*}
-    Hence the function is well defined at $x=0$, and \ref{propn:bessel_arg_zero} holds for all $n \in \bb{Z}$.
-  \end{proof}\par
-%
-\begin{figure} \centering
-  %
-  \includegraphics[width=8cm]{../figures/plot_bessel_int_order}
-  \caption{Bessel functions of integer order.}\label{fig:bessel_int_problem}
-  %
-\end{figure}\par
-%
-This result is clearly shown in \figref{fig:bessel_int_problem}.
-%
-  \begin{propn}\label{propn:neumann_singular_at_origin}
-    Neumann functions are singular at the origin.
-  \end{propn}
-  %
-  \begin{proof}
-    From the definition of Neumann functions (definition \ref{defn:neumann_func}) we know that for $n$ integer
-      \begin{equation}
-        Y_n(z=0) = \lim_{\nu \rightarrow n} \frac{J_\nu(0) \cos (\nu \pi) - J_{-\nu}(0)}{\sin (\nu \pi)}
-      \end{equation}
-    %
-    First, consider the limit of the numerator as $\nu \rightarrow$ integer. Then
-    %
-      \begin{gather*}
-        J_\nu(0) \rightarrow
-          J_n(0) = \left\{
-            \begin{array}{c l}
-                 1 & n = 0 \\
-                 0 & n \neq 0
-            \end{array}\right. \text{ from proposition \ref{propn:bessel_at_origin},}\\
-        J_{-\nu}(0) \rightarrow
-          (-1)^nJ_n(0) = (-1)^n\left\{
-            \begin{array}{c l}
-                 1 & n = 0 \\
-                 0 & n \neq 0
-            \end{array}\right.
-            = \left\{
-              \begin{array}{c l}
-                   1 & n = 0 \\
-                   0 & n \neq 0
-              \end{array}\right. \text{ from proposition \ref{propn:bessel_int_order_identity}.}\\
-        \text{Hence } J_{\pm\nu}(0) \rightarrow
-          \left\{
-            \begin{array}{c l}
-                 1 & n = 0 \\
-                 0 & n \neq 0
-            \end{array}\right.
-      \end{gather*}
-    Additionally,
-      \begin{gather*}
-        \cos(\nu\pi) \rightarrow (-1)^n.
-      \end{gather*}
-    We broady have two cases for the numerator, $n=0$ and $n\neq 0$.
-      \begin{gather*}
-        J_\nu(0)\cos(\nu\pi) - J_\nu(0) \rightarrow
-        \left\{
-          \begin{array}{c l}
-               1\times1-1=0 & n = 0 \\
-               0\times1-0=0 & n \neq 0
-          \end{array}\right.
-      \end{gather*}
-    Now for the denominatory, clearly
-      \begin{gather*}
-        \sin(\nu\pi) \rightarrow 0.
-      \end{gather*}
-    This gives us the indeterminate limit $0/0$ at $x=0$ as $\nu \rightarrow$ integer.
-  \end{proof}
-%
-\begin{figure} \centering
-  %
-  \includegraphics[width=8cm]{../figures/plot_neumann_int_order}
-  \caption{Neumann functions of integer order.}\label{fig:neumann_int_problem}
-  %
-\end{figure}\par
-%
+\section{Solution inside the cylinder}
+
+To recover an expression for the field outside the cylinder in the previous chapter we first of all make two assumtptions: that $\Phi$ is separabale and that it satisfies the Helmholtz equation. In Proposition \ref{propn:scattered_field_differential_equations} we show that this leads to two independent differential equations, one for $\Theta(\theta)$ and one for $R(r)$. The solution for $\Theta(theta)$
+\begin{equation}\label{eq:sol_inside_angular}
+  \Theta(\theta) = \sum_{n=0}^{\infty} A_n \cos(n\theta) + B_n \sin(n\theta)
+\end{equation}
+still applies, since the only addditional assumption there is that the function must be $2 \pi$ periodic, which is clearly the case inside the cylinder too.
+
+We are then left with the bessel differential equation to solve for $R(r)$. This problem is therefore a reformulation of the one we solved previously. Where before we had a wave that was well defined as as $r\rightarrow\infty$, we now have a wave which must be well defined as $r\rightarrow 0$.
+
+We can make use of the propositions in \ssref{ss:limits_of_bessel_functions}, where we consider the behaviour of Bessel equations of different kind as $r\rightarrow\infty$ and $r\rightarrow 0$. Only Bessel functions of the first kind are well defined as $r\rightarrow 0$ for $n\in \bb{Z}$.
+
 \begin{propn}
-  Hankel functions are singular at the origin.
+\begin{equation}
+  \Phi_2 = \sum_{n=0}^{\infty} \epsilon_n i^n B_2 J_n(kr) \cos(n(\theta-\alpha))
+\end{equation}
 \end{propn}
-%
 \begin{proof}
-  This follows directly from the definition of Hankel functions for $n\in\bb{Z}$ (definition \ref{defn:hankel_func}), and can be proven in the same way as proposition \ref{propn:neumann_singular_at_origin}.
+  The angular component of this solution is immediate from \eqref{eq:sol_inside_angular}. The radial component of this solution is immediate from \label{eq:gen_sol_scatterin_outside_cylinder}, taking into account the different requirement on limits this solution has.
 \end{proof}
-%
-\begin{figure} \centering
-  %
-  \includegraphics[width=8cm]{../figures/plot_hankel_int_order}
-  \caption{Hankel functions of integer order.}\label{fig:neumann_int_problem}
-  %
-\end{figure}\par
+
+We can now apply a boundary condition to find the constants we are missing.
 %---------------------------------------------------------------------
 %
-%                 BOUNDARY CONDTIONS
+%                 BOUNDARY CONDTION
 %
 %---------------------------------------------------------------------
 \section{Boundary conditions}
-The complete velocity field must be
-  \begin{enumerate}
-    \item continuous at the boundary,
-    \item well defined as $r \rightarrow \infty$,
-    \item and well defined as $r \rightarrow 0$.
-  \end{enumerate}\par
-%
-These conditions will be sufficient to find an expression for the total field, which as before will be defined as
-  \begin{equation}
-    \PPhi{tot} = \PPhi{in} + \PPhi{out}.
-  \end{equation}\par
-%
-Condition 1 will be satisfied by our choice of Bessel function. From the previous section we know that only Bessel functions are well defined for at the origin for integer $n$, so the $r$ dependence for our solution can be a Bessel function only.
-%
-Condition 2 is immediatelly satisfied by our solution to the first problem, since that solution was chosen to satisfy the Sommerfeld Radiation Condition. \par
-%
-We can restate Condition 3 as follows.
-  \begin{equation}\label{eq:in_boundary_conditon}
-    \partialfrac{\PPhi{out}}{r}\bigg\vert_{r=\sigma} =  \partialfrac{\PPhi{in}}{r}\bigg\vert_{r=\sigma}.
-  \end{equation}\par
-%
+
+In Chapter 1 we derived the linear wave equation from the governing equations using perturbation theory. Going back now to \ssref{ss:perturbation}, we have the modified Momentum equation \eqref{eq:perturbed_momentum}:
+\begin{equation*}
+  \rho \partialfrac{\vec{u}}{t} + \nabla p = 0.
+\end{equation*}
+
+We also showed in Chapter 1 that we can write $\vec{u} = \nabla \phi$, and that for $\phi = \Re[\Phi(\vec{x})T(t)]$, $T(t)=e^{-i\omega t}$, so we have
+\begin{gather*}
+  \frac{dT}{dt} = - i\omega T(t), \\
+  \partialfrac{\vec{u}}{t} = \nabla \Re\left[\Phi \frac{dT}{dt} \right]
+  = -i \omega \nabla \Re\left[ \Phi \right] = -i \omega \nabla \phi.
+\end{gather*}
+
+This means that we have a linear relationship between $\phi$, the velocity field potential and $p$, the pressure field.
+\begin{align*}
+  -i \omega \rho \nabla \phi &= - \nabla p \\
+  \nabla (i \omega \rho \phi) &= \nabla p \\
+  i \omega \rho \phi &= p \\
+  p &\propto \phi
+\end{align*}
+
+Physically, we expect the pressure field to be continuous throughout the problem space, so we must also have a continuous velocity potential.
+\begin{align*}
+  p_1 = p_2 \Leftrightarrow \rho_1 \phi_1 = \rho_2 \phi_2
+\end{align*}
+
+Equivalently,
+\begin{align*}
+  \rho_1 \phi_1 &= \rho_2 \phi_2 \\
+  \Leftrightarrow \rho_1 \Re[ \Phi_1 T(t) ] &= \rho_2 \Re[ \Phi_2 T(t) ] \\
+  \Leftrightarrow \rho_1 \Phi_1 &= \rho_2 \Phi_2
+\end{align*}
+since the function $T$ does not vary with position, so it will remain the same inside and outside the cylinder. It is useful consider the derivatives of $\Phi$
+instead,
+\begin{align*}
+  \rho_1 \Phi_1 &= \rho_2 \Phi_2 \\
+  \Leftrightarrow \rho_1 \partialfrac{\Phi_1}{n} &= \rho_2 \partialfrac{\Phi_2}{n}.
+\end{align*}
+
+Where the notation $\partial / \partial n $ is shorthand for $ \nabla \cdot \vec{n},$ for $\vec{n}$ is the normal to the boundary. In particular, we're interested in what happens at the walls of the cylinder, the boundary $r=\sigma$. The normal in polar coordinates $(r, \theta)$ is $\vec{n} = (1, 0)$, hence we have
+\begin{equation}
+  \left.\rho_1 \partialfrac{\Phi_1}{r} \right| _{r=\sigma} = \left.\rho_2 \partialfrac{\Phi_2}{r} \right| _{r=\sigma}.
+\end{equation}
+
+This is the transmission boundary condition.
+
+\begin{propn}
+  The transmission boundary condition leads to the following relationship between the two constants
+  \[ \frac{B_1}{B_2} = \frac{\rho_2 J'_n(k\sigma)}{\rho_1 H'_n(k\sigma)} \]
+\end{propn}
+\begin{proof}
+  For simplicity we compare the $n^{\text{th}}$ term of the infinite sums, instead of the sums as a whole. We have
+  \begin{align*}
+    \partialfrac{\Phi^n_1}{r}
+    &= \epsilon_n i^n B_1 H'_n(kr) \cos(n(\theta-\alpha)), \\
+    \partialfrac{\Phi^n_2}{r}
+    &= \epsilon_n i^n B_1 J'_n(kr) \cos(n(\theta-\alpha)). \\
+  \end{align*}
+  Hence for any given $n$
+  \begin{align*}
+    \left.\rho_1 \partialfrac{\Phi_1}{r} \right| _{r=\sigma} &= \left.\rho_2 \partialfrac{\Phi_2}{r} \right| _{r=\sigma} \\
+    \rho_1 B_1 H'_n(k\sigma) &= \rho_2 B_1 J'_n(k\sigma)\\
+    \frac{B_1}{B_2} &= \frac{\rho_2 J'_n(k\sigma)}{\rho_1 H'_n(k\sigma)}
+  \end{align*}
+  as required.
+\end{proof}
+
+However this doesn't give us a unique solution for the constants, we need another boundary condition, for example the specific velocity at the boundary. If we can approximate this velocity as an infinite sum
+\begin{equation}
+  \sum^{\infty}_{n=0} \epsilon_n i^n U_{\sigma} \cos(n(\theta-\alpha))
+\end{equation}
+we can find unique constants $B_1$ and $B_2$ in terms of Bessel functions that satisfy the transmission boundary condition and give the correct velocity at the boundary. The Dirichlet boundary condition is a special case of this.

@@ -5,6 +5,13 @@ from inputs import *
 from fields import *
 from plotter import *
 
+def real(Z):
+    '''
+    Transforms an array with imaginary float elements into an
+    array with real float elements.
+    '''
+    return [[n.real for n in z] for z in Z]
+
 class Graphics(Inputs):
     def __init__(self):
         print(">> graphics started...")
@@ -26,11 +33,11 @@ class Graphics(Inputs):
             -label, label]
 
     def contour(self, wave):
-        plt.contour(real(Z), extent=self.get_extent())
+        plt.contour(real(wave.get_array_Z()), extent=self.get_extent())
         self.draw_plot()
 
     def heat_map(self, wave):
-        plt.imshow(real(Z), extent=self.get_extent())
+        plt.imshow(real(wave.get_array_Z()), extent=self.get_extent())
         self.draw_plot()
 
     def draw_plot(self):
