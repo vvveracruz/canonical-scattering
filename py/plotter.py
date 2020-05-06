@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
+#edit for init commit
 import numpy as np
 import scipy.special as sp
 import mpmath as mm
