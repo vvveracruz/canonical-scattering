@@ -37,6 +37,9 @@ class Main(Inputs):
         elif self.field_type in ['total', 'Total', 'TotalField']:
             self.total_plot(self.graph)
 
+        elif self.field_type in ['interior', 'InteriorField', 'Interior']:
+            self.interior_plot(self.graph)
+
         elif self.field_type in ['none', 'None']:
             self.testing()
 
@@ -62,6 +65,10 @@ class Main(Inputs):
         field = TotalField()
         graph.heat_map(field)
 
+    def interior_plot(self, graph):
+        field = InteriorField()
+        graph.heat_map(field)
+        
     def integer_order_bessel(self, graph):
         '''TODO'''
         x=np.linspace(0,5,100)
@@ -169,7 +176,7 @@ class Wave(Inputs):
 
     def get_neumann_bc(self, n):
         '''TODO: docstring'''
-        return sp.jvp(n, self.get_wavenumber() * self.get_cylinder_radius()) / sp.h1vp(n, self.get_wavenumber() * self.get_cylinder_radius())
+        return sp.jvp(n, self.get_wavenumber() * self.get_cylinder_radius(), 1) / sp.h1vp(n, self.get_wavenumber() * self.get_cylinder_radius(), 1)
 
     def get_dirichlet_bc(self, n):
         '''TODO: docstring'''
