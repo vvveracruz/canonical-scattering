@@ -1,10 +1,10 @@
 {
   "axis_length" : 2,
   "axis_delta" : 500,
-  "truncation" : 4,
-  "wavevector" : [5, -2],
+  "truncation" : 50,
+  "wavevector" : [-1, -2],
   "cylinder_radius" : 1,
   "speed_of_sound" : 343,
-  "boundary_type" : "dirichlet",
-  "field_type" : "total"
+  "boundary_type" : " ",
+  "field_type" : "interior"
 }

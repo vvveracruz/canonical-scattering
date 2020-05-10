@@ -89,7 +89,7 @@ class Inputs():
 
     ##  PLOT NAME
     def get_plot_name(self):
-        return self.field_type + ' ' + self.boundary_type + ', N = ' + str(self.truncation) + ', k = ' + str(self.get_wavenumber())+ ', inc angle = ' + str(self.get_incident_angle())
+        return self.field_type + ' ' + self.boundary_type + ', N = ' + str(self.truncation) + ', k = ' + str(round(self.get_wavenumber(), 2))+ ', inc angle = ' + str(round(self.get_incident_angle(), 2))
 
     def get_field_type(self):
         return self.field_type

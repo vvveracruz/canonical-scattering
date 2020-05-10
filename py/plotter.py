@@ -35,7 +35,15 @@ class Main(Inputs):
             self.scattered_plot(self.graph)
         elif self.field_type.lower() in 'total':
             self.total_plot(self.graph)
+<<<<<<< HEAD
         elif self.field_type.lower() in 'none':
+=======
+
+        elif self.field_type in ['interior', 'InteriorField', 'Interior']:
+            self.interior_plot(self.graph)
+
+        elif self.field_type in ['none', 'None']:
+>>>>>>> remotes/origin/master
             self.testing()
         else:
             raise TypeError('Invalid field type.')
@@ -56,6 +64,10 @@ class Main(Inputs):
         '''TODO: docstring'''
         graph.heat_map(TotalField())
 
+    def interior_plot(self, graph):
+        field = InteriorField()
+        graph.heat_map(field)
+        
     def integer_order_bessel(self, graph):
         '''TODO'''
         x=np.linspace(0,5,100)
@@ -163,7 +175,7 @@ class Wave(Inputs):
 
     def get_neumann_bc(self, n):
         '''TODO: docstring'''
-        return sp.jvp(n, self.get_wavenumber() * self.get_cylinder_radius()) / sp.h1vp(n, self.get_wavenumber() * self.get_cylinder_radius())
+        return sp.jvp(n, self.get_wavenumber() * self.get_cylinder_radius(), 1) / sp.h1vp(n, self.get_wavenumber() * self.get_cylinder_radius(), 1)
 
     def get_dirichlet_bc(self, n):
         '''TODO: docstring'''

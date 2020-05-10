@@ -222,21 +222,23 @@ However for integer $\nu=n$ this is undefined -- in fact the left hand side is $
   In particular, for $\nu = n \in \bb{Z}$,
     \begin{align*}
       H^{(1)}_\nu(z)
-        &= \lim_{\nu \rightarrow n} \frac{J_{\nu}(z) - e^{-\nu\pi i} J_\nu(z)}{i \sin(\nu \pi)} \\
+        &= \lim_{\nu \rightarrow n} \frac{J_{\nu}(z) - e^{-\nu\pi i} J_{-\nu}(z)}{i \sin(\nu \pi)} \\
       H^{(2)}_\nu(z)
-        &= \lim_{\nu \rightarrow n} \frac{J_{\nu}(z) - e^{\nu\pi i} J_\nu(z)}{- i \sin(\nu \pi)}
+        &= \lim_{\nu \rightarrow n} \frac{J_{\nu}(z) - e^{\nu\pi i} J_{-\nu}(z)}{- i \sin(\nu \pi)}
     \end{align*}
   from \cite{karmazina19cylinderfunc}.
 \end{defn}
 
-%---------------------------------------------------------------------
-%             LIMITS OF BESSEL FUNCTIONS at infinity
-%---------------------------------------------------------------------
-\section{Limits of Bessel functions at infinity}
-\begin{propn}
-  \[ Y_n(kr) \rightarrow Y'_n(kr) \text{ as } r \rightarrow \infty \text{ for } n \in \bb{N}\]
+The following identities are well known \parencite{karmazina19cylinderfunc} and will be useful later on in the project.
 
+\begin{propn}\label{propn:hankel_identities}
+  \[ H^{(1)}_{-\nu}(z) = e^{i\nu\pi}H^{(1)}_{-\nu}(z)\]
+  \[ H^{(2)}_{-\nu}(z) = e^{-i\nu\pi}H^{(2)}_{-\nu}(z) \]
 \end{propn}
+\begin{proof}
+  Not given.
+\end{proof}
+
 
 %---------------------------------------------------------------------
 %             LIMITS OF BESSEL FUNCTIONS at the origin
