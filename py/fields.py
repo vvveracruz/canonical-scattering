@@ -14,7 +14,6 @@ class TotalField(Wave, Inputs):
         print('>>> TotalField started...')
         Wave.__init__(self)
         Inputs.__init__(self)
-
         self.incident = IncidentField()
         self.scattered = ScatteredField()
 
@@ -22,8 +21,8 @@ class TotalField(Wave, Inputs):
         '''
         Returns the value of Z at a given (x, y).
         '''
-        r = self.get_r(x, y)
-        theta = self.get_theta(x, y)
+        #r = self.get_r(x, y) #TODO Delete r? Or ...?
+        #theta = self.get_theta(x, y) #TODO not used, delete?
         return self.incident.get_value_z(x, y) + self.scattered.get_value_z(x,y)
 
 #--------------------------------------------------------------------
@@ -42,12 +41,10 @@ class IncidentField(Wave, Inputs):
         '''
         Returns the value of Z at a given (x, y).
         '''
-
         if self.get_r(x, y) >= self.get_cylinder_radius():
             return (np.exp(1j*(self.get_wavevector()[0]*x + self.get_wavevector()[1]*y)))
         else:
             return 0
-
 
 #--------------------------------------------------------------------
 #           SCATTERED FIELD
@@ -66,10 +63,8 @@ class ScatteredField(Wave, Inputs):
         Returns the value of Z at a given (x, y).
         '''
         r = self.get_r(x, y)
-        theta = self.get_theta(x, y)
-
         if r >= self.get_cylinder_radius():
-            return self.get_sum(r, theta)
+            return self.get_sum(r, self.get_theta(x, y))
         else:
             return 0
 
@@ -83,13 +78,10 @@ class ScatteredField(Wave, Inputs):
 
     def get_constant_term(self, n):
         '''TODO: docstring'''
-        if self.boundary_type in ['neumann', 'Neumann']:
+        if self.boundary_type.lower() in 'neumann':
             return self.get_modified_neumann_factor(n) * self.get_neumann_bc(n)
-
-        elif self.boundary_type in ['dirichlet', 'Dirichlet']:
+        elif self.boundary_type.lower() in 'dirichlet':
             return self.get_modified_neumann_factor(n) * self.get_dirichlet_bc(n)
-
-
         else:
             raise TypeError('Invalid boundary type.')
 
@@ -135,6 +127,7 @@ class InteriorField(Wave, Inputs):
         return sp.jv(n, self.get_wavenumber() * r)
 
 ##----------- T E M P L A T E ---------------
+#TODO Delete
 """
 class #####(Wave, Inputs):
     '''

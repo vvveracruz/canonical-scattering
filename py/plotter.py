@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
+#edit for init commit
 import numpy as np
 import scipy.special as sp
 import mpmath as mm
@@ -15,7 +15,8 @@ def real(Z):
     Transforms an array with imaginary float elements into an
     array with real float elements.
     '''
-    return [[n.real for n in z] for z in Z]
+    return [[n.real for n in z] for z in Z] #TODO n^2 algorithm, this will be slowing things down, esp for large n
+
 #--------------------------------------------------------------------
 #                           main class
 #--------------------------------------------------------------------
@@ -28,21 +29,22 @@ class Main(Inputs):
 
     def run(self):
         '''TODO: docstring'''
-        if self.field_type in ['incident', 'Incident', 'IncidentField']:
+        if self.field_type.lower() in 'incident':
             self.incident_plot(self.graph)
-
-        elif self.field_type in ['scattered', 'Scattered', 'ScatteredField']:
+        elif self.field_type.lower() in 'scattered':
             self.scattered_plot(self.graph)
-
-        elif self.field_type in ['total', 'Total', 'TotalField']:
+        elif self.field_type.lower() in 'total':
             self.total_plot(self.graph)
+<<<<<<< HEAD
+        elif self.field_type.lower() in 'none':
+=======
 
         elif self.field_type in ['interior', 'InteriorField', 'Interior']:
             self.interior_plot(self.graph)
 
         elif self.field_type in ['none', 'None']:
+>>>>>>> remotes/origin/master
             self.testing()
-
         else:
             raise TypeError('Invalid field type.')
 
@@ -52,18 +54,15 @@ class Main(Inputs):
 
     def incident_plot(self, graph):
         '''TODO: docstring'''
-        field = IncidentField()
-        graph.heat_map(field)
+        graph.heat_map(IncidentField())
 
     def scattered_plot(self, graph):
         '''TODO: docstring'''
-        field = ScatteredField()
-        graph.heat_map(field)
+        graph.heat_map(ScatteredField())
 
     def total_plot(self,graph):
         '''TODO: docstring'''
-        field = TotalField()
-        graph.heat_map(field)
+        graph.heat_map(TotalField())
 
     def interior_plot(self, graph):
         field = InteriorField()
@@ -73,7 +72,7 @@ class Main(Inputs):
         '''TODO'''
         x=np.linspace(0,5,100)
 
-        fig=plt.figure()
+        fig = plt.figure()
         ax=fig.add_subplot(111)
 
         for n in range(6):
