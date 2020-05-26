@@ -1,8 +1,11 @@
 %====================================================================
 %                 B E S S E L   F U N C T I O N S
 %====================================================================
+
+Bessel functions are named after Friedrich Wilhelm Bessel as he was the first to generalise them. The first use of Bessel functions is generally acredited to Daniel Bessel, who used the function of zero order in his work as an astronomer. There are three problems that encouraged the development of this theory in the beginning. These are: the motion of a body in an elliptic Kepler orbit, oscillations of a chain suspended at one end, and heat conductivity in a solid cylinder. Now a days, applications are found in all areas of mathematical physics which use the theory of wave motion.
+
 \section{Bessel functions of the first kind}
-The most basic idea about Bessel functions is that they are solutions to the Bessel differential equation.
+Bessel functions are solutions to the Bessel differential equation.
 %
 %-----------------defn: bessel differential equation------------------
 %
@@ -13,7 +16,7 @@ The most basic idea about Bessel functions is that they are solutions to the Bes
 for $\nu, z \in \bb{C}$.
 \end{defn}\par
 %
-Applications in this project are concerned with Bessel functions of integer order only, so we replace $\nu \in \bb{C}$ with $n \in \bb{Z}$.
+Throughout this project we will only be concerned with Bessel functions of integer order only, so we replace $\nu \in \bb{C}$ with $n \in \bb{Z}$. This will become clear in the next chapter.
 %------------------------defn: bessel function------------------------
 %
 \begin{defn}\label{defn:bessel_func}
@@ -21,50 +24,48 @@ Bessel functions are defined as follows,
   \begin{align*}
       J_n(z) = \sum^\infty_{m=0} \frac{
       (-1)^m (z/2)^{2m+n} }{
-      m! (n+m)! }
+      m! \Gamma(n+m) }
   \end{align*}
+where $\Gamma(n)$ is the extension of the factorial $n!$ for $n \in \bb{Z}^{\geq 0}$ to the complex plane. We cannot simply use $n!$ because Bessel functions are defined for $n \in \bb{Z}^{< 0}$ as well.
 \end{defn}
 %
 %------------propn: bessel function solves bessel equation------------
 %
 \begin{propn} Bessel functions of integer order solve the Bessel differential equation.
 \end{propn}
-\hl{This proof is new}
 \begin{proof} The proof in \parencite{korenev02bessel_func} is conceptually similar to this but is given in much less detail.\par
   %
-  We propose a solution to \eqref{eq:bessel_differential} in the form of a power series expansion
+  We begin by proposing a solution to the Bessel differential equation \eqref{eq:bessel_differential} in the form of a power series expansion
     \begin{equation*}
       U(z) = \sum_{m=0}^\infty c_m z^{m + \zeta}
     \end{equation*}
-  where $c_0 \neq 0$.
-  %
-  This allows us to find expressions for the first and second derivatives,
+  and we assume that $c_0 \neq 0$. This will become relevant later. This allows us to find expressions for the first and second derivatives,
     \begin{align*}
       U'(z) &= \sum_{m=0}^\infty c_m (m+\zeta) z^{m+\zeta-1}, \\
-      U''(z) &= \sum_{m=0}^\infty c_m (m+\zeta)(m+\zeta-1) z^{m+\zeta-2}.
+      U''(z) &= \sum_{m=0}^\infty c_m (m+\zeta)(m+\zeta-1) z^{m+\zeta-2},
     \end{align*}
-  Substituting these into \eqref{eq:bessel_differential},
+  which can be substituted into \eqref{eq:bessel_differential},
     \begin{multline}\label{eq:bessel_proof_summation}
       z^2 \left\{ \sum_{m=0}^\infty c_m (m+\zeta)(m+\zeta-1) z^{m+\zeta-2}\right\} \\
         + z \left\{ \sum_{m=0}^\infty c_m (m+\zeta) z^{m+\zeta-1} \right\}
           + (z^2 - n^2) \left\{ \sum_{m=0}^\infty c_m z^{m + \zeta} \right\} = 0.
     \end{multline}
-  We now want to collect all of the terms of order $z^{\zeta}$ and $z^{\zeta+1}$:
+  Consider the expansion of the first two terms of these sums,
     \begin{multline*}
       c_0(\zeta)(\zeta-1)z^{\zeta} + c_1(\zeta+1)(\zeta)z^{\zeta+1} + \sum_{m=2}^\infty c_m (m+\zeta)(m+\zeta-1) z^{m+\zeta} \\
       + c_0(\zeta)z^{\zeta} + c_1(\zeta+1)(\zeta)z^{\zeta+1} + \sum_{m=2}^\infty c_m (m+\zeta) z^{m+\zeta} \\
       - n^2 c_0 z^{\zeta} - n^2 c_1 z^{\zeta+1} -n^2 \sum_{m=2}^\infty c_m z^{m + \zeta} + \sum_{m=0}^\infty c_m z^{m + \zeta+2} =0.
     \end{multline*}
-  Collecting terms:
+  Collecting terms we get
     \begin{multline*}
       z^{\zeta} \{ c_0(\zeta)(\zeta-1) +  c_0(\zeta) - n^2 c_0 \}
       + z^{\zeta+1} \{  c_1(\zeta+1)(\zeta) + c_1(\zeta+1)(\zeta) - n^2 c_1\} \\
-      + \sum_{m=2}^\infty \left\{ c_m (m+\zeta)(m+\zeta-1) z^{m+\zeta} + c_m (m+\zeta) z^{m+\zeta} - n^2 c_m z^{m + \zeta} \right\}
+      + \sum_{m=2}^\infty \left\{ c_m (m+\zeta)(m+\zeta-1) z^{m+\zeta} + c_m (m+\zeta) z^{m+\zeta} - n^2 c_m z^{m + \zeta} \right\} \\
       + \sum_{m=0}^\infty c_m z^{m + \zeta+2} =0.
     \end{multline*}
-  Consider a change of variable for the last term: $m'=m+2$ where $m'$ is just a dummy variable. Then we have $m=0 \Rightarrow m'=2$, $m\rightarrow \infty \Rightarrow m' \rightarrow \infty$ , and $m'= m-2$. So we can rewrite the last term as a sum from $m'=2$,
+  Consider a change of variable to a dummy variable $m'$ for the last term: $m'=m+2$. Then we have $m=0 \Rightarrow m'=2$, $m\rightarrow \infty \Rightarrow m' \rightarrow \infty$ , and $m'= m-2$. So we can rewrite the last term as a sum from $m=2$,
     \begin{equation}
-      \sum_{m'=2}^\infty c_{(m'-2)} z^{m' + \zeta} =0.
+      \sum_{m=2}^\infty c_{(m-2)} z^{m + \zeta} =0.
     \end{equation}
   Hence we are left with the following expression
     \begin{equation}
@@ -81,12 +82,12 @@ Bessel functions are defined as follows,
       \begin{equation}
         \zeta = \pm n.
       \end{equation}
-  Additionally, we can see there is a recursive relationship between all the coefficients $c_i$. Namely,
+  Additionally, from \eqref{proof:bessel_cm} we can see that there is a recursive relationship between all the coefficients $c_i$. Namely,
     \begin{align}
       c_m &= - \frac{c_{m-2}}{(m+\zeta^2)-n^2} = - \frac{c_{m-2}}{(m^2 +2m\zeta + \zeta^2 -n^2} \\
-      &= - \frac{c_{m-2}}{m(m +2\zeta)} \text{ since } \zeta^2 = n^2.
+      &= - \frac{c_{m-2}}{m(m +2\zeta)} \text{ since } \zeta^2 = n^2,
     \end{align}
-  Additionally, from \eqref{proof:bessel_cm} we can find the next terms in the sequence of coefficients for even $m$:
+  and we can find the next terms in the sequence of coefficients for even $m$:
     \begin{align*}
       c_2 &= - \frac{c_0}{4(1+\zeta)}, \\
       c_4 &= - \frac{c_2}{8(2+\zeta)} = \frac{c_0}{4 \times 8 \times (1+\zeta) (2+\zeta)}, \\
@@ -115,9 +116,7 @@ Bessel functions are defined as follows,
     \end{align*}
   \end{multicols}\par
   %
-  Where $\Gamma$ is the Gamma function that extends the value of the factorial $n!$ to any complex number -- most importantly in this case to $n \in \bb{Z}_{< 0}$ \parencite{kuptsov11gammafunc}.\par
-  %
-  Consider the first solution. Note that for $n \in \bb{Z}^{\geq0}$, $\Gamma (n+1) =n!$.
+  Consider the first solution. Note that for $n \in \bb{Z}^{\geq0}$, $\Gamma (n+1) =n!$
   \begin{align*}
     U_1(z) &= \frac{1}{2^n n!} z^n \left\{
         1 - \frac{z^2}{2^2(1+n)} + \frac{z^4}{2!2^4(1+n) (2+n)} - \frac{z^6}{3!2^6(1+n)(2+n)(3+n)} + ...
@@ -137,13 +136,13 @@ Bessel functions are defined as follows,
       3   &   2^{6+n} &   3!n!  &   (1+n) (2+n) (3+n)
     \end{array}
   \end{align*}
-  which can be expressed in terms of $\Gamma$ functions:
+  which can be expressed in terms of Gamma functions:
   \begin{align*}
     \Gamma(m+n+1) &= (m+n)! \\
       &= 1 \times 2 \times 3 \times ... \times n \times (n+1) \times ... \times (n+m) \\
       &= n! (n+1)(n+2)...(n+m).
   \end{align*}
-  Note that this shows that the size of $n$ relative to $m$ is important. This will become relevant later. For $n<m$ we therefore have a general expression for the $m^{\text{th}}$ term of the series
+  Note that this shows that the size of $n$ relative to $m$ is important. We therefore have a general expression for the $m^{\text{th}}$ term of the series
   \begin{align*}
      \frac{(-1)^mz^{2m+n}}{2^{2m+n}m!\Gamma(m+n+1)}.
   \end{align*}
@@ -154,16 +153,51 @@ Bessel functions are defined as follows,
   \end{align*}
   \end{proof}
 
-For $\nu$ not an integer, the collection of Bessel functions of different $\nu$ is linearly independent and is the general soltion to \ref{eq:bessel_differential}. However if $\nu = n \in \bb{Z}$ Bessel functions are linearly dependent. In particular, the following identity holds.
+We state a few useful results about Bessel functions.
 
-\begin{propn} \label{propn:bessel_int_order_identity} For $n \in \bb{Z}$,
+\begin{defn}\label{defn:generating_function} The generating function \parencite{watson44besselfunc},
+\begin{equation}\label{eq:generating_function}
+  e^{\frac{1}{2} z(t-1/t)} = \sum _{n=-\infty}^{\infty} t^nJ_{n}(z).
+\end{equation}
+\end{defn}
+
+\begin{propn} \label{propn:bessel_int_order_identity}
   \begin{equation}
     J_n(z) = (-1)^n J_{-n}(z).
   \end{equation}
+\end{propn}
+\begin{proof}
+  Let $t= (-1/t')$ in \eqref{eq:generating_function}. Then on the left hand side we have
+  \begin{align*}
+    e^{\frac{1}{2} z(t-1/t)} = e^{\frac{1}{2} z(-1/t'+t')} = \sum _{n=-\infty}^{\infty} t'^nJ_{n}(z),
+  \end{align*}
+  and on the right hand side
+  \begin{align*}
+    \sum _{n=-\infty}^{\infty} t^nJ_{n}(z) = \sum _{n=-\infty}^{\infty} (-1/t')^nJ_{n}(z) = \sum _{n=-\infty}^{\infty} (-1)^n t'^{-n}. J_{n}(z)
+  \end{align*}
+  Hence,
+  \begin{align*}
+    \sum _{n=-\infty}^{\infty} t'^nJ_{n}(z) = \sum _{n=-\infty}^{\infty} (-1)^n t'^{-n} J_{n}(z).
+  \end{align*}
+  Now let $n=-n'$ on the right hand side,
+  \begin{align*}
+    \sum _{n=-\infty}^{\infty} t'^nJ_{n}(z) = \sum _{n'=-\infty}^{\infty} (-1)^{-n'} t'^{n'} J_{-n'}(z).
+  \end{align*}
+  So we must have
+  \begin{align*}
+    J_{n}(z) = (-1)^n J_{-n}(z)
+  \end{align*}
+  as required.
+\end{proof}
 
-\end{propn}\par
-
-Another useful result using Bessel functions of the first kind is the Jacobi expansion. This gives us a way to rewrite exponential functions as infinite sums of Bessel functions.
+\begin{propn} The fundamental expansion \parencite{watson44besselfunc},
+  \begin{equation}\label{eq:fundamental_expansion}
+    e^{\frac{1}{2} z(t-1/t)} = J_0(z) + \sum^{\infty}_{n=1} \left[ t^n + (-1)^nt^{-n} \right] J_n(z)
+  \end{equation}
+\end{propn}
+\begin{proof}
+  Not given, follows from \ref{propn:bessel_int_order_identity}.
+\end{proof}
 
 \begin{propn}\label{propn:jacobi_expansion}
 \textbf{\emph{The Jacobi expansion.}}
@@ -181,21 +215,20 @@ where $\epsilon_n$ is the Neumann factor, defined as follows.
             \end{array}\right.
     \end{align*}
 \end{propn}
-\begin{proof} TBD \parencite[$\S$2.5]{martin06scattering}
+\begin{proof}
+  Not given, but follows from the statements above. It is given in some detail in \parencite{watson44besselfunc}.
 \end{proof}
 
+Both of these results will be used in the following chapters.
 
 %====================================================================
 %                 bessel functions of the 2nd kind
 %====================================================================
 \section{Bessel functions of the second kind}
 
-Bessel functions of the second kind, or Neumann functions are defined as a linear combination of $J_\nu$ and $J_{-\nu}$. These are useful because for $\nu = n$ an intger, Bessel equations are linearly dependent on each other. In fact, the following relationship holds \cite{korenev02bessel_func}
-\[J_{-n}(z) = (-1)^n J_{n}(z)\].
+Bessel functions of the second kind, or Neumann functions are defined as a linear combination of $J_n$ and $J_{-n}$.
 
-We can define another solution to the Bessel differential equation, the Neumann function.
-
-\begin{defn} Bessel functions of the second hand, or Neumann functions of order $\nu$ and argument $z$ are defined as follows.
+\begin{defn} \label{defn:neumann_function} Neumann functions of order $\nu$ and argument $z$ are defined as follows.
   \[Y_\nu(z) = \frac{J_\nu(z) \cos (\nu \pi)- J_{-\nu}(z)}{\sin (\nu \pi)}\]
 \end{defn}
 
@@ -228,17 +261,6 @@ However for integer $\nu=n$ this is undefined -- in fact the left hand side is $
     \end{align*}
   from \cite{karmazina19cylinderfunc}.
 \end{defn}
-
-The following identities are well known \parencite{karmazina19cylinderfunc} and will be useful later on in the project.
-
-\begin{propn}\label{propn:hankel_identities}
-  \[ H^{(1)}_{-\nu}(z) = e^{i\nu\pi}H^{(1)}_{-\nu}(z)\]
-  \[ H^{(2)}_{-\nu}(z) = e^{-i\nu\pi}H^{(2)}_{-\nu}(z) \]
-\end{propn}
-\begin{proof}
-  Not given.
-\end{proof}
-
 
 %---------------------------------------------------------------------
 %             LIMITS OF BESSEL FUNCTIONS at the origin
@@ -276,15 +298,13 @@ The following identities are well known \parencite{karmazina19cylinderfunc} and 
           - \frac{(x/2)^{2}}{2}
           + \frac{(x/2)^{4}}{12} + \dotsb
     \end{align*}
-  Hence the function is well defined at $x=0$, and \ref{propn:bessel_arg_zero} holds for all $n \in \bb{Z}$.
-\end{proof}\par
+  Hence the function is well defined at $x=0$, and \eqref{propn:bessel_arg_zero} holds for all $n \in \bb{Z}$. This result is clearly shown in \figref{fig:bessel_int_problem}.
+\end{proof}
 
 \begin{figure} \centering
   \includegraphics[width=8cm]{../figures/plot_bessel_int_order}
   \caption{Bessel functions of integer order.}\label{fig:bessel_int_problem}
 \end{figure}
-
-This result is clearly shown in \figref{fig:bessel_int_problem}.
 
 %------------------- neumann functions at the origin -----------------
 \begin{propn}\label{propn:neumann_singular_at_origin}
@@ -292,7 +312,7 @@ This result is clearly shown in \figref{fig:bessel_int_problem}.
 \end{propn}
 %
 \begin{proof}
-  From the definition of Neumann functions (definition \ref{defn:neumann_func}) we know that for $n$ integer
+  From the definition of Neumann functions (definition \ref{defn:neumann_function}) we know that for $n$ integer
     \begin{equation}
       Y_n(z=0) = \lim_{\nu \rightarrow n} \frac{J_\nu(0) \cos (\nu \pi) - J_{-\nu}(0)}{\sin (\nu \pi)}
     \end{equation}
@@ -337,7 +357,7 @@ This result is clearly shown in \figref{fig:bessel_int_problem}.
              0\times1-0=0 & n \neq 0
         \end{array}\right.
     \end{gather*}
-  Now for the denominatory, clearly
+  Now for the denominator, clearly
     \begin{gather*}
       \sin(\nu\pi) \rightarrow 0.
     \end{gather*}
@@ -362,6 +382,6 @@ This result is clearly shown in \figref{fig:bessel_int_problem}.
 \begin{figure} \centering
   %
   \includegraphics[width=8cm]{../figures/plot_hankel_int_order}
-  \caption{Hankel functions of integer order.}\label{fig:neumann_int_problem}
+  \caption{Hankel functions of integer order.}\label{fig:hankel_int_problem}
   %
 \end{figure}\par

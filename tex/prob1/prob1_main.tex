@@ -7,7 +7,7 @@
 %                       INTRODUCTION
 %-----------------------------------------------------------------
 \section{Introduction to the problem}
-For this problem we consider a plane wave propagates from infinity onto a cylinder centered at the origin and of radius $\sigma$, as depicted in \figref{fig:problem_1}. We will attempt to find an expression for the velocity field of this wave as it scatters around the cylinder. We will consider two different boundary conditions, Neumann and Dirichlet, and will find expressions for both of these. \par
+We consider a plane wave propagating from infinity onto a cylinder centered at the origin and of radius $\sigma$, as depicted in \figref{fig:problem_1}. Our goal is to find an expression for the total field resulting from the interaction of the incident wave with the cylinder. We consider two types of conditions at the boundary, Neumann and Dirichlet, and create plots in python for these. As showed in the first chapter, it will be sufficient to seek $\Phi(x, y)$ to determine the velocity field.\par
 %
     \begin{figure}
         \centering
@@ -15,8 +15,6 @@ For this problem we consider a plane wave propagates from infinity onto a cylind
         \caption{Problem 1}
         \label{fig:problem_1}
     \end{figure}
-%
-Throughout this problem we will be concerned with finding an expression for the total velocity field around the cylinder, $\vec{u}$. As we showed in \ssref{ss:physical_interpretation}, it will be sufficient for us to seek $\Phi(x, y)$, since this is a 2D problem. \par
 %
 Let $\Phitot = \Phiin + \Phisc$, where $\Phiin$ is the incident field, and $\Phisc$ is the scattered field. All three of these must satisfy the Helmholtz equation.
 %====================================================================
@@ -44,19 +42,20 @@ First let us consider $\Phiin$, the incident field. We choose Cartesian coordina
             = -(a^2+b^2)\Phiin + k^2 \Phiin = 0\\
             \Rightarrow k^2-(a^2+b^2)=0
         \end{gather*}
-    which is true by definition of the wave vector $\vec{k}$ (see definition \ref{defn:wave_vector}).
+    which is true by definition of the wavevector (definition \ref{defn:wave_vector}).
     \end{proof}
 
-%
-    \begin{propn}\label{propn:ch2_inc_field_infty_sum}
-    The incident field can be expressed as an infinite sum as follows.
-        \begin{equation*}\label{eq:ch2_inc_field_infty_sum}
-            \Phiin = \sum^{\infty}_{n=0} \epsilon_n i^n J_n(kr) \cos (n(\theta - \alpha))
-        \end{equation*}
-    \end{propn}
-    \begin{proof}
-    Follows directly from Propositions \ref{propn:ch2_inc_field_intro} and  \ref{propn:jacobi_expansion}.
-    \end{proof}
+In the first chapter we define the wave vector $\vec{k}$ as $(k\cos\alpha, \sin\alpha)$, where $\alpha$ is the incident angle, and $k$ is the wavenumber. We can set $\alpha = 0$ without loss of generality by adjusting the coordinate system accordingly. Hence we have $\vec{k}=(k, 0)$.
+
+\begin{propn}\label{propn:ch2_inc_field_infty_sum}
+The incident field can be expressed as an infinite sum as follows.
+    \begin{equation*}\label{eq:ch2_inc_field_infty_sum}
+        \Phiin = \sum^{\infty}_{n=0} \epsilon_n i^n J_n(kr) \cos (n\theta)
+    \end{equation*}
+\end{propn}
+\begin{proof} From the Jacobi expansion, proposition \ref{propn:jacobi_expansion} and proposition \ref{propn:ch2_inc_field_intro} we have
+  \[\Phiin =e^{ikr\cos\theta} = \sum^{\infty}_{n=0} \epsilon_n i^n J_n(kr) \cos(n\theta) \].
+\end{proof}
 %-----------------------------------------------------------------
 %                       SCATTERED FIELD
 %-----------------------------------------------------------------
@@ -154,30 +153,28 @@ To find the expression for the scattered field we will again use the method of s
 \begin{propn}
   The expression
   \[
-  \Theta(\theta) = \sum_{n=0}^{\infty} A_n \cos(n\theta) + B_n \sin(n\theta)
+  \Theta(\theta) = A \cos(n\theta) + B \sin(n\theta)
   \]
-  is a general solution to \eqref{eq:ch2_theta_dep}.
+  solves \eqref{eq:ch2_theta_dep}.
 \end{propn}
 \begin{proof}
-  Firstly, we want to show that $\nu = n \in \bb{Z}.$ We consider three cases. \par
-  %
-  \textbf{Case 1.} Let $\hat{\nu} = 0$. This gives a linear solution:
-      \begin{equation}
-          \Theta(\theta) = A_1 \theta + B_1.
-      \end{equation}\par
-  %
-  \textbf{Case 2.} Let $\hat{\nu} = \nu^2 < 0.$ Then we get an solution of exponential form.:
-      \begin{equation}
-          \Theta(\theta) = A_2 e^{\nu \theta} + B_2 e^{- \nu \theta}.
-      \end{equation}\par
-  %
-  \textbf{Case 3.} Let $\hat{\nu}= - \nu^2 < 0$. This gives a solution of trigonometric form:
-      \begin{equation}
-          \Theta(\theta) = A_3 \cos(\nu\theta) + B_3 \sin(\nu\theta).
-      \end{equation}\par
-  %
-  Since $\theta$ is the polar angular coordinate, we expect our solution to be $2\pi$ periodic. We can therefore discount Case 2. Case 1 is only periodic in the trivial case where $A_1 = 0$, and this is included in Case 3. We can therefore assume that $\hat{\nu} = - \nu^2 \leq 0$. \par
-  %
+  Let $\hat{\nu} = \nu^2 \in \bb{C}$. Then we have the linear homogeneous differential equation
+  \begin{equation*}
+    \partialfrac{^2\Theta}{\theta^2} - \nu^2 \Theta = 0.
+  \end{equation*}
+  This has solution
+  \begin{equation*}
+    \Theta(\theta) = C_1 e^{\nu\theta} + C_2 e^{-\nu\theta}
+  \end{equation*}
+  Consider $\nu = \nu_1 + i\nu_2$. Then
+  \begin{align*}
+    \Theta(\theta) = C_1 e^{\nu_1\theta}e^{i\nu_2\theta} + C_2 e^{-\nu_1\theta}e^{-i\nu_2\theta}.
+  \end{align*}
+  But we expect our solution to be periodic in $\theta$, so we must have $\nu_1 = 0$. Hence $\nu^2 = -\nu_2^2 \leq 0$, and we have a trigonometric solution
+  \begin{equation}
+    \Theta(\theta) = A \cos(\nu\theta) + B \sin(\nu\theta).
+  \end{equation}\par
+
   Since our solution must be $2\pi$ periodic, we have
   \begin{align*}
     \Theta(\theta) &= \Theta(\theta+2 \pi)\\
@@ -226,17 +223,12 @@ To find the expression for the scattered field we will again use the method of s
   Hence $\nu = n \in \bb{Z}$ as required. \par
   %
   We have therefore shown that
-  \begin{equation}
-    A \cos(n\theta) + B \sin(n \theta)
-  \end{equation}
-  are particular solutions to \eqref{eq:ch2_theta_dep} for all $A, B$ constants and $n \in \bb{Z}.$ Hence by the principle of superposition, any linear combination of these is also a soltion to \eqref{eq:ch2_theta_dep}. Hence we have the general solution
   \begin{equation*}
-    \sum_{n=0}^\infty A_n \cos(n\theta) + B_n \sin(n \theta)
+    \Theta(\theta) = A \cos(n\theta) + B \sin(n \theta)
   \end{equation*}
-  for $A_n, B_n$ constants as required.
 \end{proof}
 
-We now seek a solution to the radial component of this field. We now know that $\hat{\nu} = \nu^2$, so we can rewrite \eqref{eq:ch2_r_dep} as follows:
+For the radial component, we can rewrite \eqref{eq:ch2_r_dep} as follows:
     \begin{equation}\label{eq:ch2_r_dep_2}
         r^2 \frac{d^2 R}{dr^2} + r \frac{d R}{dr} + (k^2r^2 - \nu^2) R = 0.
     \end{equation}
@@ -268,64 +260,68 @@ Since $R(kr)$ satisfies a Bessel differential equation, the Bessel functions are
 \end{defn}
 Naively, the Sommerfeld radiation condition states that wave diffuses as $r\rightarrow\infty$, and that the scattered waves are not reflecting back and incoming from infinity -- something we wouldn't expect to happen physically. It is therefore reasonable to apply this condition to our problem.
 
-From now on we refer to $H^{(1)}_n$ as $H_n$ for simplicity.
+To discuss the behaviour of Hankel functions in relation to the Sommerfeld radiation condition, we first consider their asymptotic expansions \parencite{wong89asymptoticapprox}.
+\begin{gather*}
+  H^{(1)}_n(kr) \sim \sqrt{\frac{2}{\pi kr}} e^{i(kr - \frac{n\pi}{2} - \frac{\pi}{4})} + O\left(\frac{1}{kr}\right) \text{ as } r \rightarrow \infty \\
+  H^{(2)}_n(kr) \sim \sqrt{\frac{2}{\pi kr}} e^{-i(kr - \frac{n\pi}{2} - \frac{\pi}{4})} + O\left(\frac{1}{kr}\right) \text{ as } r \rightarrow \infty \\
+\end{gather*}
 
 \begin{propn}
-  Hankel functions of the first kind satisfy the Sommerfeld radiation condition.
+  Hankel functions of the first kind satisfy the Sommerfeld radiation condition. Hankel functions of the second kind do not.
 \end{propn}
 \begin{proof}
-  It is known that \parencite{martin06scattering}
+  First consider Hankel functions of the first kind. We now know that
   \begin{equation}
-    H_n(kr) \sim \sqrt{\frac{2}{\pi kr}} e^{i(kr - \frac{n\pi}{2} - \frac{\pi}{4}}) \text{ as } r \rightarrow \infty
+    H_n(kr) \sim \sqrt{\frac{2}{\pi kr}} e^{i(kr - \frac{n\pi}{2} - \frac{\pi}{4})} + O\left(\frac{1}{kr}\right) \text{ as } r \rightarrow \infty.
   \end{equation}
 
   Then as $r\rightarrow\infty$
   \begin{align*}
-    &\partialfrac{H_n(kr)}{r}
+    &\partialfrac{H^{(1)}_n(kr)}{r}
     \sim \frac{d}{dr} \left\{
     \sqrt{\frac{2}{k\pi}} r^{-1/2} e^{i(kr - n\pi/2- \pi/4)}
-    \right\}\\
+    \right\} + O\left(\frac{1}{kr^2}\right)\\
     &\sim\left\{
     \sqrt{\frac{2}{k\pi}} \frac{d}{dr} (r^{-1/2}) e^{i(kr - n\pi/2- \pi/4)}
     + \sqrt{\frac{2}{k\pi}} r^{-1/2} \frac{d}{dr}(e^{i(kr - n\pi/2- \pi/4)})
-    \right\} \\
+    \right\} + O\left(\frac{1}{kr^2}\right)\\
     &\sim \sqrt{\frac{2}{k\pi}} \left\{
     \left(-\frac{1}{2} \right) r^{-3/2} e^{i(kr - n\pi/2- \pi/4)} + r^{-1/2} (ik) e^{i(kr - n\pi/2- \pi/4)}
-    \right\} \\
+    \right\} + O\left(\frac{1}{kr^2}\right)\\
     &\sim \sqrt{\frac{2}{kr\pi}} e^{i(kr - n\pi/2- \pi/4)} \left\{
     \left(-\frac{1}{2r} \right) + ik
-    \right\} \\
-    &\sim H_n(kr) \left\{
-    \left(-\frac{1}{2r} \right) + ik
-    \right\}.
+    \right\}  + O\left(\frac{1}{kr^2}\right).
   \end{align*}
 
   Hence we have
   \begin{align*}
     r^{1/2} \left(
-      \partialfrac{H_n(kr)}{r} - ik H_n(kr)
-    \right) &\sim r^{1/2} \left(
-    H_n(kr) \left\{
-    \left(-\frac{1}{2r} \right) + ik - ik
-    \right\}
-    \right)\\
+      \partialfrac{H^{(1)}_n(kr)}{r} - ik H^{(1)}_n(kr)
+    \right)
     & \sim \left(-\frac{1}{2r} \right)
       \sqrt{\frac{2}{k\pi}} e^{i(kr - n\pi/2- \pi/4)} \\
     & \sim -\sqrt{\frac{1}{2kr^2\pi}} e^{i(kr - n\pi/2- \pi/4)}\\
   \end{align*}
 
-  We can now show that this tends to $0$ as $r\rightarrow\infty$, satisfying the Sommerfeld radiation condition. Consider the behaviour real part as $r\rightarrow\infty$
-  \begin{align*}
-    & \sim -\frac{1}{r} \cos{kr},
-  \end{align*}
-  and the imaginary part
-  \begin{align*}
-    & \sim -\frac{1}{r} \sin{kr}.
-  \end{align*}
-
-  Both of these tend to $0$ as $r\rightarrow\infty$. Hence we have shown that if $R(r)=H_n(kr)$, $\Phisc$ will satisfy the Sommerfeld radiation condition.
+  This tends to zero as $r\rightarrow\infty$, satisfying the Sommerfeld radiation condition. We can do this same analysis on Hankel functions of the second kind:
+  \begin{gather*}
+    \partialfrac{H^{(2)}_n(kr)}{r} \sim \sqrt{\frac{2}{kr\pi}} e^{-i(kr - n\pi/2- \pi/4)} \left\{
+    -\frac{1}{2r} - ik
+    \right\} + O\left(\frac{1}{kr^2}\right), \\
+  \end{gather*}
+  so
+  \begin{gather*}
+    r^{1/2} \left(
+      \partialfrac{H^{(1)}_n(kr)}{r} - ik H^{(1)}_n(kr)
+    \right)
+    \sim \sqrt{\frac{2}{kr\pi}} e^{-i(kr - n\pi/2- \pi/4)} \left\{
+    -\frac{1}{2r} - 2ik
+    \right\}
+  \end{gather*}
+  which does not satisfy the Sommerfeld radiation condtion.
 \end{proof}
 
+From now on we refer to $H^{(1)}_n$ as $H_n$ for simplicity.
 %----------------------------------------------------------------
 %               General solution
 %----------------------------------------------------------------
@@ -334,29 +330,23 @@ We can now combine our solutions for $\Theta$ and $R$ to find an expression for 
 \begin{propn}\label{eq:gen_sol_scatterin_outside_cylinder}
   The general solution for scattered field can be expressed as follows.
     \begin{equation} \label{eq:ch2_gen_eq_scattered_field}
-        \Phisc = \sum^\infty_{n=-\infty} \epsilon_n i^n B_n H_n(kr) \cos(n(\theta-\alpha))
+        \Phisc = \sum^\infty_{n=0} \epsilon_n i^n B_n H_n(kr) \{A\cos(n\theta) + B \sin(n\theta)\}
     \end{equation}
   for $B_n$ a constant.
 \end{propn}
 \begin{proof}
-  We have already showed that the radial component of the scalar potential must be a Hankel function. We have also showed that the radial component must be of the form
+  We have already showed that the radial component of the scalar potential must be a Hankel function. We have also showed that the angular component must be of the form
     \begin{align*}
       A \cos(n\theta) + B \sin(n \theta).
     \end{align*}
 
-  We expect our solution to have the same angular dependence as the incident field, since it is generated by it, so we can set the constants $A,B$ to the following
-    \begin{gather*}
-      \cos(n\alpha) \cos(n\theta) + \sin(n \alpha) \sin(n \theta)
-      = \cos(n(\theta-\alpha)).
-    \end{gather*}
-
-  So we have a solution of the form
+  We expect our solution to have similar simetries to the incident field, so we can set $B$ to zero. We are then left with a solution of the form
     \begin{equation}
-      C_n H_n(kr) \cos(n(\theta-\alpha)).
+      C_n H_n(kr) \cos(n\theta).
     \end{equation}
   for any constant $C_n$. It will be useful when setting the boundary conditions find $ B_n = C_n/\epsilon_n i^n$ instead of $C_n$. So the general solution is
   \begin{equation}
-    \sum^\infty_{n=0} \epsilon_n i^n B_n H_n(kr) \cos(n(\theta-\alpha))
+    \sum^\infty_{n=0} \epsilon_n i^n B_n H_n(kr) \cos(n\theta)
   \end{equation}
   as expected.
 \end{proof}
@@ -365,13 +355,13 @@ We can now combine our solutions for $\Theta$ and $R$ to find an expression for 
 %           ~ B O U N D A R Y  C O N D I T I O N S ~
 %----------------------------------------------------------------
 
-\section{Boundary contions}
+\section{Boundary conditions}
 
 At the beginning of the chapter we defined
   \[ \Phitot = \Phisc + \Phiin \]
 so we can express $\Phitot$ as follows, using \eqref{propn:ch2_inc_field_infty_sum}
 \begin{equation}
-  \sum^\infty_{n=0} \epsilon_n i^n B_n [H_n(kr) + J_n(kr)] \cos(n(\theta-\alpha)).
+  \sum^\infty_{n=0} \epsilon_n i^n [B_n H_n(kr) + J_n(kr)] \cos(n\theta).
 \end{equation}
 
 The only thing left to do now is to find the value of $B_n$.
@@ -394,9 +384,9 @@ Equivalently, we can express this boundary condition in terms of $\Phi$:
 We can now apply this to find an expression for the constant terms in \eqref{eq:ch2_gen_eq_scattered_field}. Differentiating this equation gives
   \begin{equation}
     \sum^\infty_{n=0} \epsilon_n k i^n
-    \{ J'_n(kr) + B_n H'_n(kr) \} \cos(n(\theta-\alpha)) = 0
+    \{ J'_n(kr) + B_n H'_n(kr) \} \cos(n\theta) = 0
   \end{equation}
-Since $\cos(n(\theta - \alpha)) \neq 0 ~ \forall n, \theta$, it must be that the expression inside the braces must be zero for each $n$ at the boundary $r=\sigma$. Hence, we get an expression for $B_n$:
+The expression inside the braces must be zero for each $n$ at the boundary $r=\sigma$. Hence, we get an expression for $B_n$:
   \begin{equation}
     B_n= \frac{J'_n(k\sigma)}{H'_n(k\sigma)}.
   \end{equation}
@@ -411,13 +401,11 @@ We now consider the Dirichlet boundary condition.
   \end{defn}
 Hence, $\Phi_{sc} = - \Phi_{in}$ on $r=\sigma$,
   \begin{align*}
-    \sum^\infty_{n=0} \epsilon_n i^n B_n H_n(kr) \cos(n((\theta-\alpha)))
-    & = - \sum^\infty_{n=0} \epsilon_n i^n J_n(kr) \cos(n((\theta-\alpha))) \\
+    \sum^\infty_{n=0} \epsilon_n i^n B_n H_n(kr) \cos(n\theta)
+    & = - \sum^\infty_{n=0} \epsilon_n i^n J_n(kr) \cos(n\theta) \\
     \text{hence for all } n,~ B_n H_n (k\sigma) &= - J_n (k\sigma) \\
   \end{align*}
 Hence the Dirichlet boundary condition specifies $B_n$ as follows.
   \begin{equation}
     B_n = \frac{- J_n(k\sigma)}{H_n(k\sigma)}
   \end{equation}
-
-\section{Plotting the solution}

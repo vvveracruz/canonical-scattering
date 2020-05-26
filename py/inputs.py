@@ -3,6 +3,7 @@
 
 import json
 import numpy as np
+import scipy.special as sp
 
 class Inputs():
     '''
@@ -22,14 +23,14 @@ class Inputs():
         return_value = json.load(file)
         file.close()
         return return_value
-        
+
     def set_params(self):
         '''
         TODO: docstring
         '''
         self.boundary_type = self.file_params['boundary_type'] ## TYPE OF BCS
         self.field_type = self.file_params['field_type']  ## FIELD TYPE
-       
+
         try:
             self.axis_length = float(self.file_params['axis_length'])   ##  AXIS LENGTH
         except ValueError:
@@ -41,7 +42,7 @@ class Inputs():
         except ValueError:
             self.axis_delta = 100
             print('ERROR: input for axis delta must be a int. Has been set to default.')
-  
+
         try:
             self.truncation = int(self.file_params['truncation']) ##  TRUNCATION
         except ValueError:
@@ -53,7 +54,7 @@ class Inputs():
         except ValueError:
             self.wavevector = [-1, -1]
             print('ERROR: inputs for wavevector must be two floats. Has been set to default.')
-   
+
         try:
             self.cylinder_radius = float(self.file_params['cylinder_radius'])  ##  CYLINDER RADIUS
         except ValueError:
@@ -65,6 +66,18 @@ class Inputs():
         except ValueError:
             self.speed_of_sound = 343
             print('ERROR: input for speed of sound must be a float. Has been set to default.')
+
+        try:
+            self.density_inside = float(self.file_params['density_inside'])
+        except ValueError:
+            self.density_inside = 1
+            print('ERROR: input for density_inside must be a float. Has been set to default.')
+
+        try:
+            self.density_outside = float(self.file_params['density_outside'])
+        except ValueError:
+            self.density_outside = 1
+            print('ERROR: input for density_outside must be a float. Has been set to default.')
 
     ##  COORDINATE PARAMS
     def get_axis_length(self):
@@ -121,4 +134,9 @@ class Inputs():
     ##  PHYSICAL CONSTANTS
     def get_speed_of_sound(self):
         return self.speed_of_sound
-        
+
+    def get_radiation_resistance_inside(self, n):
+        return self.density_inside * sp.jv(n, self.get_wavenumber()*self.cylinder_radius) * sp.h1vp(n, self.get_wavenumber() * self.cylinder_radius, 1)
+
+    def get_radiation_resistance_outside(self, n):
+        return self.density_outside * sp.jvp(n, self.get_wavenumber()*self.cylinder_radius,1) * sp.hankel1(n, self.get_wavenumber()* self.cylinder_radius)

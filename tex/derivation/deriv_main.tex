@@ -13,7 +13,7 @@ This is a fairly standard assumption to make for perturbations in air. The value
 %
 Next we make an assumption about the forces which will come into play.
 \begin{assumption}\label{assumption:no_external_forces}
-  No forces act on the fluid.
+  There are no external forces.
 \end{assumption}
 %
 Our problems will concern an incident plane wave scattering around an object. We will aim to find an expression for the result of this scattering alone so we won't need to consider external forces in this case. \par
@@ -57,7 +57,7 @@ We have assumed that our fluid flow is conservative and well defined at infinite
     \frac{D \rho}{D t} + \rho \nabla \cdot \vec{u} = 0
 \end{equation}
 Where $\nabla p$ is the pressure gradient within the fluid, $\vec{F}$ is the external force applied onto the fluid and $D/Dt$ is the material derivative,
-  \[ \frac{D\vec{u}}{Dt} = \nabla \vec{u} + \partialfrac{\vec{u}}{t}.\] \par
+  \[ \frac{D\vec{u}}{Dt} = \partialfrac{\vec{u}}{t}+\vec{u}\cdot\nabla\vec{u}\] \par
 %
 Equation \eqref{eq:ns_momentum} is the momentum equation and \eqref{eq:ns_continuity} is the continutiy equation. By assumption \ref{assumption:no_viscosity} we can set $\mu = 0$. This gives the Euler momentum equation \parencite{shaughnessy05fluids}
 \begin{equation}

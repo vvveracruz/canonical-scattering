@@ -35,15 +35,11 @@ class Main(Inputs):
             self.scattered_plot(self.graph)
         elif self.field_type.lower() in 'total':
             self.total_plot(self.graph)
-<<<<<<< HEAD
         elif self.field_type.lower() in 'none':
-=======
-
+            self.testing()
         elif self.field_type in ['interior', 'InteriorField', 'Interior']:
             self.interior_plot(self.graph)
-
         elif self.field_type in ['none', 'None']:
->>>>>>> remotes/origin/master
             self.testing()
         else:
             raise TypeError('Invalid field type.')
@@ -67,7 +63,7 @@ class Main(Inputs):
     def interior_plot(self, graph):
         field = InteriorField()
         graph.heat_map(field)
-        
+
     def integer_order_bessel(self, graph):
         '''TODO'''
         x=np.linspace(0,5,100)

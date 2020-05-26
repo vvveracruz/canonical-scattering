@@ -8,20 +8,18 @@
 %-----------------------------------------------------------------
 \section{Introduction}
 %
-The goal of this tool was to plot the scattered field. I took Prof. Guettel's Introduction to Python in 2nd Year and was interested in learning more about using the language. \par
-%
-I started off with a text file on my laptop but quickly realised I would benefit from version controlling it, so I created a repository on Bitbucket. You can access it \href{https://bitbucket.org/veracruz/canonical_scattering}{here}. It also helped me version control this document, since it became quite complex quickly. \par
-%
-In Prof. Guettel's introduction to Python we exclusively used functions to build a game of Othello that ran in the command line. This is very different to what I have done here, where I would need the programme to output the file of the plotted field. Additionally, this tool became many orders of magnitude more complex because of the nature of the problem and I thought it appropriate to employ an object oriented approach.\par
-%
-I used four different libraries for this project, namely \verb!numpy!, \verb!matplotlib.pyplot!, \verb!scipy.special! and \verb!mpmath!.
-%
+The goal of this tool was to plot the scattered field. I took Prof. Guettel's Introduction to Python in 2nd Year and was interested in learning more about using the language.
+
+I started off with a text file on my laptop but quickly realised I would benefit from version controlling it, so I created a repository on Bitbucket. It can be accessed \href{https://bitbucket.org/veracruz/canonical_scattering}{here}. It also helped me version control this document, since it became quite complex quickly.
+
+In Prof. Guettel's introduction to Python we exclusively used functions to build a game of Othello that ran in the command line. This is very different to what I have done here, where I would need the programme to output the file of the plotted field. Additionally, this tool became many orders of magnitude more complex because of the nature of the problem and I thought it appropriate to employ an object oriented approach.
+
 %-----------------------------------------------------------------
 %                       THE SET UP
 %-----------------------------------------------------------------
 \section{Approach}
 
-My tool went through a lot of different verisons but in it's final state it is comprised of four python files and one json file. The json file was a late addition which made it very easy to set and carry over values for variables, which originally had to be set for every particular wave instantiation.\par
+My tool went through a lot of different verisons but in it's final state it is comprised of four python files and one json file. The json file was a late addition which made it much easier to set and carry over values for variables, which originally had to be set for every particular wave instantiation.
 
 The json file is called \verb!data.txt! and is not very complex:
 \begin{lstlisting}
@@ -33,24 +31,23 @@ The json file is called \verb!data.txt! and is not very complex:
   "cylinder_radius" : [float],
   "speed_of_sound" : 343,
   "boundary_type" : [str],
-  "field_type" : [str]
+  "field_type" : [str],
+  "density_inside" : [float],
+  "density_outside" : [float]
 } \end{lstlisting}
-however this data needs to be brought into the tool. For this I created the \verb!inputs.py! file, which holds the \verb!Inputs! class. This class is then fed through to all other classes so all the variables throughout the tool are set by the \verb!data.txt! file. This was a big change from having the variables be determined independently at different points in the plotting process, but I think it makes much more sense now, and it is easier to expand upon.
+however this data needs to be brought into the tool. For this I created the \verb!inputs.py! file, which holds the \verb!Inputs! class. This class is then fed through to all other classes so all the variables throughout the tool are set by the \verb!data.txt! file. This was a big change from having the variables be determined independently at different points in the plotting process, and helps protect the methods when changing what function to plot.
 
 The \verb!plotter.py! file holds two classes: \verb!Main! and \verb!Wave!. The \verb!Main! class is used ot run the programme itself, and the \verb!Wave! class holds all the functions that are common to all wave instantiations. The \verb!fields.py! file holds subclasses which are instantiations of the \verb!Wave! class. Finally we have the \verb!grpahics.py! file which holds the \verb!Graphics! class where the plots are created.
 
 Within the \verb!Main! class I defined the \verb!run! class, which runs the tool when it is compiled as a python script from the command line. I also define different functions for different fields I want to plot in this class, so that it is easy to call them. For example, for the cylinder scattering problem I call
-%
+
   \begin{lstlisting}
 self.create_field_around_cylinder(self.graph) \end{lstlisting}
-%
 where I have defined
-%
   \begin{lstlisting}
 def create_field_around_cylinder(self, graph):
     field = CylinderField()
     graph.heat_map(field) \end{lstlisting}
-%
 and \verb!self.graph = Graphics! was set within the \verb!__init__! constructor method.
 
 
@@ -58,20 +55,20 @@ and \verb!self.graph = Graphics! was set within the \verb!__init__! constructor 
 %                        INPUTS CLASS
 %-----------------------------------------------------------------
 
-\section{The \texttt{Inputs} class}
+\subsection{}ection{The \texttt{Inputs} class}
 
-The \verb!Inputs! class has two main objectives, first to read the \verb!data.txt! file, and to create local variables that can be passed through to the other classes. To do this we first import the \verb!json! library, and then define a function to read the file.
+The \verb!Inputs! class has two objectives, to read the \verb!data.txt! file and to create local variables that can be passed through to the other classes. These variables are either read directly from the file or calculated. The \verb!read_file! method returns a dictionary containing all the data in the json file.
 
 \begin{lstlisting}
 def read_file(self):
     file = open(r"data.txt", "r")
     return json.load(file)\end{lstlisting}
 
-This function returns a dictionary containing all the data in the json file. I found it was better to create a dictionary this way rather than in one of the python files since it reduces the chances of me accidentally deleting or editing code. This is then used in the \verb!set_params! function to set the variables themselves.
+This is then used in the \verb!set_params! function to set the local variables directly from the file.
 
-The \verb!data.txt! file was originally read as a \verb!csv! file instead of \verb!json!. This became cumbersome very quickly though, since \verb!csv! are read line by line. The only way to tell the reader which bit of information to pass through is to point at a line and position which is prone to human error. In contrast, with \verb!json! you give all the variables a name, and point to the information you want using that name which is much more human friendly. The syntax is also pretty simple so it did not require too much extra research from my part.
+The \verb!data.txt! file was originally read as a \verb!csv! file instead of \verb!json!. This became cumbersome very quickly though, since \verb!csv! are read line by line. The only way to tell the reader which bit of information to pass through is to point at a line and position which is prone to human error. In contrast \verb!json! has named variables, which makes it easier to reference.
 
-Since all the information in \verb!data.txt! is inputted manually I decided to make sure to do some error handling at this stage, so that if I have inputted the wrong variable type it will be caught immediately and won't cause bugs that would be hard to pinpoint later on.
+Since all the information in \verb!data.txt! is inputted manually I decided to make sure to do add error messages at this stage, so that if I have inputted the wrong variable type it will be caught immediately and won't cause bugs that would be hard to pinpoint later on. If there is an error.
 
 \begin{lstlisting}
 def set_params(self):
@@ -83,19 +80,7 @@ def set_params(self):
     ## FIELD TYPE
     self.field_type = dict['field_type']
 
-    ##  AXIS LENGTH
-    try:
-        self.axis_length = float(dict['axis_length'])
-    except ValueError:
-        self.axis_length = 5
-        print('ERROR: input for axis length must be a float. Has been set to default.')
-
-    ##  AXIS DELTA
-    try:
-        self.axis_delta = int(dict['axis_delta'])
-    except ValueError:
-        self.axis_delta = 100
-        print('ERROR: input for axis delta must be a int. Has been set to default.')
+    [...]
 
     ##  TRUNCATION
     try:
@@ -111,22 +96,10 @@ def set_params(self):
         self.wavevector = [-1, -1]
         print('ERROR: inputs for wavevector must be two floats. Has been set to default.')
 
-    ##  CYLINDER RADIUS
-    try:
-        self.cylinder_radius = float(dict['cylinder_radius'])
-    except ValueError:
-        self.cylinder_radius = 1
-        print('ERROR: input for cylinder radius must be a float. Has been set to default.')
-
-    ##  SPEED OF SOUND
-    try:
-        self.speed_of_sound = float(dict['speed_of_sound'])
-    except ValueError:
-        self.speed_of_sound = 343
-        print('ERROR: input for speed of sound must be a float. Has been set to default.')
+    [...]
 \end{lstlisting}
 
-My error handling including setting the variable to some default value. This is because the plotting tool ended up being fairly slow on my laptop so I didn't want to be in the position where I'd waited for a few minutes only to get an error if I was trying to test some other aspect of my code. I'd still be alerted to the error in the console, so I'd know what variable was not actually what I expected it to be, but for the most part the code would run.
+I decided to set the variable to some default value because the plotting tool ended up running fairly slow on my laptop. I'd still be alerted to the error in the terminal, so I'd know what variable was not actually what I expected it to be, but for the most part the code would run. This slowness was an issue throughout and something I'd like to work on eventually.
 
 These two are the main functions for the class, but I also defined functions to easily retrieve variables, whether \verb!Inputs! has been passed through as a parent class or not. For this we have functions such as
 \begin{lstlisting}
@@ -140,220 +113,237 @@ def get_coord_series(self):
 \end{lstlisting}
 which defines the \verb!X! and \verb!Y! coordinate series. And some others like
 \begin{lstlisting}
-def get_plot_name(self):
-    return self.field_type + ' ' + self.boundary_type + ', N = ' + str(self.truncation) + ', k = ' + str(self.get_wavenumber())+ ', inc angle = ' + str(self.get_incident_angle())
-
 def get_wavenumber(self):
     return np.sqrt(self.wavevector[0]*self.wavevector[0]
         + self.wavevector[1]*self.wavevector[1])
 
 def get_incident_angle(self):
     return np.arctan2(self.wavevector[0], self.wavevector[1])
-
-def get_omega(self):
-    return self.get_speed_of_sound()*self.get_wavenumber()
 \end{lstlisting}
 
 %-----------------------------------------------------------------
 %                    GRAPHICS
 %-----------------------------------------------------------------
-\section{The \texttt{Graphics} class}
-%
-The \verb!Graphics! class is equipped with two different types of plots: \verb!heat_map! and \verb!contour!. Both of these are constructed in the same way:
-%
-  \begin{lstlisting}[caption={},label={lst:contour}]
-def contour(self, wave, xlabel='x', ylabel='y'):
-    plt.contour(wave.get_Z(), extent=wave.get_extent())
-    self.label_plot(wave, xlabel, ylabel)
-    self.draw_plot() \end{lstlisting}
-%
-where \verb!contour! is replaced by \verb!imshow! for the heat map. \par
-%
-Here the specific wave instantiation, \verb!wave!, is fed through to the \verb!contour! function in \verb!matplotlib.pyplot! which returns the set of contour lines for the heights given by \verb!wave.get_Z!. I then add labels to my plot, and the \verb!draw_plot! function draws it. \par
-%
-The \verb!label_plot! function looks for the title I have set for my wave instantiation using the \verb!wave.get_name! function, along with labels for the axes. \par
-%
-The plotting function brings it all together
-%
-  \begin{lstlisting}
-def draw_plot(self, wave):
-    self.draw_disk_overlay(wave)
-    plt.colorbar()
-    plt.show()\end{lstlisting}
-%
-where the \verb!draw_disk_overlay! function creates a solid disk in the plot to block out the area where the field should not be calculated inside the cylinder. The size of this disk is pulled from the specific wave instantiation using \verb!get_cylinder_radius! and plotted with \verb!pyplot!.
-%
+\subsection{The \texttt{Graphics} class}
+
+The \verb!Graphics! contains all the functions that make the plots. It has access to the local variables retrieved by \verb!Inputs!. The main method is the \verb!draw_plot! method:
 \begin{lstlisting}
-def draw_disk_overlay(self, wave):
-    r = wave.get_cylinder_radius()
-    plt.gca().add_patch(plt.Circle((0,0),r, fc='#36859F'))
-\end{lstlisting}
-%
+def draw_plot(self):
+    plt.title(self.get_plot_name())
+    plt.ylabel('y')
+    plt.xlabel('x')
+    try:
+        plt.colorbar()
+    except RuntimeError:
+        pass
+      plt.show()\end{lstlisting}
+
+The plot name is set in the \verb!Inputs! class to make sure it reflects the variables given in \verb!data.txt!. I defined two functions, one for a contour plot and another for a heat map, although the heat map ended up being much more useful.
+
+\begin{lstlisting}
+def contour(self, wave):
+    plt.contour(real(wave.get_array_Z()), extent=self.get_extent())
+    self.draw_plot()\end{lstlisting}
+
+The \verb!get_extent! function sets the coordinates, which are also inputted in \verb!data.txt!.
+
 %-----------------------------------------------------------------
 %                      Wave() class
 %-----------------------------------------------------------------
-\section{The \texttt{Wave} class}
+\subsection{The \texttt{Wave} class}
 %
-This is fairly big class but its functions can be divided up into three main categories: plot information, constants, and mathematical functions. It makes sense to keep them all within one class because all the specific wave instantiations will make use of these functions. \par
-%
-%------------------ plot information --------------------------------
-\subsection{Plot information}
-Throughout this project I have attempted to name my functions to best represent the action they perform. For instance \verb!get_wavevector! returns the wavevector, \verb!self.wavevector!, whereas \verb!set_wavevector(k)! sets \verb!k! \verb!=! \verb!self.! \verb!wavevector!. This is especially useful when setting and retrieving these constants within the specific wave instantiations. \par
-%
-Following this convention I have a series of functions that set or retrieve information about the specific plot. \par
-%
-The functions \verb!set/get_name,! set and retrieve the name of the plot; \verb!get_X,! \verb!get_Y! and \verb!get_Z! retrieve the three coordinate arrays; \verb!set/get_! \verb!axis_! \verb!length! and set and retrieve the range of \verb!x! and \verb!y!; \verb!set/get_! \verb!axis! \verb!_delta! set and retrieve the granularity of the plot. \par
-%
-The axis length functions are additionally also used to specify an `extent' function, \verb!get_extent!, which is used in the \verb!Graphics! class to make sure the axis labels in the plot are over the correct range (see \ref{lst:contour}). \par
-%
-  \begin{lstlisting}
-def get_extent(self):
-    return [-self.get_axis_length(), self.get_axis_length(),
-        -self.get_axis_length(), self.get_axis_length()] \end{lstlisting}
-%
-Finally, the \verb!Wave! class is initalised by setting the arrays that will constitute our domain: \verb!self.X, self.Y = self.get_xy_series()!, where this function is defined as follows.
-%
-  \begin{lstlisting}
-def get_xy_series(self):
-    x = np.linspace(-self.get_axis_length(),
-        self.get_axis_length(), self.get_axis_delta())
-    y = x
-    return np.meshgrid(x, y)\end{lstlisting}
-%
-TODO: need to fix how x and y are defined.\par
-%
-Now that we have defined the cartesian coordinates $x$ and $y$, we can use them to define $r$ and $\theta$. We define $r$ as follows, using the \verb!numpy! library:
-%
-  \begin{lstlisting}
-def get_r(self):
-    return np.sqrt( self.get_X()*self.get_X()
-        + self.get_Y()*self.get_Y() )\end{lstlisting}
-%
-TODO: explain why $x*x$ instead of $x^2$.\par
-%
-The angular coordinate is particularly interesting because it needs work in all four quadrants of our plotted field. \verb!Numpy! offers two versions of the $\arctan(\theta)$ function, \verb!numpy.arctan! and \verb!numpy.! \verb!arctan2!. The first returns the angle $\theta \in [\frac{\pi}{2},\frac{\pi}{2}]$, that is, $(x, y)$ in the rightmost quadrants. We don't expect our field to be symmetric around $x=0$, so we need to use the latter function, which returns $\theta \in [\pi, -\pi]$.
-%
-  \begin{lstlisting}
-def get_theta(self):
-    return np.arctan2(self.get_X(), self.get_Y())\end{lstlisting}\par
-%
-%--------------------- wave constants -----------------------------
-\subsection{Wave constants}
-%
-The second set of functions defined within the \verb!Wave! class consist of the physical constants of the problem. These are determined by the wavenumber, which is set and retrieved using \verb!get/set_wavevector! for each wave instantiation. The wavevector is an array length two, such that $\vec{k} = (a,b) = (kcos\alpha, ksin\alpha)$.\par
-%
-From this wave vector we can calculate the wavenumber, $k$,
-%
-  \begin{lstlisting}
-def get_wavenumber(self):
-    return np.sqrt(self.wavevector[0]*self.wavevector[0]
-        + self.wavevector[1]*self.wavevector[1])\end{lstlisting}
-%
-the incident angle, $\alpha$, again using \verb!arctan2!:
-%
-  \begin{lstlisting}
-def get_incident_angle(self):
-    return np.arctan2(self.wavevector[0], self.wavevector[1])\end{lstlisting}\par
-%
-For the purposes of this project, I set the speed of sound to 343 $ms^{-1}$. Now we can calculate $\omega = k c$, the frequency of the wave (see Definition \ref{defn:frequency}).
-%
-  \begin{lstlisting}
-def get_omega(self):
-    return self.get_speed_of_sound()*self.get_wavenumber()\end{lstlisting} \par
-%
-Our solution deals with sums to infinity, so we must set a truncation numer. This is done with \verb!get/set_truncation!. Similarly, we need to specify the radius of the circle we are concerned with. This is set and retrieved using \verb!get/set_cylinder_radius!.
-%
-%--------------------- math functions -----------------------------
-\subsection{Mathematical functions}
-%
-Finally, we describe the Neumann factor, as defined in \ref{propn:jacobi_expansion}. I added an error message to make sure the function behaves as expected.
-  \begin{lstlisting}
+The \verb!Wave! class holds all the methods that are common to all the specific wave instantiations. This includes things like defining the $r$ and $theta$ coordinates, the Neumann factor
+
+\begin{lstlisting}
 def get_neumann_factor(self, n):
-      if n==0:
-          return 1
-      elif n > 0:
-          return 2
-      else:
-          print('ERROR: Invalid n for Neumann factor')\end{lstlisting}
-%
-\section{Particular \texttt{Wave} instantiations}
-%
-All the classes in this file are subclasses of \verb!Wave!. They are initialised with the superconstructor referring back to the parent class so that they all inherit the functions and variables of \verb!Wave()!.
-%
-  \begin{lstlisting}
-def __init__(self):
-    print('[Field_name] started...')
-
-    self.set_parameters()
-    self.set_name("Example name")
-
-    super(Field_name, self).__init__()
-
-    self.Z = self.get_z_series()\end{lstlisting}\par
-%
-Note that the superconstructor needs to go stricly \textit{after} the parameters are set. This is to override any defaults I have set in \verb!Wave!. The \verb!set_paramaters! function sets the specific values for the wavevector, truncation number, radius, and the range and granularity of the grid. \par
-%
-The array \verb!self.Z! is what \verb!Graphics! will plot. Each value in this array will be calculated by a (truncated) infinite sum depending on the coordinates $r$ and $\theta$.
-%
-  \begin{lstlisting}
-def get_z_series(self):
-    return self.get_sum(self.get_r(), self.get_theta()) \end{lstlisting}
-%
-We can now exploit the fact that our solutions for this field are separable to write
-  \begin{equation}
-    \text{total field} = \text{constant terms} \cdot \text{angular terms} \cdot \text{radial terms}.
-  \end{equation}\par
-%
-  \begin{lstlisting}
-def get_sum(self, r, theta):
-    z = 0       #Initialising
-    for n in range(self.truncation):
-        z += self.get_constant_term(n) * self.get_angular_term(n, theta) * self.get_radial_term(n, r)
-    return z.real   \end{lstlisting}\par
-%
-We can now define what these constant, angular and radial terms are for each specific field.
-%
-%--------------------------- cylinder -------------------------------
-\subsection{The scattered field around a cylinder}
-%
-\subsubsection{Constant term}
-In this case, we have two types of constant terms: Neumann or Dirichlet. One could choose to define two separate functions \verb!get_dirichlet_constants! and \verb!get_neumann_constants!, but I've simply defined my function to take a \verb!type! argument which is set to Neumann by default. I added an error message to make sure the function behaves as expected.
-%
-  \begin{lstlisting}
-def get_constant_term(self, n, type='neumann'):
-    if type == 'neumann':
-        return self.get_neumann_factor(n) * np.power(1j,n) * self.get_neumann_bc(n)
-    elif type == 'dirichlet':
-        return self.get_neumann_factor(n) * np.power(1j,n) * self.get_dirichlet_bc(n)
+    if n==0:
+        return 1
+    elif n > 0:
+        return 2
     else:
-        print('ERROR: Invalid type in CylinderField.get_constant_term') \end{lstlisting} \par
-%
-Where \verb!get_neumann_bc! and \verb!get_dirichlet_bc! are defined as follows.
-%
-  \begin{lstlisting}
-def get_neumann_bc(self, n):
-    return sp.jvp(n, self.get_wavenumber() * self.get_cylinder_radius()) / sp.h1vp(n, self.get_wavenumber() * self.get_cylinder_radius()) \end{lstlisting} \par
-%
-  \begin{lstlisting}
-def get_dirichlet_bc(self, n):
-    return None #TBD \end{lstlisting}\par
-%
-The function \verb!sp.jvp(v, z, m=1)! computes the $m^{th}$ derivative of the Bessel function of the first kind of order $v$ and argument $z$. It is provided by the \verb!scipy.special! library, imported as \verb!sp! here. Similarly \verb!sp.h1vp(v, z, m=1)! computes the $m^{th}$ derivative of the Hankel function of the first kind of order $v$ and argument $z$.
+        print('ERROR: Invalid n for Neumann factor')\end{lstlisting}
 
-\subsubsection{Radial dependence}
-%
-  \begin{lstlisting}
-def get_radial_term(self, n, r):
-    return ( sp.hankel1(n, self.get_wavenumber() * r) + sp.jv(n, self.get_wavenumber() * r))\end{lstlisting}
-%
-\subsubsection{Angular dependence}
-%
-  \begin{lstlisting}
-def get_angular_term(self, n, theta):
-    return np.cos(n * (theta - self.get_incident_angle()))\end{lstlisting}
-%
+and the array that is fed through to \verb!Graphics! to be plotted.
+
+\begin{lstlisting}
+def get_array_Z(self):
+    array = []
+    for x in self.get_X():
+        lst = []
+        for y in self.get_Y():
+            lst.append(self.get_value_z(x, y))
+        array.append(lst)
+    return array
+\end{lstlisting}
+
+The \verb!get_value_z! is defined in the particular class for each wave instantiation.
+
+\section{Scattering outside the cylinder}
+
+The class for the incident field was straightforward enough,
+
+\begin{lstlisting}
+class IncidentField(Wave, Inputs):
+      def __init__(self):
+          print('>>> IncidentField started...')
+          Wave.__init__(self)
+          Inputs.__init__(self)
+
+      def get_value_z(self, x, y):
+          if self.get_r(x, y) >= self.get_cylinder_radius():
+              return (np.exp(1j*(self.get_wavevector()[0]*x + self.get_wavevector()[1]*y)))
+          else:
+              return 0
+\end{lstlisting}
+
+All of these classes call the \verb!Wave! and \verb!Inputs! classes at initliasiation so that we can use the methods defined within them, and for scattering outside the cylinder, the value of $z$ is only defined for $r \geq \sigma$.
+
+\begin{figure}
+  \centering
+  \caption{Incident Field}
+  \includegraphics[width=6cm]{../figures/incident_field}\label{fig:incident_field}
+\end{figure}
+
+For the scattered field class, there are a few more functions:
+
+\begin{lstlisting}
+class ScatteredField(Wave, Inputs):
+    def __init__(self):
+        print('>>> ScatteredField started...')
+        Wave.__init__(self)
+        Inputs.__init__(self)
+
+    def get_value_z(self, x, y):
+        '''
+        Returns the value of Z at a given (x, y).
+        '''
+        r = self.get_r(x, y)
+        if r >= self.get_cylinder_radius():
+            return self.get_sum(r, self.get_theta(x, y))
+        else:
+            return 0
+
+    def get_sum(self, r, theta):
+        '''Actions the summation up to the truncation number and
+        returns the approximate value for z for a given point.'''
+        z = 0   #Initialising
+        for n in range(self.truncation):
+            z += self.get_constant_term(n) * self.get_angular_term(n, theta) * self.get_radial_term(n, r)
+        return z
+
+    def get_constant_term(self, n):
+        if self.boundary_type.lower() in 'neumann':
+            return self.get_modified_neumann_factor(n) * self.get_neumann_bc(n)
+        elif self.boundary_type.lower() in 'dirichlet':
+            return self.get_modified_neumann_factor(n) * self.get_dirichlet_bc(n)
+        else:
+            raise TypeError('Invalid boundary type.')
+
+    def get_angular_term(self, n, theta):
+        return np.cos(n*(theta - self.get_incident_angle()))
+
+    def get_radial_term(self, n, r):
+        return sp.hankel1(n, self.get_wavenumber()*r)\end{lstlisting}
+
+Here it starts becoming clear why my tool is so slow. The algorithm does not just loop through each coordinate to find a value of $z$, it also loops through the summation up to the truncation number, and it does this for the constant, angular and radial terms. I am sure there is a better, more efficient way to go about this but I have not found it yet.
+
+Finally, we have the \verb!TotalField! classes:
+\begin{lstlisting}
+class TotalField(Wave, Inputs):
+    '''
+    TODO: docstring
+    '''
+    def __init__(self):
+        print('>>> TotalField started...')
+        Wave.__init__(self)
+        Inputs.__init__(self)
+        self.incident = IncidentField()
+        self.scattered = ScatteredField()
+
+    def get_value_z(self, x, y):
+        return self.incident.get_value_z(x, y) + self.scattered.get_value_z(x,y)
+\end{lstlisting}
+
+this is what is actually plotted.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=6cm]{../figures/total_neumann_n15}
+  \includegraphics[width=6cm]{../figures/total_neumann_n50}
+  \caption{Total field with Neumann BC for N=15 and N=50}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=6cm]{../figures/total_dirichlet_n15}
+  \includegraphics[width=6cm]{../figures/total_dirichlet_n50}
+  \caption{Total field with Dirichlet BC for N=15 and N=50}
+\end{figure}
+
+\section{Scattering inside the cylinder}
+
+For the transmission problem, I decided to create new methods for the inside of the cylinder, and pull in the methods from the scattered field earlier for the outside, instead of creating new ones for this too. This mean that I had to add a boundary condition for this problem to the \verb!ScatteredField! class. I added an \verb!elif! term in the \verb!get_constant_term! function to make sure I was using the correct constants
+
+\begin{lstlisting}
+def get_constant_term(self, n):
+    if self.boundary_type.lower() in 'neumann':
+        return self.get_modified_neumann_factor(n) * self.get_neumann_bc(n)
+    elif self.boundary_type.lower() in 'dirichlet':
+        return self.get_modified_neumann_factor(n) * self.get_dirichlet_bc(n)
+    elif self.boundary_type.lower() in 'interior':
+        return self.get_bc_interior_field(n)
+    else:
+        raise TypeError('Invalid boundary type.')
+\end{lstlisting}
+
+and then created the boundary condition for the transmission problem
+
+\begin{lstlisting}
+def get_bc_interior_field(self, n):
+    return ((self.density_inside-self.density_outside) * sp.jv(n, self.get_wavenumber() * self.cylinder_radius)* sp.jvp(n, self.get_wavenumber() * self.cylinder_radius,1))/(self.get_radiation_resistance_outside(n)-self.get_radiation_resistance_inside(n))
+\end{lstlisting}
+
+The radiation resistance variables are simply $R_1$, $R_2$ in the theory chapter, it makes the code more readable to give them descriptive names instead.
+
+The class itself is constructed in much the same way as the other two.
+
+\begin{lstlisting}
+class InteriorField(Wave, Inputs):
+    def __init__(self):
+        print('>>> InteriorField started...')
+        Wave.__init__(self)
+        Inputs.__init__(self)
+        self.scattered = ScatteredField()
+        self.outside = TotalField()
+
+    def get_value_z(self, x, y):
+        '''
+        Returns the value of Z at a given (x, y).
+        '''
+        r = self.get_r(x, y)
+        theta = self.get_theta(x, y)
+
+        if r <= self.get_cylinder_radius():
+            return self.get_sum_inside(r, theta)
+        else:
+            return self.outside.get_value_z(x,y)
+
+    def get_sum_inside(self, r, theta):
+        '''Actions the summation up to the truncation number and
+        returns the approximate value for z for a given point.'''
+        z = 0   #Initialising
+        for n in range(self.truncation):
+            z += self.get_constant_term_inside(n) * sp.jv(n, self.get_wavenumber() * r) * np.cos(n*(theta - self.get_incident_angle()))
+        return z
+
+    def get_constant_term_inside(self, n):
+        return (self.density_inside * self.get_radiation_resistance_outside(n) - self.density_outside * self.get_radiation_resistance_inside(n)) / (self.density_inside * (self.get_radiation_resistance_outside(n)- self.get_radiation_resistance_inside(n)))
+\end{lstlisting}
+
+Unfortunately this did not work well at all.
+
 \section{Secondary plots}\label{ss:secondary_plots}
-I used python to create most of the figures in this document.
+I used python to create the plots in Chapter 2.
 %
   \begin{lstlisting}[caption={Plot of bessel functions of integer order},label={lst:bessel_int_no}]
 x=np.linspace(0,5,100)
@@ -421,4 +411,11 @@ plt.xlabel('$r$')
 plt.show()\end{lstlisting}\par
 
 \section{Limitations}
-- very, very slow. My machine isn't super powerful, but I'm sure there are more efficient ways of doing this too. There are a lot of loops and I'm not a python expert. 
+
+In short, this tool was not entirely succesfull. However it was a really valuable learning experience for me. I came into this with \verb!hello world! level understanding of Python, and I now have a grasp of what good object oriented architecture looks like, why it matters and where improvements can be made.
+
+The first and most important improvement, clearly, needs to be accuracy. The code is no use if it cannot produce accurate plots.
+
+Second, is speed. My laptop is not very powerful but even so, some of these plots took a \emph{very long time} to render. I have a rough idea of where the weak points efficiency-wise are, but this wasn't a priority and I couldn't see a clear way to fix them, or patch it up to loose a few minutes off of computing time.
+
+Finally, the structure of the file itself has gone through so many iterations it is not entirely clear or accessible to read. There are a lot of places where functions are defined in classes where they do not belong.

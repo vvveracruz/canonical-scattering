@@ -53,12 +53,13 @@ class Graphics(Inputs):
             pass
         plt.show()
 
-    def draw_disk_overlay(self, wave):
+    #def draw_disk_overlay(self, wave):
         #TODO
         #r = wave.get_cylinder_radius()
         #plt.gca().add_patch(plt.Circle((0,0),r, fc='#36859F'))
 
 # Run code if compiled as python script from command line
 # Otherwise import module.
+
 if __name__ == '__main__':
     Graphics().run()
